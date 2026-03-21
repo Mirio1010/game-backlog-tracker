@@ -2,6 +2,8 @@
 
 This is a personal project for tracking games you want to play in the future! 
 
+Work in progress
+
 
 
 # React + Vite
