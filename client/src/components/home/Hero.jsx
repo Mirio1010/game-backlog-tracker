@@ -2,12 +2,11 @@ import React from 'react'
 import HomeImage from "./HomeImage.jsx";
 import LoginBtn from "../ui/LoginBtn.jsx";
 import SignupBtn from "../ui/SignupBtn.jsx";
-import Header from "../layout/Header.jsx";
+
 import "../../styles/hero.css";
 const Hero = () => {
   return (
     <div className="Hero">
-      <Header />
       <h1>Destroy your game backlog one step at a time</h1>
       <p>
         Welcome to Game Backlog Tracker, the ultimate tool for gamers who want
