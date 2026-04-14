@@ -1,16 +1,17 @@
-import Header from "./components/Header";
+import {BrowserRouter, Routes, Route} from "react-router-dom";
 
+import Header from "./components/layout/Header.jsx";
+import AppRoutes from "./routes/AppRoutes.jsx";
 import "./styles/index.css";
+
 function App() {
-  return (
-    <main className="app-shell">
-      <Header />
-      <section className="welcome-card">
-        <h1>Game Backlog Tracker</h1>
-        <p>Track your next playthroughs, wishlist titles, and completed games.</p>
-      </section>
-    </main>
-  )
+    return (
+      <>
+        <Header />
+        <AppRoutes />
+        
+      </>
+    );
 }
 
 export default App
