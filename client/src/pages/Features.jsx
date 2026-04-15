@@ -1,16 +1,13 @@
-import React from "react";
-import Hero from "../components/home/Hero.jsx";
 import Footer from "../components/layout/Footer.jsx";
 import Header from "../components/layout/Header.jsx";
 
-const Home = () => {
+
+const Features = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-zinc-950 via-slate-900 to-black text-white">
       <Header />
-      <Hero />
-      <Footer />
+      <Footer/>
     </div>
   );
-};
-
-export default Home;
+}
+export default Features
