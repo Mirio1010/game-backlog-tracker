@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
-
+import LoginBtn from "../ui/LoginBtn";
+import SignupBtn from "../ui/SignupBtn";
 const Header = () => {
   return (
     <header className="sticky top-0 z-50 border-b border-white/10 bg-black/30 backdrop-blur-xl">
@@ -32,12 +33,12 @@ const Header = () => {
         </nav>
 
         <div className="flex items-center gap-3">
-          <button className="hidden rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-sm font-semibold text-white transition hover:bg-white/10 sm:inline-flex">
-            Log In
-          </button>
-          <button className="rounded-xl bg-cyan-500 px-4 py-2 text-sm font-semibold text-black transition hover:bg-cyan-400">
-            Sign Up
-          </button>
+          <Link to="/Login">
+            <LoginBtn />
+          </Link>
+          <Link to="/Signup">
+            <SignupBtn />
+          </Link>
         </div>
       </div>
     </header>
