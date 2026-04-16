@@ -1,15 +1,15 @@
 import React from "react";
 import Hero from "../components/home/Hero.jsx";
-import Footer from "../components/layout/Footer.jsx";
-import Header from "../components/layout/Header.jsx";
-
+import Footer from "../components/home/Footer.jsx";
+import Header from "../components/home/Header.jsx";
+import MainLayout from "../components/layout/MainLayout.jsx";
 const Home = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-zinc-950 via-slate-900 to-black text-white">
+    <MainLayout>
       <Header />
       <Hero />
       <Footer />
-    </div>
+    </MainLayout>
   );
 };
 

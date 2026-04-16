@@ -1,5 +1,5 @@
-import Header from "../components/layout/Header";
-import Footer from "../components/layout/Footer";
+import Header from "../components/home/Header";
+import Footer from "../components/home/Footer";
 
 const About = () => {
   return (
@@ -8,5 +8,5 @@ const About = () => {
       <Footer />
     </div>
   );
-}
-export default About
+};
+export default About;

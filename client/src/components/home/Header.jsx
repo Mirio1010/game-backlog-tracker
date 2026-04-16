@@ -9,7 +9,7 @@ const Header = () => {
           Game<span className="text-cyan-400">Backlog</span>
         </h1>
 
-        <nav className="hidden items-center gap-8 md:flex">
+        <nav className="flex items-center gap-8">
           <Link
             to="/"
             className="text-sm font-medium text-zinc-300 transition hover:text-white"
@@ -33,12 +33,11 @@ const Header = () => {
         </nav>
 
         <div className="flex items-center gap-3">
-          <Link to="/Login">
             <LoginBtn />
-          </Link>
-          <Link to="/Signup">
+          
+          
             <SignupBtn />
-          </Link>
+         
         </div>
       </div>
     </header>
