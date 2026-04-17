@@ -1,3 +1,5 @@
+// This file Runs the app
+
 const app = require('./app'); // This imports the Express app from app.js
 
 /*
@@ -15,3 +17,4 @@ The function inside runs once the server starts successfully.
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`); 
 });
+
