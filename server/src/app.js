@@ -3,6 +3,9 @@
 
 // imports express package to your app
 const express = require("express"); 
+const cors = require("cors");
+
+
 
 const authRoutes = require("./routes/auth.routes");
 
@@ -16,7 +19,7 @@ const app = express();
 
 
 app.use(express.json()) // middleware that allows express to parse JSON so it can be used in req.body
-
+app.use(cors())
 
 app.use("/api/auth", authRoutes); //For any request that starts with /api/auth, use the routes from authRoutes
 

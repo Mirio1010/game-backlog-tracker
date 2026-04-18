@@ -1,15 +1,15 @@
-import React from 'react'
-import MainLayout from '../components/layout/MainLayout'
-import Header from "../components/home/Header"
+import React, { useState } from "react";
+import MainLayout from "../components/layout/MainLayout";
+import Header from "../components/home/Header";
+
 const Signup = () => {
   return (
     <MainLayout>
       <Header></Header>
-      <Form/>
-
+      <Form />
     </MainLayout>
-  )
-}
+  );
+};
 
 const LeftPanel = () => {
   return (
@@ -34,6 +34,58 @@ const LeftPanel = () => {
 };
 
 const Form = () => {
+  const [formData, setFormData] = useState({
+    username: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
+
+  const [error, setError] = useState("");
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+
+    setError("");
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (formData.password !== formData.confirmPassword) {
+      setError("Passwords do not match.");
+      return;
+    }
+
+    if (formData.password.length < 8) {
+      setError("Password must be at least 8 characters.");
+      return;
+    }
+
+    const res = await fetch("http://localhost:5000/api/auth/register", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        username: formData.username,
+        email: formData.email,
+        password: formData.password,
+      }),
+    });
+
+    const data = await res.json();
+    if (!res.ok) {
+      console.log("Backend error:", data.message);
+      return;
+    }
+
+    console.log("Success:", data);
+  };
+
   return (
     <main>
       <section className="grid min-h-screen grid-cols-1 overflow-hidden border border-white/10 bg-white/5 shadow-2xl backdrop-blur md:grid-cols-2">
@@ -44,9 +96,9 @@ const Form = () => {
             <h2 className="mb-6 text-2xl font-semibold text-white">Sign Up</h2>
 
             <form
-              action="/server-endpoint"
               autoComplete="off"
               className="space-y-5"
+              onSubmit={handleSubmit}
             >
               <div className="space-y-2">
                 <label
@@ -59,6 +111,8 @@ const Form = () => {
                   type="text"
                   id="username"
                   name="username"
+                  value={formData.username}
+                  onChange={handleChange}
                   autoComplete="username"
                   className="w-full rounded-xl border border-white/10 bg-zinc-800/80 px-4 py-3 text-white outline-none transition placeholder:text-zinc-500 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/30"
                 />
@@ -75,6 +129,8 @@ const Form = () => {
                   type="email"
                   id="email"
                   name="email"
+                  value={formData.email}
+                  onChange={handleChange}
                   autoComplete="email"
                   className="w-full rounded-xl border border-white/10 bg-zinc-800/80 px-4 py-3 text-white outline-none transition placeholder:text-zinc-500 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/30"
                 />
@@ -91,6 +147,8 @@ const Form = () => {
                   type="password"
                   id="password"
                   name="password"
+                  value={formData.password}
+                  onChange={handleChange}
                   autoComplete="new-password"
                   className="w-full rounded-xl border border-white/10 bg-zinc-800/80 px-4 py-3 text-white outline-none transition placeholder:text-zinc-500 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/30"
                 />
@@ -103,10 +161,17 @@ const Form = () => {
                 >
                   Confirm Password
                 </label>
+                {error && (
+                  <p className="rounded-xl border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-300">
+                    {error}
+                  </p>
+                )}
                 <input
                   type="password"
                   id="confirmPassword"
                   name="confirmPassword"
+                  value={formData.confirmPassword}
+                  onChange={handleChange}
                   autoComplete="new-password"
                   className="w-full rounded-xl border border-white/10 bg-zinc-800/80 px-4 py-3 text-white outline-none transition placeholder:text-zinc-500 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/30"
                 />
@@ -126,6 +191,4 @@ const Form = () => {
   );
 };
 
-
-
-export default Signup
+export default Signup;
