@@ -6,7 +6,7 @@ const app = require('./app'); // This imports the Express app from app.js
 This stores the port number your backend will run on.
 A port is like a door your server listens on.
 */
-const PORT = 5000; 
+const PORT = process.env.PORT || 5000;
 
 
 /*
