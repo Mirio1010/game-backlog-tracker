@@ -57,6 +57,11 @@ const Form = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (!formData.username || !formData.email || !formData.password) {
+      setError("Please fill in all fields");
+      return;
+    }
+
     if (formData.password !== formData.confirmPassword) {
       setError("Passwords do not match.");
       return;
