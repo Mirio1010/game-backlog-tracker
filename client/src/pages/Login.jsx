@@ -1,11 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import MainLayout from "../components/layout/MainLayout";
 import Header from "../components/home/Header";
+
 const Login = () => {
   return (
     <MainLayout>
-      <Header></Header>
-      <Form></Form>
+      <Header />
+      <Form />
     </MainLayout>
   );
 };
@@ -33,27 +35,94 @@ const LeftPanel = () => {
 };
 
 const Form = () => {
+  const navigate = useNavigate();
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+
+    setMessage("");
+    setError("");
+
+    if (!email || !password) {
+      setError("Email and password are required");
+      return;
+    }
+
+    try {
+      const res = await fetch("http://localhost:5000/api/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email,
+          password,
+        }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        setError(data.message);
+        return;
+      }
+
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("user", JSON.stringify(data.user));
+
+      setMessage(data.message);
+
+      console.log("Login successful:", data);
+
+      navigate("/dashboard");
+    } catch (error) {
+      setError("Something went wrong. Please try again.");
+      console.log(error);
+    }
+  };
+
   return (
     <main>
       <section className="grid min-h-screen grid-cols-1 overflow-hidden border border-white/10 bg-white/5 shadow-2xl backdrop-blur md:grid-cols-2">
-        <LeftPanel/>
-        
+        <LeftPanel />
+
         <div className="flex items-center justify-center bg-black/20 p-10 md:p-16">
           <div className="w-full max-w-md rounded-2xl border border-white/10 bg-zinc-900/70 p-8 shadow-xl">
             <h2 className="mb-6 text-2xl font-semibold text-white">Log In</h2>
 
-            <form action="/server-endpoint" className="space-y-5">
+            {error && (
+              <p className="mb-4 rounded-xl border border-red-500/20 bg-red-500/10 px-4 py-3 text-sm text-red-300">
+                {error}
+              </p>
+            )}
+
+            {message && (
+              <p className="mb-4 rounded-xl border border-green-500/20 bg-green-500/10 px-4 py-3 text-sm text-green-300">
+                {message}
+              </p>
+            )}
+
+            <form onSubmit={handleLogin} className="space-y-5">
               <div className="space-y-2">
                 <label
-                  htmlFor="username"
+                  htmlFor="email"
                   className="text-sm font-medium text-zinc-200"
                 >
-                  Username
+                  Email
                 </label>
+
                 <input
-                  type="text"
-                  id="username"
-                  name="username"
+                  type="email"
+                  id="email"
+                  name="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   className="w-full rounded-xl border border-white/10 bg-zinc-800/80 px-4 py-3 text-white outline-none transition placeholder:text-zinc-500 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/30"
                 />
               </div>
@@ -65,10 +134,13 @@ const Form = () => {
                 >
                   Password
                 </label>
+
                 <input
                   type="password"
                   id="password"
                   name="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                   className="w-full rounded-xl border border-white/10 bg-zinc-800/80 px-4 py-3 text-white outline-none transition placeholder:text-zinc-500 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/30"
                 />
               </div>
