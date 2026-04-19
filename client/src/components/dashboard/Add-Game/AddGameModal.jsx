@@ -39,8 +39,8 @@ const AddGameModal = ({ game, onClose, onSaveGame }) => {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 px-4">
-      <div className="w-full max-w-lg rounded-2xl border border-white/10 bg-zinc-950 p-6 text-white shadow-2xl">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-4 backdrop-blur-sm">
+      <div className="w-full max-w-lg rounded-2xl border border-white/10 bg-white/10 p-6 text-white shadow-2xl backdrop-blur-xl">
         <div className="mb-5 flex items-start justify-between gap-4">
           <div>
             <h2 className="text-2xl font-bold">Add to Backlog</h2>
@@ -81,10 +81,14 @@ const AddGameModal = ({ game, onClose, onSaveGame }) => {
             <select
               value={status}
               onChange={(event) => setStatus(event.target.value)}
-              className="w-full rounded-xl border border-white/10 bg-black/30 px-4 py-3 text-white outline-none focus:border-violet-400"
+              className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white outline-none backdrop-blur-md focus:border-violet-400"
             >
               {statuses.map((status) => (
-                <option key={status} value={status}>
+                <option
+                  className="bg-zinc-900 text-white"
+                  key={status}
+                  value={status}
+                >
                   {status}
                 </option>
               ))}
@@ -100,12 +104,18 @@ const AddGameModal = ({ game, onClose, onSaveGame }) => {
               value={platform}
               onChange={(event) => setPlatform(event.target.value)}
               required
-              className="w-full rounded-xl border border-white/10 bg-black/30 px-4 py-3 text-white outline-none focus:border-violet-400"
+              className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white outline-none backdrop-blur-md focus:border-violet-400"
             >
-              <option value="">Select a platform</option>
+              <option className="bg-zinc-900 text-white" value="">
+                Select a platform
+              </option>
 
               {platforms.map((platform) => (
-                <option key={platform} value={platform}>
+                <option
+                  className="bg-zinc-900 text-white"
+                  key={platform}
+                  value={platform}
+                >
                   {platform}
                 </option>
               ))}
@@ -122,7 +132,7 @@ const AddGameModal = ({ game, onClose, onSaveGame }) => {
               onChange={(event) => setNotes(event.target.value)}
               placeholder="Add personal notes about this game..."
               rows="4"
-              className="w-full resize-none rounded-xl border border-white/10 bg-black/30 px-4 py-3 text-white outline-none placeholder:text-white/30 focus:border-violet-400"
+              className="w-full resize-none rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white outline-none placeholder:text-white/30 backdrop-blur-md focus:border-violet-400"
             />
           </div>
 
