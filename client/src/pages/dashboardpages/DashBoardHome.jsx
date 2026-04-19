@@ -1,8 +1,12 @@
 import BackLogPreviewCard from "../../components/dashboard/BackLogPreviewCard";
 import DashboardStats from "../../components/dashboard/DashboardStats";
 import StatusWheelCard from "../../components/dashboard/StatusWheelCard";
+import { useOutletContext } from "react-router-dom";
+
 
 const DashboardHome = () => {
+const { games } = useOutletContext();
+
   return (
     <section>
       <div className="mb-8">
@@ -16,7 +20,7 @@ const DashboardHome = () => {
       </div>
 
       <div className="flex flex-col gap-8">
-        <StatusWheelCard />
+        <StatusWheelCard games={games}/>
         <DashboardStats />
         <BackLogPreviewCard />
       </div>

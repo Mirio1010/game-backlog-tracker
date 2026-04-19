@@ -9,12 +9,12 @@ const AddGamePage = () => {
   const { games, setGames } = useOutletContext();
   const [searchTerm, setSearchTerm] = useState("");
 
- const searchResults =
-   searchTerm.trim() === ""
-     ? []
-     : mockGames.filter((game) =>
-         game.title.toLowerCase().includes(searchTerm.toLowerCase()),
-       );
+  const searchResults =
+    searchTerm.trim() === ""
+      ? []
+      : mockGames.filter((game) =>
+          game.title.toLowerCase().includes(searchTerm.toLowerCase()),
+        );
 
   const handleAddGame = (selectedGame) => {
     const alreadyAdded = games.some(
