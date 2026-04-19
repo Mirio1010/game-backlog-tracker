@@ -10,6 +10,7 @@ import DashBoard from "../pages/DashBoard.jsx";
 import ProtectedRoutes from "../routes/ProtectedRoutes.jsx";
 import DashBoardHome from "../pages/dashboardpages/DashBoardHome";
 import BacklogPage from "../pages/dashboardpages/BacklogPage";
+import AddGamePage from "../pages/dashboardpages/AddGanePage.jsx";
 
 function AppRoutes() {
   return (
@@ -32,6 +33,7 @@ function AppRoutes() {
       >
         <Route index element={<DashBoardHome />} />
         <Route path="backlog" element={<BacklogPage />} />
+        <Route path="add-game" element={<AddGamePage/>} />
       </Route>
     </Routes>
   );

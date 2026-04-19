@@ -56,8 +56,9 @@ const StatusWheelCard = () => {
               {statusData.map((entry, index) => (
                 <Cell key={entry.name} fill={colors[index]} />
               ))}
+              
             </Pie>
-
+            
             <Tooltip />
           </PieChart>
         </ResponsiveContainer>
