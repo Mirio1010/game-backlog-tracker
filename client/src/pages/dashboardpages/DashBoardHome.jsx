@@ -20,9 +20,9 @@ const { games } = useOutletContext();
       </div>
 
       <div className="flex flex-col gap-8">
-        <StatusWheelCard games={games}/>
-        <DashboardStats games={games}/>
-        <BackLogPreviewCard />
+        <StatusWheelCard games={games} />
+        <DashboardStats games={games} />
+        <BackLogPreviewCard games={games} />
       </div>
     </section>
   );
