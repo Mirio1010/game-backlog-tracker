@@ -1,43 +1,10 @@
-const games = [
-  {
-    id: 1,
-    title: "Elden Ring",
-    platform: "PS5",
-    status: "Playing",
-    hoursPlayed: 25,
-    rating: 9,
-  },
-  {
-    id: 2,
-    title: "Hollow Knight",
-    platform: "Switch",
-    status: "Completed",
-    hoursPlayed: 40,
-    rating: 10,
-  },
-  {
-    id: 3,
-    title: "Cyberpunk 2077",
-    platform: "PC",
-    status: "Backlog",
-    hoursPlayed: 0,
-    rating: null,
-  },
-];
+import mockGames from "../../data/mockGames";
 
 const BackLogPreviewCard = () => {
-  const totalGames = games.length;
-
-  const playingGames = games.filter((game) => game.status === "Playing").length;
-
-  const completedGames = games.filter(
-    (game) => game.status === "Completed",
-  ).length;
-
-  const totalHours = games.reduce((sum, game) => sum + game.hoursPlayed, 0);
+  const previewGames = mockGames.slice(0, 3);
 
   return (
-    <div className="mt-8 rounded-2xl border border-white/10 bg-white/5 p-6 shadow-xl">
+    <div className="rounded-2xl border border-white/10 bg-white/5 p-6 shadow-xl">
       <div className="mb-4">
         <h2 className="text-xl font-semibold">Backlog Preview</h2>
         <p className="text-sm text-white/50">
@@ -46,18 +13,39 @@ const BackLogPreviewCard = () => {
       </div>
 
       <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-        {games.map((game) => (
+        {previewGames.map((game) => (
           <div
             key={game.id}
-            className="rounded-xl border border-white/10 bg-black/20 p-4"
+            className="overflow-hidden rounded-xl border border-white/10 bg-black/20 transition hover:-translate-y-1 hover:bg-black/30"
           >
-            <h3 className="font-semibold">{game.title}</h3>
-            <p className="text-sm text-white/50">{game.platform}</p>
-            <p className="mt-3 text-sm">{game.status}</p>
+            <div className="flex h-72 items-center justify-center bg-black/30 p-3">
+              <img
+                src={game.coverImage}
+                alt={game.coverAlt}
+                className="h-full w-full object-contain"
+              />
+            </div>
+
+            <div className="p-4">
+              <h3 className="font-semibold">{game.title}</h3>
+
+              <p className="text-sm text-white/50">{game.platform}</p>
+
+              <div className="mt-3 flex items-center justify-between">
+                <span className="rounded-full border border-white/10 bg-white/10 px-3 py-1 text-xs text-white/70">
+                  {game.status}
+                </span>
+
+                <span className="text-xs text-white/40">
+                  {game.hoursPlayed}h played
+                </span>
+              </div>
+            </div>
           </div>
         ))}
       </div>
     </div>
   );
 };
+
 export default BackLogPreviewCard;
