@@ -8,6 +8,8 @@ import Signup from "../pages/Signup.jsx";
 import DashBoard from "../pages/DashBoard.jsx";
 
 import ProtectedRoutes from "../routes/ProtectedRoutes.jsx";
+import DashBoardHome from "../pages/dashboardpages/DashBoardHome";
+import BacklogPage from "../pages/dashboardpages/BacklogPage";
 
 function AppRoutes() {
   return (
@@ -27,7 +29,10 @@ function AppRoutes() {
             <DashBoard />
           </ProtectedRoutes>
         }
-      />
+      >
+        <Route index element={<DashBoardHome />} />
+        <Route path="backlog" element={<BacklogPage />} />
+      </Route>
     </Routes>
   );
 }

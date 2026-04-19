@@ -1,6 +1,6 @@
 import MainLayout from "../components/layout/MainLayout";
 import SideBar from "../components/dashboard/SideBar";
-import DashboardHome from "./DashBoardHome";
+import { Outlet } from "react-router-dom";
 
 const DashBoard = () => {
   return (
@@ -11,7 +11,8 @@ const DashBoard = () => {
         </aside>
 
         <main className="flex-1 overflow-y-auto bg-gradient-to-br from-zinc-950 via-slate-900 to-black p-8 text-white">
-          <DashboardHome />
+          {/* “Render whichever dashboard subpage matches the current URL here.” */}
+          <Outlet />
         </main>
       </div>
     </MainLayout>

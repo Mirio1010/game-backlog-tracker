@@ -1,6 +1,6 @@
-import BackLogPreviewCard from "../components/dashboard/BackLogPreviewCard";
-import DashboardStats from "../components/dashboard/DashboardStats";
-import StatusWheelCard from "../components/dashboard/StatusWheelCard";
+import BackLogPreviewCard from "../../components/dashboard/BackLogPreviewCard";
+import DashboardStats from "../../components/dashboard/DashboardStats";
+import StatusWheelCard from "../../components/dashboard/StatusWheelCard";
 
 const DashboardHome = () => {
   return (

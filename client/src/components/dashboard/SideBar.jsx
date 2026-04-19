@@ -1,31 +1,41 @@
+import { NavLink } from "react-router-dom";
+
 const SideBar = () => {
+  const linkBaseClasses =
+    "rounded-xl px-4 py-3 text-left text-sm font-medium transition";
+
+  const getLinkClasses = ({ isActive }) =>
+    isActive
+      ? `${linkBaseClasses} bg-white/10 text-white shadow-sm hover:bg-white/15 hover:text-violet-300`
+      : `${linkBaseClasses} text-white/70 hover:bg-white/10 hover:text-white`;
+
   return (
-    <aside className="min-h-screen w-64 border-r border-white/10 bg-black/30 px-4 py-6 text-white backdrop-blur">
+    <aside className="h-full w-64 border-r border-white/10 bg-black/30 px-4 py-6 text-white backdrop-blur">
       <div className="mb-8">
         <h2 className="text-xl font-bold tracking-tight">Game Backlog</h2>
         <p className="mt-1 text-sm text-white/50">Track your progress</p>
       </div>
 
       <nav className="flex flex-col gap-2">
-        <button className="rounded-xl bg-white/10 px-4 py-3 text-left text-sm font-medium text-white shadow-sm transition hover:bg-white/15 hover:text-violet-300">
+        <NavLink to="/dashboard" end className={getLinkClasses}>
           Dashboard
-        </button>
+        </NavLink>
 
-        <button className="rounded-xl px-4 py-3 text-left text-sm font-medium text-white/70 transition hover:bg-white/10 hover:text-white">
+        <NavLink to="/dashboard/backlog" className={getLinkClasses}>
           My Backlog
-        </button>
+        </NavLink>
 
-        <button className="rounded-xl px-4 py-3 text-left text-sm font-medium text-white/70 transition hover:bg-white/10 hover:text-white">
+        <NavLink to="/dashboard/add-game" className={getLinkClasses}>
           Add Game
-        </button>
+        </NavLink>
 
-        <button className="rounded-xl px-4 py-3 text-left text-sm font-medium text-white/70 transition hover:bg-white/10 hover:text-white">
+        <NavLink to="/dashboard/playing" className={getLinkClasses}>
           Playing
-        </button>
+        </NavLink>
 
-        <button className="rounded-xl px-4 py-3 text-left text-sm font-medium text-white/70 transition hover:bg-white/10 hover:text-white">
+        <NavLink to="/dashboard/completed" className={getLinkClasses}>
           Completed
-        </button>
+        </NavLink>
       </nav>
     </aside>
   );
