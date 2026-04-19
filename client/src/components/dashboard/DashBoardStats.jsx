@@ -1,16 +1,15 @@
 import StatCard from "./StatCard";
-import mockGames from "../../data/mockGames";
-import {
-  totalGames,
-  playingGames,
-  completedGames,
-  backlogGames,
-  totalHoursPlayed,
-} from "../../utils/gameStats";
+import { getGameStats } from "../../utils/gameStats";
 
-const DashboardStats = () => {
-  const completionRate =
-    totalGames === 0 ? 0 : Math.round((completedGames / totalGames) * 100);
+const DashboardStats = ({ games = [] }) => {
+  const {
+    totalGames,
+    playingGames,
+    completedGames,
+    backlogGames,
+    completedHoursPlayed,
+    completionRate,
+  } = getGameStats(games);
 
   return (
     <>
@@ -42,9 +41,9 @@ const DashboardStats = () => {
 
       <div className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-2">
         <StatCard
-          title="Total Hours Played"
-          value={`${totalHoursPlayed}h`}
-          subtitle="Across all tracked games"
+          title="Completed Hours"
+          value={`${completedHoursPlayed}h`}
+          subtitle="Hours from completed games only"
         />
 
         <StatCard

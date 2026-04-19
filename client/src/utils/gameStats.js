@@ -1,21 +1,27 @@
-import mockGames from "../data/mockGames";
+export const getGameStats = (games) => {
+  const totalGames = games.length;
 
-export const totalGames = mockGames.length;
+  const playingGames = games.filter((game) => game.status === "Playing").length;
 
-export const playingGames = mockGames.filter(
-  (game) => game.status === "Playing",
-).length;
+  const completedGames = games.filter(
+    (game) => game.status === "Completed",
+  ).length;
 
-export const completedGames = mockGames.filter(
-  (game) => game.status === "Completed",
-).length;
+  const backlogGames = games.filter((game) => game.status === "Backlog").length;
 
-export const backlogGames = mockGames.filter(
-  (game) => game.status === "Backlog",
-).length;
+ const completedHoursPlayed = games.reduce((sum, game) => {
+   return game.status === "Completed" ? sum + game.hoursPlayed : sum;
+ }, 0);
 
-export const totalHoursPlayed = mockGames.reduce(
-  (sum, game) => sum + game.hoursPlayed,
-  0,
-);
+  const completionRate =
+    totalGames === 0 ? 0 : Math.round((completedGames / totalGames) * 100);
 
+  return {
+    totalGames,
+    playingGames,
+    completedGames,
+    backlogGames,
+    completedHoursPlayed,
+    completionRate,
+  };
+};

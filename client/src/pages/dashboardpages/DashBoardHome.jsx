@@ -21,7 +21,7 @@ const { games } = useOutletContext();
 
       <div className="flex flex-col gap-8">
         <StatusWheelCard games={games}/>
-        <DashboardStats />
+        <DashboardStats games={games}/>
         <BackLogPreviewCard />
       </div>
     </section>
