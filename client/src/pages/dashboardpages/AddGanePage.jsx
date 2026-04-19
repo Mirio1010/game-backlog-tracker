@@ -2,12 +2,15 @@ import { useState } from "react";
 import { useOutletContext } from "react-router-dom";
 
 import mockGames from "../../data/mockGames";
-import AddGameSearchBar from "../../components/dashboard/AddGameSearchBar";
-import AddGameResultCard from "../../components/dashboard/AddGameResultCard";
+import AddGameSearchBar from "../../components/dashboard/Add-Game/AddGameSearchBar";
+import AddGameResultCard from "../../components/dashboard/Add-Game/AddGameResultCard";
+import AddGameModal from "../../components/dashboard/Add-Game/AddGameModal";
 
 const AddGamePage = () => {
   const { games, setGames } = useOutletContext();
+
   const [searchTerm, setSearchTerm] = useState("");
+  const [selectedGame, setSelectedGame] = useState(null);
 
   const searchResults =
     searchTerm.trim() === ""
@@ -16,21 +19,22 @@ const AddGamePage = () => {
           game.title.toLowerCase().includes(searchTerm.toLowerCase()),
         );
 
-  const handleAddGame = (selectedGame) => {
-    const alreadyAdded = games.some(
-      (game) => game.title === selectedGame.title,
-    );
+  const handleOpenModal = (game) => {
+    setSelectedGame(game);
+  };
+
+  const handleCloseModal = () => {
+    setSelectedGame(null);
+  };
+
+  const handleSaveGame = (gameToAdd) => {
+    const alreadyAdded = games.some((game) => game.title === gameToAdd.title);
 
     if (alreadyAdded) return;
 
-    const gameToAdd = {
-      ...selectedGame,
-      id: crypto.randomUUID(),
-      status: "Backlog",
-      dateAdded: new Date().toISOString().split("T")[0],
-    };
-
     setGames((currentGames) => [gameToAdd, ...currentGames]);
+
+    handleCloseModal();
   };
 
   return (
@@ -64,11 +68,19 @@ const AddGamePage = () => {
               key={game.id}
               game={game}
               alreadyAdded={alreadyAdded}
-              onAddGame={handleAddGame}
+              onOpenModal={handleOpenModal}
             />
           );
         })}
       </div>
+
+      {selectedGame && (
+        <AddGameModal
+          game={selectedGame}
+          onClose={handleCloseModal}
+          onSaveGame={handleSaveGame}
+        />
+      )}
     </section>
   );
 };
