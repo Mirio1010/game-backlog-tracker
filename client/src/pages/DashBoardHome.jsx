@@ -1,5 +1,6 @@
 import BackLogPreviewCard from "../components/dashboard/BackLogPreviewCard";
 import DashboardStats from "../components/dashboard/DashboardStats";
+import StatusWheelCard from "../components/dashboard/StatusWheelCard";
 
 const DashboardHome = () => {
   return (
@@ -14,9 +15,9 @@ const DashboardHome = () => {
         </p>
       </div>
 
-      <DashboardStats />
-
-      <div className="mt-8">
+      <div className="flex flex-col gap-8">
+        <StatusWheelCard />
+        <DashboardStats />
         <BackLogPreviewCard />
       </div>
     </section>

@@ -1,3 +1,5 @@
+import mockGames from "../data/mockGames";
+
 export const totalGames = mockGames.length;
 
 export const playingGames = mockGames.filter(
