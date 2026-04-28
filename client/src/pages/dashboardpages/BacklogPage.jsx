@@ -8,12 +8,16 @@ const FilterUI = ({
   setSelectedStatus,
   selectedPlatform,
   setSelectedPlatform,
+  searchTerm,
+  setSearchTerm,
 }) => {
   return (
     <div className="mb-6 rounded-2xl border border-white/10 bg-white/5 p-4 backdrop-blur">
       <div className="flex flex-col gap-3 md:flex-row">
         <input
           type="text"
+          value={searchTerm}
+          onChange={(event) => setSearchTerm(event.target.value)}
           placeholder="Search games..."
           className="w-full rounded-xl border border-white/10 bg-white/10 px-4 py-2 text-white placeholder:text-white/40 outline-none md:flex-1"
         />
@@ -49,15 +53,15 @@ const FilterUI = ({
           <option value="Other">Other</option>
         </select>
       </div>
-      <p className="text-sm text-white/50">Selected status: {selectedStatus}</p>
     </div>
   );
 };
 
 const BacklogPage = () => {
   const { games, setGames } = useOutletContext();
-  const [selectedStatus, setSelectedStatus] = useState("All");
+  const [selectedStatus, setSelectedStatus] = useState("Backlog");
   const [selectedPlatform, setSelectedPlatform] = useState("All");
+  const [searchTerm, setSearchTerm] = useState("");
 
   const filteredGames = games.filter((game) => {
     const matchesStatus =
@@ -66,7 +70,11 @@ const BacklogPage = () => {
     const matchesPlatform =
       selectedPlatform === "All" || game.platform === selectedPlatform;
 
-    return matchesStatus && matchesPlatform;
+    const matchesSearch = game.title
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase());
+
+    return matchesStatus && matchesPlatform && matchesSearch;
   });
 
   const handleRemoveGame = (gameId) => {
@@ -82,6 +90,8 @@ const BacklogPage = () => {
         setSelectedStatus={setSelectedStatus}
         selectedPlatform={selectedPlatform}
         setSelectedPlatform={setSelectedPlatform}
+        searchTerm={searchTerm}
+        setSearchTerm={setSearchTerm}
       />
       <div className="mb-8">
         <h1 className="text-3xl font-bold tracking-tight text-white">
