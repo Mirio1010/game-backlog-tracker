@@ -29,12 +29,12 @@ const SideBar = () => {
           Add Game
         </NavLink>
 
-        <NavLink to="/dashboard/playing" className={getLinkClasses}>
-          Playing
+        <NavLink to="/dashboard/stats" className={getLinkClasses}>
+          Stats
         </NavLink>
 
-        <NavLink to="/dashboard/completed" className={getLinkClasses}>
-          Completed
+        <NavLink to="/dashboard/wishlist" className={getLinkClasses}>
+          Wishlist
         </NavLink>
       </nav>
     </aside>
