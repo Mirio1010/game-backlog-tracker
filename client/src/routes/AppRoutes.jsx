@@ -11,7 +11,7 @@ import ProtectedRoutes from "../routes/ProtectedRoutes.jsx";
 import DashBoardHome from "../pages/dashboardpages/DashBoardHome";
 import BacklogPage from "../pages/dashboardpages/BacklogPage";
 import AddGamePage from "../pages/dashboardpages/AddGanePage.jsx";
-
+import Stats from "../pages/dashboardpages/Stats.jsx";
 function AppRoutes() {
   return (
     <Routes>
@@ -34,6 +34,7 @@ function AppRoutes() {
         <Route index element={<DashBoardHome />} />
         <Route path="backlog" element={<BacklogPage />} />
         <Route path="add-game" element={<AddGamePage/>} />
+        <Route path="stats" element={<Stats/>}/>
       </Route>
     </Routes>
   );

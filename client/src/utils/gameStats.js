@@ -16,6 +16,10 @@ export const getGameStats = (games) => {
   const completionRate =
     totalGames === 0 ? 0 : Math.round((completedGames / totalGames) * 100);
 
+   
+
+
+
   return {
     totalGames,
     playingGames,
@@ -23,5 +27,22 @@ export const getGameStats = (games) => {
     backlogGames,
     completedHoursPlayed,
     completionRate,
+    
   };
 };
+
+
+ export const getGamesByPlatform = (games = []) => {
+   const platformCounts = games.reduce((acc, game) => {
+     const platform = game.platform || "Unknown";
+
+     acc[platform] = (acc[platform] || 0) + 1;
+
+     return acc;
+   }, {});
+
+   return Object.entries(platformCounts).map(([platform, count]) => ({
+     platform,
+     count,
+   }));
+ };

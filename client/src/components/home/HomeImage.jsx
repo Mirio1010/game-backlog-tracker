@@ -1,5 +1,5 @@
 import React from 'react'
-import imageSrc from "../../assets/homepage/video_game_collection.png";
+import imageSrc from "../../assets/homepage/videogames.jpg";
 import "../../styles/hero.css";
 const HomeImage = () => {
   return (
