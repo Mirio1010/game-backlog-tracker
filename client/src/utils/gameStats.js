@@ -76,3 +76,18 @@ export const getBacklogTimeStats = (games = []) => {
     shortestBacklogGame,
   };
 };
+
+export const getGamesByGenre = (games = []) => {
+  const genreCounts = games.reduce((acc, game) => {
+    const genre = game.genre || "Unknown";
+
+    acc[genre] = (acc[genre] || 0) + 1;
+
+    return acc;
+  }, {});
+
+  return Object.entries(genreCounts).map(([genre, count]) => ({
+    genre,
+    count,
+  }));
+};
