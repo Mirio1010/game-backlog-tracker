@@ -12,6 +12,7 @@ import DashBoardHome from "../pages/dashboardpages/DashBoardHome";
 import BacklogPage from "../pages/dashboardpages/BacklogPage";
 import AddGamePage from "../pages/dashboardpages/AddGanePage.jsx";
 import Stats from "../pages/dashboardpages/Stats.jsx";
+import Wishlist from "../pages/dashboardpages/Wishlist.jsx";
 function AppRoutes() {
   return (
     <Routes>
@@ -35,6 +36,7 @@ function AppRoutes() {
         <Route path="backlog" element={<BacklogPage />} />
         <Route path="add-game" element={<AddGamePage/>} />
         <Route path="stats" element={<Stats/>}/>
+        <Route path="wishlist" element={<Wishlist/>} />
       </Route>
     </Routes>
   );
