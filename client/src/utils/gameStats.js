@@ -9,16 +9,12 @@ export const getGameStats = (games) => {
 
   const backlogGames = games.filter((game) => game.status === "Backlog").length;
 
- const completedHoursPlayed = games.reduce((sum, game) => {
-   return game.status === "Completed" ? sum + game.hoursPlayed : sum;
- }, 0);
+  const completedHoursPlayed = games.reduce((sum, game) => {
+    return game.status === "Completed" ? sum + game.hoursPlayed : sum;
+  }, 0);
 
   const completionRate =
     totalGames === 0 ? 0 : Math.round((completedGames / totalGames) * 100);
-
-   
-
-
 
   return {
     totalGames,
@@ -27,22 +23,56 @@ export const getGameStats = (games) => {
     backlogGames,
     completedHoursPlayed,
     completionRate,
-    
   };
 };
 
+export const getGamesByPlatform = (games = []) => {
+  const platformCounts = games.reduce((acc, game) => {
+    const platform = game.platform || "Unknown";
 
- export const getGamesByPlatform = (games = []) => {
-   const platformCounts = games.reduce((acc, game) => {
-     const platform = game.platform || "Unknown";
+    acc[platform] = (acc[platform] || 0) + 1;
 
-     acc[platform] = (acc[platform] || 0) + 1;
+    return acc;
+  }, {});
 
-     return acc;
-   }, {});
+  return Object.entries(platformCounts).map(([platform, count]) => ({
+    platform,
+    count,
+  }));
+};
 
-   return Object.entries(platformCounts).map(([platform, count]) => ({
-     platform,
-     count,
-   }));
- };
+export const getBacklogTimeStats = (games = []) => {
+  const backlogGames = games.filter((game) => {
+    return game.status === "Backlog" && typeof game.howLongToBeat === "number";
+  });
+
+  const totalBacklogHours = backlogGames.reduce((sum, game) => {
+    return sum + game.howLongToBeat;
+  }, 0);
+
+  const averageBacklogHours =
+    backlogGames.length === 0
+      ? 0
+      : Math.round(totalBacklogHours / backlogGames.length);
+
+  const longestBacklogGame =
+    backlogGames.length === 0
+      ? null
+      : backlogGames.reduce((longest, game) => {
+          return game.howLongToBeat > longest.howLongToBeat ? game : longest;
+        }, backlogGames[0]);
+
+  const shortestBacklogGame =
+    backlogGames.length === 0
+      ? null
+      : backlogGames.reduce((shortest, game) => {
+          return game.howLongToBeat < shortest.howLongToBeat ? game : shortest;
+        }, backlogGames[0]);
+
+  return {
+    totalBacklogHours,
+    averageBacklogHours,
+    longestBacklogGame,
+    shortestBacklogGame,
+  };
+};

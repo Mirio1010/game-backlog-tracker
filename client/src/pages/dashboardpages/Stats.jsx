@@ -1,5 +1,6 @@
 import { useOutletContext } from "react-router-dom";
 import GamesByPlatformChart from "../../components//dashboard/Stats/GamesByPlatformChart";
+import BacklogTimeStats from "../../components/dashboard/Stats/BacklogTimeStats";
 
 const Stats = () => {
   const { games } = useOutletContext();
@@ -14,6 +15,7 @@ const Stats = () => {
       </div>
 
       <GamesByPlatformChart games={games} />
+      <BacklogTimeStats games={games}/>
     </div>
   );
 };
