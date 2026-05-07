@@ -1,4 +1,27 @@
-import { Trash2 } from "lucide-react";
+import { Trash2, Monitor, Smartphone, Gamepad2 } from "lucide-react";
+
+import { SiSteam, SiSteamdeck, SiPlaystation5, SiPlaystation4} from "@icons-pack/react-simple-icons";
+
+
+export const getPlatformIcon = (platform) => {
+  const platformIcons = {
+    PC: <Gamepad2 size={18} />,
+    Steam: <SiSteam size={18} />,
+    "PlayStation 5": <SiPlaystation5 size={18} />,
+    "PlayStation 4": <SiPlaystation4 size={18} />,
+    "Xbox Series X/S": <Gamepad2 size={18} />,
+    "Xbox One": <Gamepad2 size={18} />,
+
+    "Nintendo Switch": <Gamepad2 size={18} />,
+    "Nintendo Switch 2": <Gamepad2 size={18} />,
+
+    "Steam Deck": <SiSteamdeck size={18} />,
+    Mobile: <Smartphone />,
+    Other: <Gamepad2 size={18} />,
+  };
+
+  return platformIcons[platform] || <Monitor />;
+};
 
 const GameCard = ({ game, onRemove }) => {
   return (
@@ -25,7 +48,10 @@ const GameCard = ({ game, onRemove }) => {
         <div className="mb-3 flex items-start justify-between gap-3">
           <div>
             <h2 className="font-semibold text-white">{game.title}</h2>
-            <p className="text-sm text-white/50">{game.platform}</p>
+            <div className="mt-1 flex items-center gap-2 text-white/50">
+              <span className="text-lg">{getPlatformIcon(game.platform)}</span>
+              <span className="text-sm">{game.platform}</span>
+            </div>
           </div>
 
           <span className="rounded-full border border-white/10 bg-white/10 px-3 py-1 text-xs text-white/70">
