@@ -37,7 +37,7 @@ const BacklogTimeStats = ({ games = [] }) => {
         </h3>
         <p className="mt-2 text-sm text-white/40">
           {longestBacklogGame
-            ? `${longestBacklogGame.howLongToBeat}h estimated`
+            ? `${longestBacklogGame.average_playtime}h estimated`
             : "No data yet"}
         </p>
       </div>
@@ -49,7 +49,7 @@ const BacklogTimeStats = ({ games = [] }) => {
         </h3>
         <p className="mt-2 text-sm text-white/40">
           {shortestBacklogGame
-            ? `${shortestBacklogGame.howLongToBeat}h estimated`
+            ? `${shortestBacklogGame.average_playtime}h estimated`
             : "No data yet"}
         </p>
       </div>

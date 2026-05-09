@@ -35,10 +35,13 @@ const GameCard = ({ game, onRemove }) => {
 
   const platform = game.platform || game.selected_platform;
 
-  const timeToBeat = game.howLongToBeat || game.rawgPlaytime || game.playtime;
+  const timeToBeat = game.howLongToBeat || game.rawgPlaytime || game.average_playtime;
 
   const rating = game.rating || game.rawgRating;
-
+ 
+  
+  
+  
   return (
     <article className="relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 shadow-xl transition hover:-translate-y-1 hover:bg-white/10">
       {onRemove && (

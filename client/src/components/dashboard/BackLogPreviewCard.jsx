@@ -22,7 +22,7 @@ const BackLogPreviewCard = ({ games = [] }) => {
               game.coverImage || game.cover_image || game.background_image;
             const platform = game.platform || game.selected_platform;
             const timeToBeat =
-              game.howLongToBeat || game.rawgPlaytime || game.playtime;
+              game.howLongToBeat || game.rawgPlaytime || game.average_playtime;
 
             return (
               <div

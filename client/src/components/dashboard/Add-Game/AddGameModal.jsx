@@ -36,7 +36,7 @@ const AddGameModal = ({ game, onClose, onSaveGame }) => {
      title: game.title || game.name,
      cover_image: game.cover_image || game.coverImage || game.background_image,
      released: game.released || null,
-     rating: game.rating || null,
+     rating: game.rating ?? game.rawgRating ?? null,
 
      genres: game.genres || [],
      platforms: game.platforms || [],
@@ -44,7 +44,8 @@ const AddGameModal = ({ game, onClose, onSaveGame }) => {
      status,
      selected_platform: platform,
      notes,
-     hours_played: 0,
+     average_playtime:
+       game.average_playtime || game.rawgPlaytime || game.playtime || 0,
    };
 
    try {

@@ -27,7 +27,7 @@ const saveGame = async (req, res) => {
         status: game.status || "Backlog",
         selected_platform: game.selected_platform,
         notes: game.notes || "",
-        hours_played: game.hours_played || 0,
+        average_playtime: game.average_playtime || 0,
       })
       .select()
       .single();
