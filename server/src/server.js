@@ -1,5 +1,5 @@
 // This file Runs the app
-
+require("dotenv").config();
 const app = require('./app'); // This imports the Express app from app.js
 
 /*
