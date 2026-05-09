@@ -39,6 +39,7 @@ router.get("/search", async (req, res) => {
         coverAlt: `${game.name} cover art`,
         released: game.released,
         rawgRating: game.rating,
+        rawgPlaytime: game.playtime,
         genres: game.genres.map((genre) => genre.name),
         platforms: game.platforms.map((platformData) => {
           return platformData.platform.name;
