@@ -1,27 +1,31 @@
 import { useState } from "react";
 
- const platforms = [
-   "PC",
-   "Steam",
-   "PlayStation 5",
-   "PlayStation 4",
-   "Xbox Series X/S",
-   "Xbox One",
-   "Nintendo Switch",
-   "Nintendo Switch 2",
-   "Steam Deck",
-   "Mobile",
-   "Other",
- ];
+const platforms = [
+  "PC",
+  "Steam",
+  "PlayStation 5",
+  "PlayStation 4",
+  "Xbox Series X/S",
+  "Xbox One",
+  "Nintendo Switch",
+  "Nintendo Switch 2",
+  "Steam Deck",
+  "Mobile",
+  "Other",
+];
 
- const statuses = ["Backlog", "Playing", "Completed", "Dropped"];
+const statuses = ["Backlog", "Playing", "Completed", "Dropped"];
 
 const AddGameModal = ({ game, onClose, onSaveGame }) => {
   const [status, setStatus] = useState("Backlog");
   const [platform, setPlatform] = useState("");
   const [notes, setNotes] = useState("");
 
- 
+  const genreText = Array.isArray(game.genres)
+    ? game.genres.slice(0, 2).join(", ")
+    : game.genre || "Genre unknown";
+
+  const timeToBeat = game.howLongToBeat || game.rawgPlaytime;
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -59,15 +63,15 @@ const AddGameModal = ({ game, onClose, onSaveGame }) => {
         <div className="mb-5 flex gap-4 rounded-xl bg-white/5 p-3">
           <img
             src={game.coverImage}
-            alt={game.coverAlt}
+            alt={game.coverAlt || `${game.title} cover art`}
             className="h-24 w-20 rounded-lg object-contain"
           />
 
           <div>
             <h3 className="font-semibold text-white">{game.title}</h3>
-            <p className="text-sm text-white/50">{game.genre}</p>
+            <p className="text-sm text-white/50">{genreText}</p>
             <p className="text-sm text-white/50">
-              Time to Beat: {game.howLongToBeat}h
+              Time to Beat: {timeToBeat ? `${timeToBeat}h` : "N/A"}
             </p>
           </div>
         </div>
