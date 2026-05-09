@@ -84,7 +84,48 @@ const getMyGames = async (req, res) => {
   }
 };
 
+const deleteGame = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const { data, error } = await supabase
+      .from("saved_games")
+      .delete()
+      .eq("id", id)
+      .eq("user_id", req.user.id)
+      .select()
+      .single();
+
+    if (error) {
+      console.error("Error deleting game:", error);
+
+      return res.status(500).json({
+        message: "Error deleting game",
+        error: error.message,
+      });
+    }
+
+    if (!data) {
+      return res.status(404).json({
+        message: "Game not found",
+      });
+    }
+
+    res.status(200).json({
+      message: "Game deleted successfully",
+      game: data,
+    });
+  } catch (error) {
+    console.error("Delete game server error:", error);
+
+    res.status(500).json({
+      message: "Server error while deleting game",
+    });
+  }
+};
+
 module.exports = {
   saveGame,
   getMyGames,
+  deleteGame,
 };

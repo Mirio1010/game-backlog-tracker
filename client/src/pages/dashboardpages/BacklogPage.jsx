@@ -4,6 +4,8 @@ import GameCard from "../../components/dashboard/GameCard";
 import { useState } from "react";
 import FilterUI from "../../components/ui/FilterUI";
 
+import { deleteGame } from "../../api/gamesApi";
+
 const BacklogPage = () => {
   const { games, setGames } = useOutletContext();
   const [selectedStatus, setSelectedStatus] = useState("Backlog");
@@ -11,24 +13,33 @@ const BacklogPage = () => {
   const [searchTerm, setSearchTerm] = useState("");
 
   const filteredGames = games.filter((game) => {
+    const gamePlatform = game.platform || game.selected_platform;
+    const gameTitle = game.title || game.name || "";
+
     const matchesStatus =
       selectedStatus === "All" || game.status === selectedStatus;
 
     const matchesPlatform =
-      selectedPlatform === "All" || game.platform === selectedPlatform;
+      selectedPlatform === "All" || gamePlatform === selectedPlatform;
 
-    const matchesSearch = game.title
+    const matchesSearch = gameTitle
       .toLowerCase()
       .includes(searchTerm.toLowerCase());
 
     return matchesStatus && matchesPlatform && matchesSearch;
   });
 
-  const handleRemoveGame = (gameId) => {
-    setGames((currentGames) =>
-      currentGames.filter((game) => game.id !== gameId),
-    );
-  };
+ const handleRemoveGame = async (gameId) => {
+   try {
+     await deleteGame(gameId);
+
+     setGames((currentGames) =>
+       currentGames.filter((game) => game.id !== gameId),
+     );
+   } catch (error) {
+     console.error("Delete game error:", error);
+   }
+ };
 
   return (
     <section>

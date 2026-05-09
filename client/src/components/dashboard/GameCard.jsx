@@ -28,7 +28,14 @@ export const getPlatformIcon = (platform) => {
 };
 
 const GameCard = ({ game, onRemove }) => {
-  const timeToBeat = game.howLongToBeat || game.rawgPlaytime;
+  const title = game.title || game.name;
+
+  const coverImage =
+    game.coverImage || game.cover_image || game.background_image;
+
+  const platform = game.platform || game.selected_platform;
+
+  const timeToBeat = game.howLongToBeat || game.rawgPlaytime || game.playtime;
 
   const rating = game.rating || game.rawgRating;
 
@@ -37,7 +44,7 @@ const GameCard = ({ game, onRemove }) => {
       {onRemove && (
         <button
           onClick={() => onRemove(game.id)}
-          aria-label={`Remove ${game.title}`}
+          aria-label={`Remove ${title}`}
           className="absolute right-3 top-3 z-10 rounded-full border border-red-500/20 bg-black/60 p-2 text-red-300 backdrop-blur transition hover:bg-red-500/20 hover:text-red-200"
         >
           <Trash2 size={18} />
@@ -45,20 +52,27 @@ const GameCard = ({ game, onRemove }) => {
       )}
 
       <div className="flex h-72 items-center justify-center bg-black/30 p-3">
-        <img
-          src={game.coverImage}
-          alt={game.coverAlt || `${game.title} cover art`}
-          className="h-full w-full object-contain"
-        />
+        {coverImage ? (
+          <img
+            src={coverImage}
+            alt={game.coverAlt || `${title} cover art`}
+            className="h-full w-full object-contain"
+          />
+        ) : (
+          <div className="flex h-full w-full items-center justify-center rounded-xl border border-white/10 bg-white/5 text-sm text-white/40">
+            No cover available
+          </div>
+        )}
       </div>
 
       <div className="p-4">
         <div className="mb-3 flex items-start justify-between gap-3">
           <div>
-            <h2 className="font-semibold text-white">{game.title}</h2>
+            <h2 className="font-semibold text-white">{title}</h2>
+
             <div className="mt-1 flex items-center gap-2 text-white/50">
-              <span className="text-lg">{getPlatformIcon(game.platform)}</span>
-              <span className="text-sm">{game.platform}</span>
+              <span className="text-lg">{getPlatformIcon(platform)}</span>
+              <span className="text-sm">{platform || "No platform"}</span>
             </div>
           </div>
 

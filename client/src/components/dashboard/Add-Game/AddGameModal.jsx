@@ -20,6 +20,7 @@ const AddGameModal = ({ game, onClose, onSaveGame }) => {
   const [status, setStatus] = useState("Backlog");
   const [platform, setPlatform] = useState("");
   const [notes, setNotes] = useState("");
+  const [isSaving, setIsSaving] = useState(false);
 
   const genreText = Array.isArray(game.genres)
     ? game.genres.slice(0, 2).join(", ")
@@ -27,20 +28,39 @@ const AddGameModal = ({ game, onClose, onSaveGame }) => {
 
   const timeToBeat = game.howLongToBeat || game.rawgPlaytime;
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
+ const handleSubmit = async (event) => {
+   event.preventDefault();
 
-    const gameToAdd = {
-      ...game,
-      id: crypto.randomUUID(),
-      status,
-      platform,
-      notes,
-      dateAdded: new Date().toISOString().split("T")[0],
-    };
+   const gameToAdd = {
+     rawg_id: game.rawg_id || game.rawgId || game.id,
+     title: game.title || game.name,
+     cover_image: game.cover_image || game.coverImage || game.background_image,
+     released: game.released || null,
+     rating: game.rating || null,
 
-    onSaveGame(gameToAdd);
-  };
+     genres: game.genres || [],
+     platforms: game.platforms || [],
+
+     status,
+     selected_platform: platform,
+     notes,
+     hours_played: 0,
+   };
+
+   try {
+     setIsSaving(true);
+     await onSaveGame(gameToAdd);
+   } catch (error) {
+     console.error("Error saving game:", error);
+   } finally {
+     setIsSaving(false);
+   }
+ };
+
+
+ const displayTitle = game.title || game.name;
+ const displayCover =
+   game.coverImage || game.cover_image || game.background_image;
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-4 backdrop-blur-sm">
@@ -48,7 +68,7 @@ const AddGameModal = ({ game, onClose, onSaveGame }) => {
         <div className="mb-5 flex items-start justify-between gap-4">
           <div>
             <h2 className="text-2xl font-bold">Add to Backlog</h2>
-            <p className="mt-1 text-sm text-white/50">{game.title}</p>
+            <p className="mt-1 text-sm text-white/50">{displayTitle}</p>
           </div>
 
           <button
@@ -62,13 +82,13 @@ const AddGameModal = ({ game, onClose, onSaveGame }) => {
 
         <div className="mb-5 flex gap-4 rounded-xl bg-white/5 p-3">
           <img
-            src={game.coverImage}
-            alt={game.coverAlt || `${game.title} cover art`}
+            src={displayCover}
+            alt={game.coverAlt || `${displayTitle} cover art`}
             className="h-24 w-20 rounded-lg object-contain"
           />
 
           <div>
-            <h3 className="font-semibold text-white">{game.title}</h3>
+            <h3 className="font-semibold text-white">{displayTitle}</h3>
             <p className="text-sm text-white/50">{genreText}</p>
             <p className="text-sm text-white/50">
               Time to Beat: {timeToBeat ? `${timeToBeat}h` : "N/A"}
@@ -151,9 +171,10 @@ const AddGameModal = ({ game, onClose, onSaveGame }) => {
 
             <button
               type="submit"
-              className="flex-1 rounded-xl bg-violet-500 px-4 py-2 text-sm font-medium text-white transition hover:bg-violet-600"
+              disabled={isSaving}
+              className="flex-1 rounded-xl bg-violet-500 px-4 py-2 text-sm font-medium text-white transition hover:bg-violet-600 disabled:cursor-not-allowed disabled:opacity-60"
             >
-              Save Game
+              {isSaving ? "Saving..." : "Save Game"}
             </button>
           </div>
         </form>

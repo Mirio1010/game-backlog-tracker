@@ -47,3 +47,26 @@ export const saveGame = async (game) => {
 
   return data.game;
 };
+
+export const deleteGame = async (gameId) => {
+  const token = localStorage.getItem("token");
+
+  if (!token) {
+    throw new Error("No token found. Please log in again.");
+  }
+
+  const response = await fetch(`${API_BASE_URL}/games/${gameId}`, {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.message || "Failed to delete game.");
+  }
+
+  return data.game;
+};

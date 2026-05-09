@@ -4,6 +4,7 @@ import { useOutletContext } from "react-router-dom";
 import AddGameSearchBar from "../../components/dashboard/Add-Game/AddGameSearchBar";
 import AddGameResultCard from "../../components/dashboard/Add-Game/AddGameResultCard";
 import AddGameModal from "../../components/dashboard/Add-Game/AddGameModal";
+import { saveGame as saveGameToDatabase } from "../../api/gamesApi";
 
 const AddGamePage = () => {
   const { games, setGames } = useOutletContext();
@@ -56,23 +57,30 @@ const AddGamePage = () => {
     setSelectedGame(null);
   };
 
- const handleSaveGame = (gameToAdd) => {
-   const alreadyAdded = games.some(
-     (game) =>
-       game.rawgId === gameToAdd.rawgId || game.title === gameToAdd.title,
-   );
+  const handleSaveGame = async (gameToAdd) => {
+    try {
+      const alreadyAdded = games.some((game) => {
+        const savedRawgId = game.rawg_id || game.rawgId;
+        const newRawgId = gameToAdd.rawg_id || gameToAdd.rawgId;
 
-   if (alreadyAdded) return;
+        return savedRawgId === newRawgId || game.title === gameToAdd.title;
+      });
 
-   const newGame = {
-     ...gameToAdd,
-     id: crypto.randomUUID(),
-   };
+      if (alreadyAdded) {
+        setError("This game is already in your backlog.");
+        return;
+      }
 
-   setGames((currentGames) => [newGame, ...currentGames]);
+      const savedGame = await saveGameToDatabase(gameToAdd);
 
-   handleCloseModal();
- };
+      setGames((currentGames) => [savedGame, ...currentGames]);
+
+      handleCloseModal();
+    } catch (error) {
+      console.error("Save game error:", error);
+      setError("Something went wrong while saving this game.");
+    }
+  };
 
   return (
     <section>
@@ -113,15 +121,18 @@ const AddGamePage = () => {
 
       <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
         {searchResults.map((game) => {
-          const alreadyAdded = games.some(
-            (savedGame) =>
-              savedGame.rawgId === game.rawgId ||
-              savedGame.title === game.title,
-          );
+          const alreadyAdded = games.some((savedGame) => {
+            const savedRawgId = savedGame.rawg_id || savedGame.rawgId;
+            const resultRawgId = game.rawg_id || game.rawgId || game.id;
+
+            return (
+              savedRawgId === resultRawgId || savedGame.title === game.title
+            );
+          });
 
           return (
             <AddGameResultCard
-              key={game.rawgId}
+              key={game.rawg_id || game.rawgId || game.id}
               game={game}
               alreadyAdded={alreadyAdded}
               onOpenModal={handleOpenModal}

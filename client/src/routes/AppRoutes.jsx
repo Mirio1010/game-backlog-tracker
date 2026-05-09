@@ -10,7 +10,7 @@ import DashBoard from "../pages/DashBoard.jsx";
 import ProtectedRoutes from "../routes/ProtectedRoutes.jsx";
 import DashBoardHome from "../pages/dashboardpages/DashBoardHome";
 import BacklogPage from "../pages/dashboardpages/BacklogPage";
-import AddGamePage from "../pages/dashboardpages/AddGanePage.jsx";
+import AddGamePage from "../pages/dashboardpages/AddGamePage.jsx";
 import Stats from "../pages/dashboardpages/Stats.jsx";
 import Wishlist from "../pages/dashboardpages/Wishlist.jsx";
 function AppRoutes() {
