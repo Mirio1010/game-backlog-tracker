@@ -6,7 +6,7 @@ const cors = require("cors");
 
 const authRoutes = require("./routes/auth.routes");
 const rawgRoutes = require("./routes/rawg.routes");
-
+const gamesRoutes = require("./routes/games.routes");
 /*
 This app variable is now your backend app. It is the thing that will hold:
  - routes
@@ -20,5 +20,8 @@ app.use(cors());
 
 app.use("/api/auth", authRoutes); // For any request that starts with /api/auth, use the routes from authRoutes
 app.use("/api/rawg", rawgRoutes); // For any request that starts with /api/rawg, use the routes from rawgRoutes
+
+
+app.use("/api/games", gamesRoutes);
 
 module.exports = app; // Allows app to be exported to server.js in order to start the server
