@@ -56,18 +56,23 @@ const AddGamePage = () => {
     setSelectedGame(null);
   };
 
-  const handleSaveGame = (gameToAdd) => {
-    const alreadyAdded = games.some(
-      (game) =>
-        game.rawgId === gameToAdd.rawgId || game.title === gameToAdd.title,
-    );
+ const handleSaveGame = (gameToAdd) => {
+   const alreadyAdded = games.some(
+     (game) =>
+       game.rawgId === gameToAdd.rawgId || game.title === gameToAdd.title,
+   );
 
-    if (alreadyAdded) return;
+   if (alreadyAdded) return;
 
-    setGames((currentGames) => [gameToAdd, ...currentGames]);
+   const newGame = {
+     ...gameToAdd,
+     id: crypto.randomUUID(),
+   };
 
-    handleCloseModal();
-  };
+   setGames((currentGames) => [newGame, ...currentGames]);
+
+   handleCloseModal();
+ };
 
   return (
     <section>

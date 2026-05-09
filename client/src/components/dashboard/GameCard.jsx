@@ -1,7 +1,11 @@
 import { Trash2, Monitor, Smartphone, Gamepad2 } from "lucide-react";
 
-import { SiSteam, SiSteamdeck, SiPlaystation5, SiPlaystation4} from "@icons-pack/react-simple-icons";
-
+import {
+  SiSteam,
+  SiSteamdeck,
+  SiPlaystation5,
+  SiPlaystation4,
+} from "@icons-pack/react-simple-icons";
 
 export const getPlatformIcon = (platform) => {
   const platformIcons = {
@@ -16,14 +20,18 @@ export const getPlatformIcon = (platform) => {
     "Nintendo Switch 2": <Gamepad2 size={18} />,
 
     "Steam Deck": <SiSteamdeck size={18} />,
-    Mobile: <Smartphone />,
+    Mobile: <Smartphone size={18} />,
     Other: <Gamepad2 size={18} />,
   };
 
-  return platformIcons[platform] || <Monitor />;
+  return platformIcons[platform] || <Monitor size={18} />;
 };
 
 const GameCard = ({ game, onRemove }) => {
+  const timeToBeat = game.howLongToBeat || game.rawgPlaytime;
+
+  const rating = game.rating || game.rawgRating;
+
   return (
     <article className="relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 shadow-xl transition hover:-translate-y-1 hover:bg-white/10">
       {onRemove && (
@@ -39,7 +47,7 @@ const GameCard = ({ game, onRemove }) => {
       <div className="flex h-72 items-center justify-center bg-black/30 p-3">
         <img
           src={game.coverImage}
-          alt={game.coverAlt}
+          alt={game.coverAlt || `${game.title} cover art`}
           className="h-full w-full object-contain"
         />
       </div>
@@ -63,19 +71,21 @@ const GameCard = ({ game, onRemove }) => {
           <div className="rounded-xl bg-black/20 p-3">
             <p className="text-white/40">Time to Beat</p>
             <p className="mt-1 font-semibold text-white">
-              {game.howLongToBeat}h
+              {timeToBeat ? `${timeToBeat}h` : "N/A"}
             </p>
           </div>
 
           <div className="rounded-xl bg-black/20 p-3">
             <p className="text-white/40">Rating</p>
             <p className="mt-1 font-semibold text-white">
-              {game.rating ? `${game.rating}/10` : "Not rated"}
+              {rating ? `${rating}/5` : "Not rated"}
             </p>
           </div>
         </div>
 
-        <p className="mt-4 line-clamp-2 text-sm text-white/50">{game.notes}</p>
+        <p className="mt-4 line-clamp-2 text-sm text-white/50">
+          {game.notes || "No notes added yet."}
+        </p>
       </div>
     </article>
   );
