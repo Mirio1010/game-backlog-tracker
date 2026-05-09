@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useOutletContext } from "react-router-dom";
 
-import mockGames from "../../data/mockGames";
 import AddGameSearchBar from "../../components/dashboard/Add-Game/AddGameSearchBar";
 import AddGameResultCard from "../../components/dashboard/Add-Game/AddGameResultCard";
 import AddGameModal from "../../components/dashboard/Add-Game/AddGameModal";
@@ -10,14 +9,44 @@ const AddGamePage = () => {
   const { games, setGames } = useOutletContext();
 
   const [searchTerm, setSearchTerm] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
   const [selectedGame, setSelectedGame] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
 
-  const searchResults =
-    searchTerm.trim() === ""
-      ? []
-      : mockGames.filter((game) =>
-          game.title.toLowerCase().includes(searchTerm.toLowerCase()),
-        );
+  const handleSearchGames = async (event) => {
+    event.preventDefault();
+
+    if (!searchTerm.trim()) {
+      setSearchResults([]);
+      setError("Please enter a game name.");
+      return;
+    }
+
+    try {
+      setIsLoading(true);
+      setError("");
+
+      const response = await fetch(
+        `http://localhost:5001/api/rawg/search?query=${encodeURIComponent(
+          searchTerm,
+        )}`,
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to search games.");
+      }
+
+      const data = await response.json();
+
+      setSearchResults(data);
+    } catch (error) {
+      console.error("Search games error:", error);
+      setError("Something went wrong while searching for games.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const handleOpenModal = (game) => {
     setSelectedGame(game);
@@ -28,7 +57,10 @@ const AddGamePage = () => {
   };
 
   const handleSaveGame = (gameToAdd) => {
-    const alreadyAdded = games.some((game) => game.title === gameToAdd.title);
+    const alreadyAdded = games.some(
+      (game) =>
+        game.rawgId === gameToAdd.rawgId || game.title === gameToAdd.title,
+    );
 
     if (alreadyAdded) return;
 
@@ -49,7 +81,12 @@ const AddGamePage = () => {
         </p>
       </div>
 
-      <AddGameSearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+      <form onSubmit={handleSearchGames}>
+        <AddGameSearchBar
+          searchTerm={searchTerm}
+          setSearchTerm={setSearchTerm}
+        />
+      </form>
 
       {searchTerm.trim() === "" && (
         <div className="rounded-2xl border border-white/10 bg-white/5 p-8 text-center text-white/50">
@@ -57,15 +94,29 @@ const AddGamePage = () => {
         </div>
       )}
 
+      {isLoading && (
+        <div className="rounded-2xl border border-white/10 bg-white/5 p-8 text-center text-white/50">
+          Searching games...
+        </div>
+      )}
+
+      {error && (
+        <div className="mb-6 rounded-2xl border border-red-500/20 bg-red-500/10 p-4 text-red-300">
+          {error}
+        </div>
+      )}
+
       <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
         {searchResults.map((game) => {
           const alreadyAdded = games.some(
-            (savedGame) => savedGame.title === game.title,
+            (savedGame) =>
+              savedGame.rawgId === game.rawgId ||
+              savedGame.title === game.title,
           );
 
           return (
             <AddGameResultCard
-              key={game.id}
+              key={game.rawgId}
               game={game}
               alreadyAdded={alreadyAdded}
               onOpenModal={handleOpenModal}
