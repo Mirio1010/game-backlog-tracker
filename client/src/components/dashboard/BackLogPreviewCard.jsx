@@ -16,36 +16,53 @@ const BackLogPreviewCard = ({ games = [] }) => {
         </div>
       ) : (
         <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-          {previewGames.map((game) => (
-            <div
-              key={game.id}
-              className="overflow-hidden rounded-xl border border-white/10 bg-black/20 transition hover:-translate-y-1 hover:bg-black/30"
-            >
-              <div className="flex h-72 items-center justify-center bg-black/30 p-3">
-                <img
-                  src={game.coverImage}
-                  alt={game.coverAlt}
-                  className="h-full w-full object-contain"
-                />
-              </div>
+          {previewGames.map((game) => {
+            const title = game.title || game.name;
+            const coverImage =
+              game.coverImage || game.cover_image || game.background_image;
+            const platform = game.platform || game.selected_platform;
+            const timeToBeat =
+              game.howLongToBeat || game.rawgPlaytime || game.playtime;
 
-              <div className="p-4">
-                <h3 className="font-semibold">{game.title}</h3>
+            return (
+              <div
+                key={game.id}
+                className="overflow-hidden rounded-xl border border-white/10 bg-black/20 transition hover:-translate-y-1 hover:bg-black/30"
+              >
+                <div className="flex h-72 items-center justify-center bg-black/30 p-3">
+                  {coverImage ? (
+                    <img
+                      src={coverImage}
+                      alt={game.coverAlt || `${title} cover art`}
+                      className="h-full w-full object-contain"
+                    />
+                  ) : (
+                    <div className="flex h-full w-full items-center justify-center rounded-xl border border-white/10 bg-white/5 text-sm text-white/40">
+                      No cover available
+                    </div>
+                  )}
+                </div>
 
-                <p className="text-sm text-white/50">{game.platform}</p>
+                <div className="p-4">
+                  <h3 className="font-semibold">{title}</h3>
 
-                <div className="mt-3 flex items-center justify-between">
-                  <span className="rounded-full border border-white/10 bg-white/10 px-3 py-1 text-xs text-white/70">
-                    {game.status}
-                  </span>
+                  <p className="text-sm text-white/50">
+                    {platform || "No platform selected"}
+                  </p>
 
-                  <span className="text-xs text-white/40">
-                    {game.howLongToBeat}h to beat
-                  </span>
+                  <div className="mt-3 flex items-center justify-between">
+                    <span className="rounded-full border border-white/10 bg-white/10 px-3 py-1 text-xs text-white/70">
+                      {game.status}
+                    </span>
+
+                    <span className="text-xs text-white/40">
+                      {timeToBeat ? `${timeToBeat}h to beat` : "Time N/A"}
+                    </span>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       )}
     </div>
