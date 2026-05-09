@@ -19,11 +19,34 @@ router.get("/search", async (req, res) => {
       });
     }
 
-    res.json({
-      message: "RAWG API key is loaded successfully",
-      searchTerm: query,
-      hasApiKey: true,
+    const rawgUrl = `https://api.rawg.io/api/games?key=${process.env.RAWG_API_KEY}&search=${encodeURIComponent(query)}&page_size=10`;
+
+    const rawgResponse = await fetch(rawgUrl);
+
+    if (!rawgResponse.ok) {
+      return res.status(rawgResponse.status).json({
+        message: "Failed to fetch games from RAWG",
+      });
+    }
+
+    const rawgData = await rawgResponse.json();
+
+    const cleanedGames = rawgData.results.map((game) => {
+      return {
+        rawgId: game.id,
+        title: game.name,
+        coverImage: game.background_image,
+        coverAlt: `${game.name} cover art`,
+        released: game.released,
+        rawgRating: game.rating,
+        genres: game.genres.map((genre) => genre.name),
+        platforms: game.platforms.map((platformData) => {
+          return platformData.platform.name;
+        }),
+      };
     });
+
+    res.json(cleanedGames);
   } catch (error) {
     console.error("RAWG search error:", error);
 
