@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import MainLayout from "../components/layout/MainLayout";
 import Header from "../components/home/Header";
 
@@ -34,6 +35,7 @@ const LeftPanel = () => {
 };
 
 const Form = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -82,13 +84,20 @@ const Form = () => {
       }),
     });
 
-    const data = await res.json();
-    if (!res.ok) {
-      console.log("Backend error:", data.message);
-      return;
-    }
+   const data = await res.json();
 
-    console.log("Success:", data);
+   if (!res.ok) {
+     console.log("Backend error:", data.message);
+     setError(data.message || "Something went wrong. Please try again.");
+     return;
+   }
+
+   console.log("Success:", data);
+   navigate("/login", {
+     state: {
+       message: "Account created successfully. Please log in.",
+     },
+   });
   };
 
   return (

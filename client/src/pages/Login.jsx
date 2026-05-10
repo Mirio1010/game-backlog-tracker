@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import MainLayout from "../components/layout/MainLayout";
 import Header from "../components/home/Header";
 
@@ -36,6 +36,9 @@ const LeftPanel = () => {
 
 const Form = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const signupMessage = location.state?.message;
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -69,7 +72,7 @@ const Form = () => {
       const data = await res.json();
 
       if (!res.ok) {
-        setError(data.message);
+        setError(data.message || "Login failed. Please try again.");
         return;
       }
 
@@ -102,9 +105,9 @@ const Form = () => {
               </p>
             )}
 
-            {message && (
+            {(signupMessage || message) && (
               <p className="mb-4 rounded-xl border border-green-500/20 bg-green-500/10 px-4 py-3 text-sm text-green-300">
-                {message}
+                {signupMessage || message}
               </p>
             )}
 
