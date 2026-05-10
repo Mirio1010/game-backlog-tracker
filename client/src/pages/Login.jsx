@@ -47,6 +47,7 @@ const Form = () => {
 
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -58,6 +59,8 @@ const Form = () => {
       setError("Email and password are required");
       return;
     }
+
+    setIsLoading(true);
 
     try {
       const res = await fetch(`${API_URL}/api/auth/login`, {
@@ -89,6 +92,8 @@ const Form = () => {
     } catch (error) {
       setError("Something went wrong. Please try again.");
       console.log(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -128,7 +133,8 @@ const Form = () => {
                   name="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full rounded-xl border border-white/10 bg-zinc-800/80 px-4 py-3 text-white outline-none transition placeholder:text-zinc-500 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/30"
+                  disabled={isLoading}
+                  className="w-full rounded-xl border border-white/10 bg-zinc-800/80 px-4 py-3 text-white outline-none transition placeholder:text-zinc-500 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/30 disabled:cursor-not-allowed disabled:opacity-70"
                 />
               </div>
 
@@ -146,16 +152,28 @@ const Form = () => {
                   name="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full rounded-xl border border-white/10 bg-zinc-800/80 px-4 py-3 text-white outline-none transition placeholder:text-zinc-500 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/30"
+                  disabled={isLoading}
+                  className="w-full rounded-xl border border-white/10 bg-zinc-800/80 px-4 py-3 text-white outline-none transition placeholder:text-zinc-500 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/30 disabled:cursor-not-allowed disabled:opacity-70"
                 />
               </div>
 
               <button
                 type="submit"
-                className="w-full rounded-xl bg-cyan-400 px-4 py-3 font-semibold text-slate-950 transition hover:bg-cyan-300 active:scale-[0.99]"
+                disabled={isLoading}
+                className="flex w-full items-center justify-center gap-2 rounded-xl bg-cyan-400 px-4 py-3 font-semibold text-slate-950 transition hover:bg-cyan-300 active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-70"
               >
-                Submit
+                {isLoading && (
+                  <span className="h-5 w-5 animate-spin rounded-full border-2 border-slate-950/30 border-t-slate-950"></span>
+                )}
+
+                {isLoading ? "Logging in..." : "Submit"}
               </button>
+
+              {isLoading && (
+                <p className="text-center text-sm text-zinc-400">
+                  Waking things up, this may take a moment...
+                </p>
+              )}
             </form>
           </div>
         </div>
