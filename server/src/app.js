@@ -15,6 +15,10 @@ This app variable is now your backend app. It is the thing that will hold:
 */
 const app = express();
 
+app.get("/", (req, res) => {
+  res.send("Game Backlog API is running");
+});
+
 app.use(express.json()); // middleware that allows express to parse JSON so it can be used in req.body
 app.use(cors());
 
