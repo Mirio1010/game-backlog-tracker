@@ -4,7 +4,7 @@ Game Backlog Tracker is a full-stack web app for organizing a personal video gam
 
 ## Live Demo
 
-[View the deployed app](https://game-backlog-tracker.netlify.app/)
+[View the deployed app 🚀](https://game-backlog-tracker.netlify.app/)
 
 ## Preview
 
