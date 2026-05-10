@@ -35,6 +35,8 @@ const LeftPanel = () => {
 };
 
 const Form = () => {
+  const API_URL = import.meta.env.VITE_API_URL;
+
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     username: "",
@@ -74,7 +76,7 @@ const Form = () => {
       return;
     }
 
-    const res = await fetch("http://localhost:5001/api/auth/register", {
+    const res = await fetch(`${API_URL}/api/auth/register`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

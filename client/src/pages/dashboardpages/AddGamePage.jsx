@@ -7,6 +7,8 @@ import AddGameModal from "../../components/dashboard/Add-Game/AddGameModal";
 import { saveGame as saveGameToDatabase } from "../../api/gamesApi";
 
 const AddGamePage = () => {
+  const API_URL = import.meta.env.VITE_API_URL;
+
   const { games, setGames } = useOutletContext();
 
   const [searchTerm, setSearchTerm] = useState("");
@@ -29,9 +31,7 @@ const AddGamePage = () => {
       setError("");
 
       const response = await fetch(
-        `http://localhost:5001/api/rawg/search?query=${encodeURIComponent(
-          searchTerm,
-        )}`,
+        `${API_URL}/api/rawg/search?query=${encodeURIComponent(searchTerm)}`,
       );
 
       if (!response.ok) {

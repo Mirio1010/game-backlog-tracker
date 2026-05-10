@@ -1,38 +1,20 @@
-// This file builds the app
-
-// imports express package to your app
-const express = require("express");
-const cors = require("cors");
-
-const authRoutes = require("./routes/auth.routes");
-const rawgRoutes = require("./routes/rawg.routes");
-const gamesRoutes = require("./routes/games.routes");
+// This file Runs the app
+require("dotenv").config();
+const app = require('./app'); // This imports the Express app from app.js
 
 /*
-This app variable is now your backend app. It is the thing that will hold:
- - routes
- - middleware
- - settings
+This stores the port number your backend will run on.
+A port is like a door your server listens on.
 */
-const app = express();
+const PORT = process.env.PORT || 5001;
 
-const allowedOrigins = ["http://localhost:5173", process.env.CLIENT_URL];
 
-app.use(
-  cors({
-    origin: allowedOrigins,
-    credentials: true,
-  }),
-);
-
-app.use(express.json()); // middleware that allows express to parse JSON so it can be used in req.body
-
-app.get("/", (req, res) => {
-  res.send("Game Backlog API is running");
+/*
+This starts the server!
+app.listen() tells Express: "Start listening for incoming requests on this port".
+The function inside runs once the server starts successfully.
+*/
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`); 
 });
 
-app.use("/api/auth", authRoutes); // For any request that starts with /api/auth, use the routes from authRoutes
-app.use("/api/rawg", rawgRoutes); // For any request that starts with /api/rawg, use the routes from rawgRoutes
-app.use("/api/games", gamesRoutes);
-
-module.exports = app; // Allows app to be exported to server.js in order to start the server
