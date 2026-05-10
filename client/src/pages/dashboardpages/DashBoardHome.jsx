@@ -1,5 +1,5 @@
 import BackLogPreviewCard from "../../components/dashboard/BackLogPreviewCard";
-import DashboardStats from "../../components/dashboard/temp";
+import DashboardStats from "../../components/dashboard/DashboardStats";
 import StatusWheelCard from "../../components/dashboard/StatusWheelCard";
 import { useOutletContext } from "react-router-dom";
 
