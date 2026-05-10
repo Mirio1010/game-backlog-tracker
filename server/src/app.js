@@ -15,12 +15,14 @@ This app variable is now your backend app. It is the thing that will hold:
 */
 const app = express();
 
-app.get("/", (req, res) => {
-  res.send("Game Backlog API is running");
-});
+
 
 app.use(express.json()); // middleware that allows express to parse JSON so it can be used in req.body
 app.use(cors());
+
+app.get("/", (req, res) => {
+  res.send("Game Backlog API is running");
+});
 
 app.use("/api/auth", authRoutes); // For any request that starts with /api/auth, use the routes from authRoutes
 app.use("/api/rawg", rawgRoutes); // For any request that starts with /api/rawg, use the routes from rawgRoutes
