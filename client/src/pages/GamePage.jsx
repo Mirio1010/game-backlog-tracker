@@ -6,7 +6,8 @@ const GamePage = () => {
   const { games } = useOutletContext();
 
   const game = games.find((game) => String(game.id) === String(id));
-
+    console.log(game);
+    
   if (!game) {
     return (
       <div className="p-6 text-white">
@@ -35,9 +36,7 @@ const GamePage = () => {
 
       <p className="mt-2 text-white/70">{game.platform}</p>
       <p className="mt-2 text-white/70">Status: {game.status}</p>
-      <p className="mt-2 text-white/70">
-        Average Playtime: {game.averagePlaytime ?? "N/A"} hours
-      </p>
+      <img src={game.cover_image}></img>
     </div>
   );
 };
