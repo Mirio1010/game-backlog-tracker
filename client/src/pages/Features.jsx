@@ -8,86 +8,99 @@ import {
   Clock,
   Sparkles,
 } from "lucide-react";
+
 const Features = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-zinc-950 via-slate-900 to-black text-white">
       <Header />
 
-      <main className="mx-auto max-w-6xl px-6 py-20">
-        <section className="text-center">
-          <span className="inline-flex rounded-full border border-purple-400/30 bg-purple-500/10 px-4 py-2 text-sm text-purple-200">
+      <main className="relative overflow-hidden">
+        <div className="absolute left-0 top-24 h-72 w-72 rounded-full bg-cyan-500/10 blur-3xl"></div>
+        <div className="absolute right-0 top-96 h-72 w-72 rounded-full bg-blue-500/10 blur-3xl"></div>
+
+        <section className="relative mx-auto max-w-6xl px-6 py-20 text-center">
+          <span className="inline-flex rounded-full border border-cyan-400/30 bg-cyan-500/10 px-4 py-2 text-sm text-cyan-200">
             Built for gamers with growing backlogs
           </span>
 
-          <h1 className="mt-6 text-4xl font-black tracking-tight md:text-6xl">
-            Keep track of the games you actually want to play.
+          <h1 className="mx-auto mt-6 max-w-4xl text-4xl font-extrabold leading-tight tracking-tight md:text-6xl">
+            Everything you need to organize your games and{" "}
+            <span className="bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
+              decide what to play next
+            </span>
           </h1>
 
-          <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-white/70">
-            Backlog Tracker helps you organize your unfinished games, track your
-            progress, and decide what to play next without losing games in your
-            library.
+          <p className="mx-auto mt-6 max-w-2xl text-base leading-8 text-zinc-300 sm:text-lg">
+            Game Backlog Tracker helps you manage your collection, track your
+            progress, and keep your backlog from turning into a pile of games
+            you forgot about.
           </p>
         </section>
 
-        <section className="mt-20 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <section className="relative mx-auto grid max-w-6xl gap-6 px-6 pb-20 md:grid-cols-2 lg:grid-cols-3">
           <FeatureCard
             icon={<Gamepad2 />}
-            title="Build your game backlog"
-            description="Add games you want to play later and keep them organized in one clean place."
+            title="Build your backlog"
+            description="Add games you want to play later and keep them organized in one clean dashboard."
           />
 
           <FeatureCard
             icon={<ListChecks />}
-            title="Track game status"
-            description="Mark games as backlog, playing, completed, or dropped so you always know where you stand."
+            title="Track every status"
+            description="Mark games as backlog, playing, completed, or dropped so your collection always stays clear."
           />
 
           <FeatureCard
             icon={<Search />}
-            title="Discover game details"
-            description="View useful details like platforms, genres, ratings, release dates, and average playtime."
+            title="View game details"
+            description="See useful information like platforms, genres, ratings, release dates, and average playtime."
           />
 
           <FeatureCard
             icon={<Clock />}
-            title="Plan around playtime"
-            description="See average playtime so you can pick a short game, a long RPG, or something in between."
+            title="Pick based on time"
+            description="Use average playtime to decide whether you want a short game, a long RPG, or something in between."
           />
 
           <FeatureCard
             icon={<BarChart3 />}
-            title="Understand your progress"
-            description="Get a clearer picture of your gaming habits and how your backlog is changing over time."
+            title="Understand progress"
+            description="Get a better picture of what you are playing, what you finished, and what is still waiting."
           />
 
           <FeatureCard
             icon={<Sparkles />}
             title="Immersive game pages"
-            description="Open each game in a detailed page with cover art, notes, genres, and a cinematic layout."
+            description="Open each game in a detailed cinematic page with cover art, stats, notes, platforms, and genres."
           />
         </section>
 
-        <section className="mt-24 overflow-hidden rounded-3xl border border-white/10 bg-white/5 p-8 backdrop-blur md:p-12">
-          <div className="grid gap-10 md:grid-cols-2 md:items-center">
-            <div>
-              <h2 className="text-3xl font-bold md:text-4xl">
-                Your backlog should feel exciting, not overwhelming.
-              </h2>
+        <section className="relative mx-auto max-w-6xl px-6 pb-24">
+          <div className="overflow-hidden rounded-3xl border border-white/10 bg-white/5 p-8 shadow-2xl shadow-black/40 backdrop-blur-xl md:p-12">
+            <div className="grid gap-10 md:grid-cols-2 md:items-center">
+              <div>
+                <span className="text-sm font-medium text-cyan-300">
+                  Why it matters
+                </span>
 
-              <p className="mt-5 leading-7 text-white/70">
-                Instead of scrolling through a messy library and forgetting what
-                you wanted to play, Backlog Tracker gives every game a place, a
-                status, and a reason to come back to it.
-              </p>
-            </div>
+                <h2 className="mt-3 text-3xl font-extrabold tracking-tight md:text-4xl">
+                  Your backlog should feel exciting, not overwhelming.
+                </h2>
 
-            <div className="rounded-3xl border border-white/10 bg-black/30 p-6">
-              <div className="space-y-4">
-                <PreviewRow title="Persona 5" status="Backlog" />
-                <PreviewRow title="Elden Ring" status="Playing" />
-                <PreviewRow title="God of War" status="Completed" />
-                <PreviewRow title="Hollow Knight" status="Backlog" />
+                <p className="mt-5 leading-8 text-zinc-300">
+                  Instead of scrolling through a messy game library and
+                  forgetting what you wanted to play, Backlog Tracker gives each
+                  game a status, details, and a reason to come back to it.
+                </p>
+              </div>
+
+              <div className="rounded-3xl border border-white/10 bg-black/30 p-5">
+                <div className="space-y-4">
+                  <PreviewRow title="Persona 5" status="Backlog" />
+                  <PreviewRow title="Elden Ring" status="Playing" />
+                  <PreviewRow title="God of War" status="Completed" />
+                  <PreviewRow title="Hollow Knight" status="Backlog" />
+                </div>
               </div>
             </div>
           </div>
@@ -101,14 +114,14 @@ const Features = () => {
 
 const FeatureCard = ({ icon, title, description }) => {
   return (
-    <div className="rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur transition hover:-translate-y-1 hover:bg-white/10">
-      <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-purple-500/20 text-purple-200">
+    <div className="group rounded-3xl border border-white/10 bg-white/5 p-6 shadow-xl shadow-black/20 backdrop-blur transition hover:-translate-y-1 hover:border-cyan-400/30 hover:bg-white/10">
+      <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-cyan-400/20 bg-cyan-500/10 text-cyan-300 transition group-hover:bg-cyan-500/20">
         {icon}
       </div>
 
       <h3 className="mt-6 text-xl font-bold">{title}</h3>
 
-      <p className="mt-3 leading-7 text-white/60">{description}</p>
+      <p className="mt-3 leading-7 text-zinc-400">{description}</p>
     </div>
   );
 };
@@ -116,9 +129,9 @@ const FeatureCard = ({ icon, title, description }) => {
 const PreviewRow = ({ title, status }) => {
   return (
     <div className="flex items-center justify-between rounded-2xl border border-white/10 bg-white/5 px-4 py-3">
-      <span className="font-medium">{title}</span>
+      <span className="font-medium text-white">{title}</span>
 
-      <span className="rounded-full bg-purple-500/20 px-3 py-1 text-sm text-purple-200">
+      <span className="rounded-full border border-cyan-400/20 bg-cyan-500/10 px-3 py-1 text-sm text-cyan-200">
         {status}
       </span>
     </div>
