@@ -19,9 +19,7 @@ const Features = () => {
         <div className="absolute right-0 top-96 h-72 w-72 rounded-full bg-blue-500/10 blur-3xl"></div>
 
         <section className="relative mx-auto max-w-6xl px-6 py-20 text-center">
-          <span className="inline-flex rounded-full border border-cyan-400/30 bg-cyan-500/10 px-4 py-2 text-sm text-cyan-200">
-            Built for gamers with growing backlogs
-          </span>
+         
 
           <h1 className="mx-auto mt-6 max-w-4xl text-4xl font-extrabold leading-tight tracking-tight md:text-6xl">
             Everything you need to organize your games and{" "}
