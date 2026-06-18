@@ -47,7 +47,7 @@ const GameCard = ({ game, onRemove }) => {
   
   return (
     <Link to={`/dashboard/games/${game.id}`}>
-      <article className="relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 shadow-xl transition hover:-translate-y-1 hover:bg-white/10">
+      <article className="relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 shadow-xl transition hover:-translate-y-1 hover:bg-white/10 ">
         {onRemove && (
           <button
             onClick={(event) => {
@@ -63,15 +63,15 @@ const GameCard = ({ game, onRemove }) => {
           </button>
         )}
 
-        <div className="flex h-72 items-center justify-center bg-black/30 p-3">
+        <div className="h-50 overflow-hidden rounded-xl bg-black/30">
           {coverImage ? (
             <img
               src={coverImage}
               alt={game.coverAlt || `${title} cover art`}
-              className="h-full w-full object-contain"
+              className="h-full w-full object-cover"
             />
           ) : (
-            <div className="flex h-full w-full items-center justify-center rounded-xl border border-white/10 bg-white/5 text-sm text-white/40">
+            <div className="flex h-full w-full items-center justify-center border border-white/10 bg-white/5 text-sm text-white/40">
               No cover available
             </div>
           )}

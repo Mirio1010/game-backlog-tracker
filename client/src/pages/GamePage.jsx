@@ -23,11 +23,11 @@ const GamePage = () => {
 
   return (
     <div className="relative min-h-screen overflow-hidden text-white">
-      <div className="absolute inset-0">
+      <div className="absolute inset-0 overflow-hidden rounded-[2rem]">
         <img
           src={game.cover_image}
           alt=""
-          className="h-full w-full object-cover blur-sm scale-110 opacity-100"
+          className="h-full w-full object-cover blur-sm scale-110 opacity-100 animate-slow-pan"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/80 to-black" />
       </div>

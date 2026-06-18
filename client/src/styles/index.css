@@ -22,3 +22,23 @@
   scrollbar-width: thin;
   scrollbar-color: rgba(123, 173, 238, 0.22) transparent;
 }
+
+
+
+@keyframes slow-pan {
+  0% {
+    transform: scale(1.12) translate(0px, 0px);
+  }
+
+  50% {
+    transform: scale(1.18) translate(-20px, -12px);
+  }
+
+  100% {
+    transform: scale(1.12) translate(0px, 0px);
+  }
+}
+
+.animate-slow-pan {
+  animation: slow-pan 18s ease-in-out infinite;
+}
