@@ -2,7 +2,7 @@ const BackLogPreviewCard = ({ games = [] }) => {
   const previewGames = games.slice(0, 3);
 
   return (
-    <div className="rounded-2xl border border-white/10 bg-white/5 p-6 shadow-xl">
+    <div className="rounded-2xl border border-white/10 bg-white/5 p-4 shadow-xl sm:p-6">
       <div className="mb-4">
         <h2 className="text-xl font-semibold">Backlog Preview</h2>
         <p className="text-sm text-white/50">
@@ -29,7 +29,7 @@ const BackLogPreviewCard = ({ games = [] }) => {
                 key={game.id}
                 className="overflow-hidden rounded-xl border border-white/10 bg-black/20 transition hover:-translate-y-1 hover:bg-black/30"
               >
-                <div className="flex h-72 items-center justify-center bg-black/30 p-3">
+                <div className="flex h-56 items-center justify-center bg-black/30 p-3 sm:h-72">
                   {coverImage ? (
                     <img
                       src={coverImage}
@@ -44,13 +44,13 @@ const BackLogPreviewCard = ({ games = [] }) => {
                 </div>
 
                 <div className="p-4">
-                  <h3 className="font-semibold">{title}</h3>
+                  <h3 className="line-clamp-2 font-semibold">{title}</h3>
 
                   <p className="text-sm text-white/50">
                     {platform || "No platform selected"}
                   </p>
 
-                  <div className="mt-3 flex items-center justify-between">
+                  <div className="mt-3 flex flex-wrap items-center justify-between gap-2">
                     <span className="rounded-full border border-white/10 bg-white/10 px-3 py-1 text-xs text-white/70">
                       {game.status}
                     </span>
