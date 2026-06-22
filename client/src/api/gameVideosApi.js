@@ -14,3 +14,17 @@ export const getGameMovies = async (rawgId) => {
 
   return response.json();
 };
+
+export const getGameScreenshots = async (rawgId) => {
+  if (!rawgId) return [];
+
+  const response = await fetch(
+    `${API_BASE_URL}/api/rawg/games/${rawgId}/screenshots`,
+  );
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch game screenshots");
+  }
+
+  return response.json();
+};

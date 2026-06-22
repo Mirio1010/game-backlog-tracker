@@ -1,39 +1,45 @@
 import { useEffect, useState } from "react";
 import { Link, useParams, useOutletContext } from "react-router-dom";
-import { getGameMovies } from "../api/gameVideosApi";
+import { getGameMovies, getGameScreenshots } from "../api/gameVideosApi";
 
 const GamePage = () => {
   const { id } = useParams();
   const { games } = useOutletContext();
 
   const [videos, setVideos] = useState([]);
-  const [videosLoading, setVideosLoading] = useState(false);
-  const [videosError, setVideosError] = useState(null);
+  const [screenshots, setScreenshots] = useState([]);
+  const [mediaLoading, setMediaLoading] = useState(false);
+  const [mediaError, setMediaError] = useState(null);
 
   const game = games.find((game) => String(game.id) === String(id));
 
   useEffect(() => {
     if (!game?.rawg_id) return;
 
-    const loadVideos = async () => {
+    const loadMedia = async () => {
       try {
-        setVideosLoading(true);
-        setVideosError(null);
+        setMediaLoading(true);
+        setMediaError(null);
 
-        const gameVideos = await getGameMovies(game.rawg_id);
+        const [gameVideos, gameScreenshots] = await Promise.all([
+          getGameMovies(game.rawg_id),
+          getGameScreenshots(game.rawg_id),
+        ]);
 
         console.log("Gameplay videos:", gameVideos);
+        console.log("Game screenshots:", gameScreenshots);
 
         setVideos(gameVideos);
+        setScreenshots(gameScreenshots);
       } catch (error) {
-        console.error("Error loading gameplay videos:", error);
-        setVideosError("Could not load gameplay videos.");
+        console.error("Error loading game media:", error);
+        setMediaError("Could not load game preview media.");
       } finally {
-        setVideosLoading(false);
+        setMediaLoading(false);
       }
     };
 
-    loadVideos();
+    loadMedia();
   }, [game?.rawg_id]);
 
   if (!game) {
@@ -146,35 +152,98 @@ const GamePage = () => {
           </div>
         </section>
 
-        <GameplayVideos
+        <GamePreview
+          gameTitle={game.title}
+          coverImage={game.cover_image}
           videos={videos}
-          isLoading={videosLoading}
-          error={videosError}
+          screenshots={screenshots}
+          isLoading={mediaLoading}
+          error={mediaError}
         />
       </div>
     </div>
   );
 };
 
-const GameplayVideos = ({ videos, isLoading, error }) => {
+const GamePreview = ({
+  gameTitle,
+  coverImage,
+  videos,
+  screenshots,
+  isLoading,
+  error,
+}) => {
+  const [selectedScreenshotIndex, setSelectedScreenshotIndex] = useState(null);
+
+  const youtubeSearchUrl = `https://www.youtube.com/results?search_query=${encodeURIComponent(
+    `${gameTitle} gameplay`,
+  )}`;
+
+  const selectedScreenshot =
+    selectedScreenshotIndex !== null
+      ? screenshots[selectedScreenshotIndex]
+      : null;
+
+  const hasVideos = videos.length > 0;
+  const hasScreenshots = screenshots.length > 0;
+
+  const openScreenshot = (index) => {
+    setSelectedScreenshotIndex(index);
+  };
+
+  const closeScreenshot = () => {
+    setSelectedScreenshotIndex(null);
+  };
+
+  const showPreviousScreenshot = () => {
+    setSelectedScreenshotIndex((currentIndex) => {
+      if (currentIndex === 0) {
+        return screenshots.length - 1;
+      }
+
+      return currentIndex - 1;
+    });
+  };
+
+  const showNextScreenshot = () => {
+    setSelectedScreenshotIndex((currentIndex) => {
+      if (currentIndex === screenshots.length - 1) {
+        return 0;
+      }
+
+      return currentIndex + 1;
+    });
+  };
+
   return (
     <section className="mt-10 rounded-3xl border border-white/10 bg-white/10 p-6 backdrop-blur">
-      <div className="mb-5">
-        <p className="text-sm font-medium uppercase tracking-[0.2em] text-purple-200/70">
-          Media
-        </p>
+      <div className="mb-5 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+          <p className="text-sm font-medium uppercase tracking-[0.2em] text-purple-200/70">
+            Media
+          </p>
 
-        <h2 className="mt-2 text-2xl font-bold text-white">Gameplay Videos</h2>
+          <h2 className="mt-2 text-2xl font-bold text-white">Game Preview</h2>
 
-        <p className="mt-2 text-sm text-white/60">
-          Watch a quick preview before deciding if this game is next in the
-          queue.
-        </p>
+          <p className="mt-2 text-sm text-white/60">
+            Preview the game before deciding if it belongs at the top of your
+            backlog.
+          </p>
+        </div>
+
+        <a
+          href={youtubeSearchUrl}
+          target="_blank"
+          rel="noreferrer"
+          className="inline-flex w-fit rounded-full border border-purple-400/30 bg-purple-500/20 px-4 py-2 text-sm font-medium text-purple-100 transition hover:bg-purple-500/30 hover:text-white"
+        >
+          Search gameplay on YouTube
+        </a>
       </div>
 
       {isLoading && (
         <div className="rounded-2xl border border-white/10 bg-black/30 p-5 text-sm text-white/60">
-          Loading gameplay videos...
+          Loading game preview...
         </div>
       )}
 
@@ -184,37 +253,137 @@ const GameplayVideos = ({ videos, isLoading, error }) => {
         </div>
       )}
 
-      {!isLoading && !error && videos.length === 0 && (
-        <div className="rounded-2xl border border-white/10 bg-black/30 p-5 text-sm text-white/60">
-          No gameplay videos found for this game yet.
+      {!isLoading && !error && hasVideos && (
+        <div>
+          <div className="mb-4 flex items-center justify-between">
+            <h3 className="text-lg font-semibold text-white">
+              Gameplay Videos
+            </h3>
+
+            <span className="rounded-full border border-emerald-400/20 bg-emerald-500/10 px-3 py-1 text-xs font-medium text-emerald-100">
+              Found on RAWG
+            </span>
+          </div>
+
+          <div className="grid gap-6 md:grid-cols-2">
+            {videos.map((video) => (
+              <article
+                key={video.id}
+                className="overflow-hidden rounded-2xl border border-white/10 bg-black/30"
+              >
+                <div className="aspect-video bg-black">
+                  <video
+                    controls
+                    poster={video.preview}
+                    className="h-full w-full object-cover"
+                  >
+                    <source src={video.videoUrl} type="video/mp4" />
+                    Your browser does not support the video tag.
+                  </video>
+                </div>
+
+                <div className="p-4">
+                  <h3 className="font-semibold text-white">
+                    {video.title || "Gameplay video"}
+                  </h3>
+                </div>
+              </article>
+            ))}
+          </div>
         </div>
       )}
 
-      {!isLoading && !error && videos.length > 0 && (
-        <div className="grid gap-6 md:grid-cols-2">
-          {videos.map((video) => (
-            <article
-              key={video.id}
-              className="overflow-hidden rounded-2xl border border-white/10 bg-black/30"
-            >
-              <div className="aspect-video bg-black">
-                <video
-                  controls
-                  poster={video.preview}
-                  className="h-full w-full object-cover"
-                >
-                  <source src={video.videoUrl} type="video/mp4" />
-                  Your browser does not support the video tag.
-                </video>
-              </div>
+      {!isLoading && !error && !hasVideos && hasScreenshots && (
+        <div>
+          <div className="mb-4 rounded-2xl border border-white/10 bg-black/30 p-5">
+            <h3 className="text-lg font-semibold text-white">Screenshots</h3>
 
-              <div className="p-4">
-                <h3 className="font-semibold text-white">
-                  {video.title || "Gameplay video"}
-                </h3>
-              </div>
-            </article>
-          ))}
+            <p className="mt-2 text-sm leading-6 text-white/60">
+              No gameplay videos were found for this game, so here are
+              screenshots from RAWG instead.
+            </p>
+          </div>
+
+          <div className="grid gap-4 md:grid-cols-2">
+            {screenshots.slice(0, 4).map((screenshot, index) => (
+              <button
+                key={screenshot.id}
+                type="button"
+                onClick={() => openScreenshot(index)}
+                className="group overflow-hidden rounded-2xl border border-white/10 bg-black/30 text-left"
+              >
+                <img
+                  src={screenshot.image}
+                  alt={`${gameTitle} screenshot ${index + 1}`}
+                  className="aspect-video h-full w-full object-cover transition duration-300 group-hover:scale-105 group-hover:opacity-80"
+                />
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {!isLoading && !error && !hasVideos && !hasScreenshots && (
+        <div className="rounded-2xl border border-white/10 bg-black/30 p-5">
+          <h3 className="text-lg font-semibold text-white">No preview found</h3>
+
+          <p className="mt-2 text-sm leading-6 text-white/60">
+            No videos or screenshots were found for this game yet.
+          </p>
+
+          {coverImage && (
+            <img
+              src={coverImage}
+              alt={`${gameTitle} cover`}
+              className="mt-4 aspect-video w-full rounded-2xl object-cover opacity-80"
+            />
+          )}
+        </div>
+      )}
+
+      {selectedScreenshot && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 p-4">
+          <button
+            type="button"
+            onClick={closeScreenshot}
+            className="absolute right-5 top-5 rounded-full border border-white/10 bg-white/10 px-4 py-2 text-sm font-semibold text-white backdrop-blur transition hover:bg-white/20"
+          >
+            Close
+          </button>
+
+          {screenshots.length > 1 && (
+            <button
+              type="button"
+              onClick={showPreviousScreenshot}
+              className="absolute left-5 top-1/2 -translate-y-1/2 rounded-full border border-white/10 bg-white/10 px-4 py-3 text-2xl font-bold text-white backdrop-blur transition hover:bg-white/20"
+              aria-label="Previous screenshot"
+            >
+              ←
+            </button>
+          )}
+
+          <div className="max-h-[90vh] max-w-6xl">
+            <img
+              src={selectedScreenshot.image}
+              alt={`${gameTitle} screenshot enlarged`}
+              className="max-h-[90vh] w-full rounded-2xl object-contain shadow-2xl"
+            />
+
+            <p className="mt-4 text-center text-sm text-white/50">
+              {selectedScreenshotIndex + 1} / {screenshots.length}
+            </p>
+          </div>
+
+          {screenshots.length > 1 && (
+            <button
+              type="button"
+              onClick={showNextScreenshot}
+              className="absolute right-5 top-1/2 -translate-y-1/2 rounded-full border border-white/10 bg-white/10 px-4 py-3 text-2xl font-bold text-white backdrop-blur transition hover:bg-white/20"
+              aria-label="Next screenshot"
+            >
+              →
+            </button>
+          )}
         </div>
       )}
     </section>
