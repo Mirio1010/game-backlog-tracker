@@ -33,12 +33,12 @@ const SideBar = () => {
           </p>
         </div>
 
-        <SignedInBox
-          username={username}
-          onLogout={handleLogout}
-          className="hidden sm:block md:hidden"
-          compact
-        />
+        <button
+          onClick={handleLogout}
+          className="shrink-0 rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-sm font-medium text-white/70 transition hover:bg-red-500/10 hover:text-red-300 md:hidden"
+        >
+          Log out
+        </button>
       </div>
 
       <nav className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1 md:mx-0 md:flex-col md:overflow-visible md:px-0 md:pb-0">
@@ -66,13 +66,13 @@ const SideBar = () => {
       <SignedInBox
         username={username}
         onLogout={handleLogout}
-        className="mt-4 sm:hidden md:mt-auto md:block"
+        className="mt-auto hidden md:block"
       />
     </aside>
   );
 };
 
-const SignedInBox = ({ username, onLogout, className = "", compact = false }) => {
+const SignedInBox = ({ username, onLogout, className = "" }) => {
   return (
     <div
       className={`rounded-2xl border border-white/10 bg-white/5 p-4 shadow-lg backdrop-blur ${className}`}
@@ -89,14 +89,12 @@ const SignedInBox = ({ username, onLogout, className = "", compact = false }) =>
         </div>
       </div>
 
-      {!compact && (
-        <button
-          onClick={onLogout}
-          className="mt-4 w-full rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-sm font-medium text-white/70 transition hover:bg-red-500/10 hover:text-red-300"
-        >
-          Log out
-        </button>
-      )}
+      <button
+        onClick={onLogout}
+        className="mt-4 w-full rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-sm font-medium text-white/70 transition hover:bg-red-500/10 hover:text-red-300"
+      >
+        Log out
+      </button>
     </div>
   );
 };
