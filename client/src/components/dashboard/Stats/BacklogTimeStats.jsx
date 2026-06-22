@@ -10,9 +10,9 @@ const BacklogTimeStats = ({ games = [] }) => {
 
   return (
     <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
-      <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-5 shadow-lg">
+      <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-4 shadow-lg sm:p-5">
         <p className="text-sm text-white/50">Estimated Backlog Time</p>
-        <h3 className="mt-2 text-3xl font-bold text-white">
+        <h3 className="mt-2 text-2xl font-bold text-white sm:text-3xl">
           {totalBacklogHours}h
         </h3>
         <p className="mt-2 text-sm text-white/40">
@@ -20,9 +20,9 @@ const BacklogTimeStats = ({ games = [] }) => {
         </p>
       </div>
 
-      <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-5 shadow-lg">
+      <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-4 shadow-lg sm:p-5">
         <p className="text-sm text-white/50">Average Backlog Length</p>
-        <h3 className="mt-2 text-3xl font-bold text-white">
+        <h3 className="mt-2 text-2xl font-bold text-white sm:text-3xl">
           {averageBacklogHours}h
         </h3>
         <p className="mt-2 text-sm text-white/40">
@@ -30,7 +30,7 @@ const BacklogTimeStats = ({ games = [] }) => {
         </p>
       </div>
 
-      <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-5 shadow-lg">
+      <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-4 shadow-lg sm:p-5">
         <p className="text-sm text-white/50">Longest Backlog Game</p>
         <h3 className="mt-2 truncate text-xl font-bold text-white">
           {longestBacklogGame ? longestBacklogGame.title : "N/A"}
@@ -42,7 +42,7 @@ const BacklogTimeStats = ({ games = [] }) => {
         </p>
       </div>
 
-      <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-5 shadow-lg">
+      <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-4 shadow-lg sm:p-5">
         <p className="text-sm text-white/50">Shortest Backlog Game</p>
         <h3 className="mt-2 truncate text-xl font-bold text-white">
           {shortestBacklogGame ? shortestBacklogGame.title : "N/A"}
