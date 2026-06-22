@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { Link, useParams, useOutletContext } from "react-router-dom";
 import { getGameMovies } from "../api/gameVideosApi";
 
@@ -5,7 +6,35 @@ const GamePage = () => {
   const { id } = useParams();
   const { games } = useOutletContext();
 
+  const [videos, setVideos] = useState([]);
+  const [videosLoading, setVideosLoading] = useState(false);
+  const [videosError, setVideosError] = useState(null);
+
   const game = games.find((game) => String(game.id) === String(id));
+
+  useEffect(() => {
+    if (!game?.rawg_id) return;
+
+    const loadVideos = async () => {
+      try {
+        setVideosLoading(true);
+        setVideosError(null);
+
+        const gameVideos = await getGameMovies(game.rawg_id);
+
+        console.log("Gameplay videos:", gameVideos);
+
+        setVideos(gameVideos);
+      } catch (error) {
+        console.error("Error loading gameplay videos:", error);
+        setVideosError("Could not load gameplay videos.");
+      } finally {
+        setVideosLoading(false);
+      }
+    };
+
+    loadVideos();
+  }, [game?.rawg_id]);
 
   if (!game) {
     return (
@@ -22,16 +51,13 @@ const GamePage = () => {
     );
   }
 
-  
-  
-
   return (
     <div className="relative min-h-screen overflow-hidden text-white">
       <div className="absolute inset-0 overflow-hidden rounded-[2rem]">
         <img
           src={game.cover_image}
           alt=""
-          className="h-full w-full object-cover blur-sm scale-110 opacity-100 animate-slow-pan"
+          className="h-full w-full scale-110 object-cover opacity-100 blur-sm animate-slow-pan"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/80 to-black" />
       </div>
@@ -81,12 +107,14 @@ const GamePage = () => {
 
             <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
               <StatCard label="Rating" value={game.rating || "N/A"} />
+
               <StatCard
                 label="Playtime"
                 value={
                   game.average_playtime ? `${game.average_playtime}h` : "N/A"
                 }
               />
+
               <StatCard label="Released" value={game.released || "N/A"} />
               <StatCard label="Status" value={game.status || "N/A"} />
             </div>
@@ -117,18 +145,79 @@ const GamePage = () => {
             </div>
           </div>
         </section>
+
+        <GameplayVideos
+          videos={videos}
+          isLoading={videosLoading}
+          error={videosError}
+        />
       </div>
-      
     </div>
   );
 };
 
-const DetailCard = ({ label, value }) => {
+const GameplayVideos = ({ videos, isLoading, error }) => {
   return (
-    <div className="rounded-2xl border border-white/10 bg-black/20 p-4">
-      <p className="text-sm text-white/50">{label}</p>
-      <p className="mt-1 font-semibold text-white">{value}</p>
-    </div>
+    <section className="mt-10 rounded-3xl border border-white/10 bg-white/10 p-6 backdrop-blur">
+      <div className="mb-5">
+        <p className="text-sm font-medium uppercase tracking-[0.2em] text-purple-200/70">
+          Media
+        </p>
+
+        <h2 className="mt-2 text-2xl font-bold text-white">Gameplay Videos</h2>
+
+        <p className="mt-2 text-sm text-white/60">
+          Watch a quick preview before deciding if this game is next in the
+          queue.
+        </p>
+      </div>
+
+      {isLoading && (
+        <div className="rounded-2xl border border-white/10 bg-black/30 p-5 text-sm text-white/60">
+          Loading gameplay videos...
+        </div>
+      )}
+
+      {!isLoading && error && (
+        <div className="rounded-2xl border border-red-400/20 bg-red-500/10 p-5 text-sm text-red-100">
+          {error}
+        </div>
+      )}
+
+      {!isLoading && !error && videos.length === 0 && (
+        <div className="rounded-2xl border border-white/10 bg-black/30 p-5 text-sm text-white/60">
+          No gameplay videos found for this game yet.
+        </div>
+      )}
+
+      {!isLoading && !error && videos.length > 0 && (
+        <div className="grid gap-6 md:grid-cols-2">
+          {videos.map((video) => (
+            <article
+              key={video.id}
+              className="overflow-hidden rounded-2xl border border-white/10 bg-black/30"
+            >
+              <div className="aspect-video bg-black">
+                <video
+                  controls
+                  poster={video.preview}
+                  className="h-full w-full object-cover"
+                >
+                  <source src={video.videoUrl} type="video/mp4" />
+                  Your browser does not support the video tag.
+                </video>
+              </div>
+
+              <div className="p-4">
+                <h3 className="font-semibold text-white">
+                  {video.title || "Gameplay video"}
+                </h3>
+              </div>
+            </article>
+          ))}
+        </div>
+      )}
+    </section>
   );
 };
 
