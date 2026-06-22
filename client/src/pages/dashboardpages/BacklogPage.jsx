@@ -41,6 +41,11 @@ const BacklogPage = () => {
    }
  };
 
+
+console.log(filteredGames);
+
+ 
+
   return (
     <section>
       <FilterUI

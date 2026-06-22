@@ -57,4 +57,55 @@ router.get("/search", async (req, res) => {
   }
 });
 
+
+// GET /api/rawg/games/:rawgId/videos
+router.get("/games/:rawgId/videos", async (req, res) => {
+  try {
+    const { rawgId } = req.params;
+
+    if (!rawgId) {
+      return res.status(400).json({
+        message: "RAWG game id is required",
+      });
+    }
+
+    if (!process.env.RAWG_API_KEY) {
+      return res.status(500).json({
+        message: "RAWG API key is missing",
+      });
+    }
+
+    const rawgUrl = `https://api.rawg.io/api/games/${rawgId}/movies?key=${process.env.RAWG_API_KEY}`;
+
+    const rawgResponse = await fetch(rawgUrl);
+
+    if (!rawgResponse.ok) {
+      return res.status(rawgResponse.status).json({
+        message: "Failed to fetch videos from RAWG",
+      });
+    }
+
+    const rawgData = await rawgResponse.json();
+
+    const cleanedVideos = rawgData.results
+      .map((video) => {
+        return {
+          id: video.id,
+          title: video.name,
+          preview: video.preview,
+          videoUrl: video.data?.max || video.data?.["480"],
+        };
+      })
+      .filter((video) => video.videoUrl);
+
+    res.json(cleanedVideos);
+  } catch (error) {
+    console.error("RAWG videos error:", error);
+
+    res.status(500).json({
+      message: "Something went wrong fetching RAWG videos",
+    });
+  }
+});
+
 module.exports = router;

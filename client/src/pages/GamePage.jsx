@@ -1,4 +1,5 @@
 import { Link, useParams, useOutletContext } from "react-router-dom";
+import { getGameMovies } from "../api/gameVideosApi";
 
 const GamePage = () => {
   const { id } = useParams();
@@ -20,6 +21,9 @@ const GamePage = () => {
       </div>
     );
   }
+
+  
+  
 
   return (
     <div className="relative min-h-screen overflow-hidden text-white">
@@ -114,6 +118,7 @@ const GamePage = () => {
           </div>
         </section>
       </div>
+      
     </div>
   );
 };
