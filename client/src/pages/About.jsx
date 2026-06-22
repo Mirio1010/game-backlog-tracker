@@ -11,12 +11,12 @@ const About = () => {
         <div className="absolute left-0 top-24 h-72 w-72 rounded-full bg-cyan-500/10 blur-3xl"></div>
         <div className="absolute right-0 top-96 h-72 w-72 rounded-full bg-blue-500/10 blur-3xl"></div>
 
-        <section className="relative mx-auto max-w-5xl px-6 py-20 md:py-28">
+        <section className="relative mx-auto max-w-5xl px-4 py-14 sm:px-6 sm:py-20 md:py-28">
           <p className="text-sm font-medium text-cyan-300">
             About Game Backlog Tracker
           </p>
 
-          <h1 className="mt-4 max-w-3xl text-4xl font-extrabold leading-tight tracking-tight md:text-6xl">
+          <h1 className="mt-4 max-w-3xl text-3xl font-extrabold leading-tight tracking-tight sm:text-4xl md:text-6xl">
             For people who keep saying, “I’ll play that eventually.”
           </h1>
 
@@ -33,9 +33,9 @@ const About = () => {
           </p>
         </section>
 
-        <section className="relative mx-auto max-w-5xl px-6 pb-20">
-          <div className="rounded-3xl border border-white/10 bg-white/5 p-8 shadow-2xl shadow-black/40 backdrop-blur-xl md:p-10">
-            <h2 className="text-3xl font-bold tracking-tight">
+        <section className="relative mx-auto max-w-5xl px-4 pb-16 sm:px-6 sm:pb-20">
+          <div className="rounded-3xl border border-white/10 bg-white/5 p-5 shadow-2xl shadow-black/40 backdrop-blur-xl sm:p-8 md:p-10">
+            <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">
               Why I built this
             </h2>
 
@@ -61,7 +61,7 @@ const About = () => {
           </div>
         </section>
 
-        <section className="relative mx-auto grid max-w-5xl gap-6 px-6 pb-24 md:grid-cols-3">
+        <section className="relative mx-auto grid max-w-5xl gap-4 px-4 pb-20 sm:gap-6 sm:px-6 sm:pb-24 md:grid-cols-3">
           <AboutCard
             icon={<Gamepad2 />}
             title="Add games"
@@ -89,7 +89,7 @@ const About = () => {
 
 const AboutCard = ({ icon, title, description }) => {
   return (
-    <div className="rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur transition hover:border-cyan-400/30 hover:bg-white/10">
+    <div className="rounded-3xl border border-white/10 bg-white/5 p-5 backdrop-blur transition hover:border-cyan-400/30 hover:bg-white/10 sm:p-6">
       <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-cyan-500/10 text-cyan-300">
         {icon}
       </div>
