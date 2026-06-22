@@ -59,7 +59,7 @@ const GamePage = () => {
 
   return (
     <div className="relative min-h-screen overflow-hidden text-white">
-      <div className="absolute inset-0 overflow-hidden rounded-[2rem]">
+      <div className="absolute inset-0 overflow-hidden md:rounded-[2rem]">
         <img
           src={game.cover_image}
           alt=""
@@ -68,10 +68,10 @@ const GamePage = () => {
         <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/80 to-black" />
       </div>
 
-      <div className="relative z-10 mx-auto max-w-6xl p-6">
+      <div className="relative z-10 mx-auto max-w-6xl p-4 sm:p-6">
         <Link
           to="/dashboard/backlog"
-          className="mb-8 inline-flex items-center rounded-full border border-white/10 bg-white/10 px-4 py-2 text-sm text-white/80 backdrop-blur transition hover:bg-white/20 hover:text-white"
+          className="mb-6 inline-flex items-center rounded-full border border-white/10 bg-white/10 px-4 py-2 text-sm text-white/80 backdrop-blur transition hover:bg-white/20 hover:text-white sm:mb-8"
         >
           ← Back to backlog
         </Link>
@@ -81,7 +81,7 @@ const GamePage = () => {
             <img
               src={game.cover_image}
               alt={game.title}
-              className="h-[480px] w-full object-cover"
+              className="h-80 w-full object-cover sm:h-[420px] md:h-[480px]"
             />
           </div>
 
@@ -96,7 +96,7 @@ const GamePage = () => {
               </span>
             </div>
 
-            <h1 className="text-5xl font-black tracking-tight md:text-7xl">
+            <h1 className="break-words text-4xl font-black tracking-tight sm:text-5xl md:text-7xl">
               {game.title}
             </h1>
 
@@ -111,7 +111,7 @@ const GamePage = () => {
               ))}
             </div>
 
-            <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="mt-6 grid gap-3 sm:mt-8 sm:grid-cols-2 sm:gap-4 lg:grid-cols-4">
               <StatCard label="Rating" value={game.rating || "N/A"} />
 
               <StatCard
@@ -127,17 +127,17 @@ const GamePage = () => {
           </div>
         </section>
 
-        <section className="mt-10 grid gap-6 lg:grid-cols-[1fr_360px]">
-          <div className="rounded-3xl border border-white/10 bg-white/10 p-6 backdrop-blur">
-            <h2 className="text-2xl font-bold">Notes</h2>
+        <section className="mt-8 grid gap-4 sm:mt-10 sm:gap-6 lg:grid-cols-[minmax(0,1fr)_360px]">
+          <div className="min-w-0 rounded-3xl border border-white/10 bg-white/10 p-4 backdrop-blur sm:p-6">
+            <h2 className="text-xl font-bold sm:text-2xl">Notes</h2>
 
             <p className="mt-4 leading-7 text-white/70">
               {game.notes || "You have not added any notes for this game yet."}
             </p>
           </div>
 
-          <div className="rounded-3xl border border-white/10 bg-white/10 p-6 backdrop-blur">
-            <h2 className="text-2xl font-bold">Platforms</h2>
+          <div className="min-w-0 rounded-3xl border border-white/10 bg-white/10 p-4 backdrop-blur sm:p-6">
+            <h2 className="text-xl font-bold sm:text-2xl">Platforms</h2>
 
             <div className="mt-4 flex flex-wrap gap-2">
               {game.platforms?.map((platform) => (
@@ -216,14 +216,16 @@ const GamePreview = ({
   };
 
   return (
-    <section className="mt-10 rounded-3xl border border-white/10 bg-white/10 p-6 backdrop-blur">
+    <section className="mt-8 rounded-3xl border border-white/10 bg-white/10 p-4 backdrop-blur sm:mt-10 sm:p-6">
       <div className="mb-5 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <p className="text-sm font-medium uppercase tracking-[0.2em] text-purple-200/70">
             Media
           </p>
 
-          <h2 className="mt-2 text-2xl font-bold text-white">Game Preview</h2>
+          <h2 className="mt-2 text-xl font-bold text-white sm:text-2xl">
+            Game Preview
+          </h2>
 
           <p className="mt-2 text-sm text-white/60">
             Preview the game before deciding if it belongs at the top of your
@@ -235,7 +237,7 @@ const GamePreview = ({
           href={youtubeSearchUrl}
           target="_blank"
           rel="noreferrer"
-          className="inline-flex w-fit rounded-full border border-purple-400/30 bg-purple-500/20 px-4 py-2 text-sm font-medium text-purple-100 transition hover:bg-purple-500/30 hover:text-white"
+          className="inline-flex w-full justify-center rounded-full border border-purple-400/30 bg-purple-500/20 px-4 py-2 text-sm font-medium text-purple-100 transition hover:bg-purple-500/30 hover:text-white sm:w-fit"
         >
           Search gameplay on YouTube
         </a>
@@ -255,7 +257,7 @@ const GamePreview = ({
 
       {!isLoading && !error && hasVideos && (
         <div>
-          <div className="mb-4 flex items-center justify-between">
+          <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <h3 className="text-lg font-semibold text-white">
               Gameplay Videos
             </h3>
@@ -342,11 +344,11 @@ const GamePreview = ({
       )}
 
       {selectedScreenshot && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 p-4">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 p-4 sm:p-6">
           <button
             type="button"
             onClick={closeScreenshot}
-            className="absolute right-5 top-5 rounded-full border border-white/10 bg-white/10 px-4 py-2 text-sm font-semibold text-white backdrop-blur transition hover:bg-white/20"
+            className="absolute right-3 top-3 rounded-full border border-white/10 bg-white/10 px-4 py-2 text-sm font-semibold text-white backdrop-blur transition hover:bg-white/20 sm:right-5 sm:top-5"
           >
             Close
           </button>
@@ -355,18 +357,18 @@ const GamePreview = ({
             <button
               type="button"
               onClick={showPreviousScreenshot}
-              className="absolute left-5 top-1/2 -translate-y-1/2 rounded-full border border-white/10 bg-white/10 px-4 py-3 text-2xl font-bold text-white backdrop-blur transition hover:bg-white/20"
+              className="absolute bottom-5 left-4 rounded-full border border-white/10 bg-white/10 px-4 py-3 text-xl font-bold text-white backdrop-blur transition hover:bg-white/20 sm:bottom-auto sm:left-5 sm:top-1/2 sm:-translate-y-1/2 sm:text-2xl"
               aria-label="Previous screenshot"
             >
               ←
             </button>
           )}
 
-          <div className="max-h-[90vh] max-w-6xl">
+          <div className="max-h-[82vh] max-w-6xl sm:max-h-[90vh]">
             <img
               src={selectedScreenshot.image}
               alt={`${gameTitle} screenshot enlarged`}
-              className="max-h-[90vh] w-full rounded-2xl object-contain shadow-2xl"
+              className="max-h-[78vh] w-full rounded-2xl object-contain shadow-2xl sm:max-h-[90vh]"
             />
 
             <p className="mt-4 text-center text-sm text-white/50">
@@ -378,7 +380,7 @@ const GamePreview = ({
             <button
               type="button"
               onClick={showNextScreenshot}
-              className="absolute right-5 top-1/2 -translate-y-1/2 rounded-full border border-white/10 bg-white/10 px-4 py-3 text-2xl font-bold text-white backdrop-blur transition hover:bg-white/20"
+              className="absolute bottom-5 right-4 rounded-full border border-white/10 bg-white/10 px-4 py-3 text-xl font-bold text-white backdrop-blur transition hover:bg-white/20 sm:bottom-auto sm:right-5 sm:top-1/2 sm:-translate-y-1/2 sm:text-2xl"
               aria-label="Next screenshot"
             >
               →
@@ -392,9 +394,11 @@ const GamePreview = ({
 
 const StatCard = ({ label, value }) => {
   return (
-    <div className="rounded-2xl border border-white/10 bg-black/30 p-4 backdrop-blur">
+    <div className="min-w-0 rounded-2xl border border-white/10 bg-black/30 p-4 backdrop-blur">
       <p className="text-sm text-white/50">{label}</p>
-      <p className="mt-1 text-xl font-bold text-white">{value}</p>
+      <p className="mt-1 break-words text-lg font-bold text-white sm:text-xl">
+        {value}
+      </p>
     </div>
   );
 };
