@@ -10,7 +10,7 @@ const { games } = useOutletContext();
   return (
     <section>
       <div className="mb-8">
-        <h1 className="text-3xl font-bold tracking-tight text-white">
+        <h1 className="text-2xl font-bold tracking-tight text-white sm:text-3xl">
           Dashboard
         </h1>
 
@@ -19,7 +19,7 @@ const { games } = useOutletContext();
         </p>
       </div>
 
-      <div className="flex flex-col gap-8">
+      <div className="flex flex-col gap-5 sm:gap-8">
         <StatusWheelCard games={games} />
         <DashboardStats games={games} />
         <BackLogPreviewCard games={games} />

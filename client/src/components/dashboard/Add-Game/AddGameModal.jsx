@@ -64,8 +64,8 @@ const AddGameModal = ({ game, onClose, onSaveGame }) => {
    game.coverImage || game.cover_image || game.background_image;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-4 backdrop-blur-sm">
-      <div className="w-full max-w-lg rounded-2xl border border-white/10 bg-white/10 p-6 text-white shadow-2xl backdrop-blur-xl">
+    <div className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-black/50 px-4 py-6 backdrop-blur-sm">
+      <div className="max-h-full w-full max-w-lg rounded-2xl border border-white/10 bg-white/10 p-4 text-white shadow-2xl backdrop-blur-xl sm:p-6">
         <div className="mb-5 flex items-start justify-between gap-4">
           <div>
             <h2 className="text-2xl font-bold">Add to Backlog</h2>
@@ -81,14 +81,14 @@ const AddGameModal = ({ game, onClose, onSaveGame }) => {
           </button>
         </div>
 
-        <div className="mb-5 flex gap-4 rounded-xl bg-white/5 p-3">
+        <div className="mb-5 flex flex-col gap-4 rounded-xl bg-white/5 p-3 sm:flex-row">
           <img
             src={displayCover}
             alt={game.coverAlt || `${displayTitle} cover art`}
-            className="h-24 w-20 rounded-lg object-contain"
+            className="h-32 w-full rounded-lg object-contain sm:h-24 sm:w-20"
           />
 
-          <div>
+          <div className="min-w-0">
             <h3 className="font-semibold text-white">{displayTitle}</h3>
             <p className="text-sm text-white/50">{genreText}</p>
             <p className="text-sm text-white/50">
@@ -161,7 +161,7 @@ const AddGameModal = ({ game, onClose, onSaveGame }) => {
             />
           </div>
 
-          <div className="flex gap-3 pt-2">
+          <div className="flex flex-col gap-3 pt-2 sm:flex-row">
             <button
               type="button"
               onClick={onClose}

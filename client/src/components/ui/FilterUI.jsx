@@ -7,12 +7,12 @@ const FilterUI = ({
   setSearchTerm,
 }) => {
   const selectClass =
-    "rounded-xl border border-white/10 bg-white/10 px-4 py-2 text-white outline-none backdrop-blur-md transition focus:border-violet-400 focus:bg-white/15";
+    "w-full rounded-xl border border-white/10 bg-white/10 px-4 py-2 text-white outline-none backdrop-blur-md transition focus:border-violet-400 focus:bg-white/15 md:w-auto md:min-w-40";
 
   const optionClass = "bg-zinc-900 text-white";
 
   return (
-    <div className="mb-6 rounded-2xl border border-white/10 bg-white/5 p-4 backdrop-blur">
+    <div className="mb-6 rounded-2xl border border-white/10 bg-white/5 p-3 backdrop-blur sm:p-4">
       <div className="flex flex-col gap-3 md:flex-row">
         <input
           type="text"

@@ -1,6 +1,6 @@
 const AddGameSearchBar = ({ searchTerm, setSearchTerm }) => {
   return (
-    <div className="mb-8 rounded-2xl border border-white/10 bg-white/5 p-6 shadow-xl">
+    <div className="mb-6 rounded-2xl border border-white/10 bg-white/5 p-4 shadow-xl sm:mb-8 sm:p-6">
       <label
         htmlFor="game-search"
         className="mb-2 block text-sm font-medium text-white/70"

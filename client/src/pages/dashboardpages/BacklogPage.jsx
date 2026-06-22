@@ -57,7 +57,7 @@ console.log(filteredGames);
         setSearchTerm={setSearchTerm}
       />
       <div className="mb-8">
-        <h1 className="text-3xl font-bold tracking-tight text-white">
+        <h1 className="text-2xl font-bold tracking-tight text-white sm:text-3xl">
           My Backlog
         </h1>
 
@@ -76,7 +76,7 @@ console.log(filteredGames);
           </p>
         </div>
       ) : (
-        <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
+        <div className="grid gap-4 sm:grid-cols-2 sm:gap-6 xl:grid-cols-3 2xl:grid-cols-4">
           {filteredGames.map((game) => (
             <GameCard key={game.id} game={game} onRemove={handleRemoveGame} />
           ))}

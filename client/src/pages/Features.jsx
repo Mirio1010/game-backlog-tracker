@@ -18,10 +18,10 @@ const Features = () => {
         <div className="absolute left-0 top-24 h-72 w-72 rounded-full bg-cyan-500/10 blur-3xl"></div>
         <div className="absolute right-0 top-96 h-72 w-72 rounded-full bg-blue-500/10 blur-3xl"></div>
 
-        <section className="relative mx-auto max-w-6xl px-6 py-20 text-center">
+        <section className="relative mx-auto max-w-6xl px-4 py-14 text-center sm:px-6 sm:py-20">
          
 
-          <h1 className="mx-auto mt-6 max-w-4xl text-4xl font-extrabold leading-tight tracking-tight md:text-6xl">
+          <h1 className="mx-auto mt-6 max-w-4xl text-3xl font-extrabold leading-tight tracking-tight sm:text-4xl md:text-6xl">
             Everything you need to organize your games and{" "}
             <span className="bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
               decide what to play next
@@ -35,7 +35,7 @@ const Features = () => {
           </p>
         </section>
 
-        <section className="relative mx-auto grid max-w-6xl gap-6 px-6 pb-20 md:grid-cols-2 lg:grid-cols-3">
+        <section className="relative mx-auto grid max-w-6xl gap-4 px-4 pb-16 sm:gap-6 sm:px-6 sm:pb-20 md:grid-cols-2 lg:grid-cols-3">
           <FeatureCard
             icon={<Gamepad2 />}
             title="Build your backlog"
@@ -73,15 +73,15 @@ const Features = () => {
           />
         </section>
 
-        <section className="relative mx-auto max-w-6xl px-6 pb-24">
-          <div className="overflow-hidden rounded-3xl border border-white/10 bg-white/5 p-8 shadow-2xl shadow-black/40 backdrop-blur-xl md:p-12">
+        <section className="relative mx-auto max-w-6xl px-4 pb-20 sm:px-6 sm:pb-24">
+          <div className="overflow-hidden rounded-3xl border border-white/10 bg-white/5 p-5 shadow-2xl shadow-black/40 backdrop-blur-xl sm:p-8 md:p-12">
             <div className="grid gap-10 md:grid-cols-2 md:items-center">
               <div>
                 <span className="text-sm font-medium text-cyan-300">
                   Why it matters
                 </span>
 
-                <h2 className="mt-3 text-3xl font-extrabold tracking-tight md:text-4xl">
+                <h2 className="mt-3 text-2xl font-extrabold tracking-tight sm:text-3xl md:text-4xl">
                   Your backlog should feel exciting, not overwhelming.
                 </h2>
 
@@ -112,7 +112,7 @@ const Features = () => {
 
 const FeatureCard = ({ icon, title, description }) => {
   return (
-    <div className="group rounded-3xl border border-white/10 bg-white/5 p-6 shadow-xl shadow-black/20 backdrop-blur transition hover:-translate-y-1 hover:border-cyan-400/30 hover:bg-white/10">
+  <div className="group rounded-3xl border border-white/10 bg-white/5 p-5 shadow-xl shadow-black/20 backdrop-blur transition hover:-translate-y-1 hover:border-cyan-400/30 hover:bg-white/10 sm:p-6">
       <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-cyan-400/20 bg-cyan-500/10 text-cyan-300 transition group-hover:bg-cyan-500/20">
         {icon}
       </div>
@@ -126,7 +126,7 @@ const FeatureCard = ({ icon, title, description }) => {
 
 const PreviewRow = ({ title, status }) => {
   return (
-    <div className="flex items-center justify-between rounded-2xl border border-white/10 bg-white/5 px-4 py-3">
+    <div className="flex flex-wrap items-center justify-between gap-2 rounded-2xl border border-white/10 bg-white/5 px-4 py-3">
       <span className="font-medium text-white">{title}</span>
 
       <span className="rounded-full border border-cyan-400/20 bg-cyan-500/10 px-3 py-1 text-sm text-cyan-200">

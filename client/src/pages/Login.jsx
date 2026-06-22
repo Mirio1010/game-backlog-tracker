@@ -14,13 +14,13 @@ const Login = () => {
 
 const LeftPanel = () => {
   return (
-    <div className="flex items-center justify-center bg-gradient-to-br from-indigo-600/20 via-cyan-500/10 to-transparent p-10 md:p-16">
-      <div className="max-w-md space-y-6">
+    <div className="flex items-center justify-center bg-gradient-to-br from-indigo-600/20 via-cyan-500/10 to-transparent p-6 sm:p-10 md:p-16">
+      <div className="max-w-md space-y-4 sm:space-y-6">
         <p className="text-sm font-medium uppercase tracking-[0.2em] text-cyan-300">
           GameBacklog
         </p>
 
-        <h1 className="text-4xl font-bold tracking-tight text-white md:text-5xl">
+        <h1 className="text-3xl font-bold tracking-tight text-white sm:text-4xl md:text-5xl">
           Welcome Back
         </h1>
 
@@ -99,11 +99,11 @@ const Form = () => {
 
   return (
     <main>
-      <section className="grid min-h-screen grid-cols-1 overflow-hidden border border-white/10 bg-white/5 shadow-2xl backdrop-blur md:grid-cols-2">
+      <section className="grid min-h-[calc(100vh-105px)] grid-cols-1 overflow-hidden border border-white/10 bg-white/5 shadow-2xl backdrop-blur md:min-h-screen md:grid-cols-2">
         <LeftPanel />
 
-        <div className="flex items-center justify-center bg-black/20 p-10 md:p-16">
-          <div className="w-full max-w-md rounded-2xl border border-white/10 bg-zinc-900/70 p-8 shadow-xl">
+        <div className="flex items-center justify-center bg-black/20 p-4 sm:p-10 md:p-16">
+          <div className="w-full max-w-md rounded-2xl border border-white/10 bg-zinc-900/70 p-5 shadow-xl sm:p-8">
             <h2 className="mb-6 text-2xl font-semibold text-white">Log In</h2>
 
             {error && (

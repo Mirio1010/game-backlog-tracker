@@ -13,7 +13,7 @@ const AddGameResultCard = ({ game, alreadyAdded, onOpenModal }) => {
 
   return (
     <article className="overflow-hidden rounded-2xl border border-white/10 bg-white/5 shadow-xl transition hover:-translate-y-1 hover:bg-white/10">
-      <div className="flex h-72 items-center justify-center bg-black/30 p-3">
+      <div className="flex h-56 items-center justify-center bg-black/30 p-3 sm:h-72">
         <img
           src={game.coverImage}
           alt={game.coverAlt}
@@ -21,7 +21,7 @@ const AddGameResultCard = ({ game, alreadyAdded, onOpenModal }) => {
         />
       </div>
 
-      <div className="p-4">
+      <div className="p-3 sm:p-4">
         <div className="mb-3">
           <h2 className="line-clamp-1 font-semibold text-white">
             {game.title}
@@ -30,7 +30,7 @@ const AddGameResultCard = ({ game, alreadyAdded, onOpenModal }) => {
           <p className="line-clamp-1 text-sm text-white/50">{genresText}</p>
         </div>
 
-        <div className="grid grid-cols-2 gap-3 text-sm">
+        <div className="grid gap-3 text-sm sm:grid-cols-2">
           <div className="rounded-xl bg-black/20 p-3">
             <p className="text-white/40">Platforms</p>
             <p className="mt-1 line-clamp-1 font-semibold text-white">

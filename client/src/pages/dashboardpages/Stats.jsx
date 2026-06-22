@@ -8,7 +8,9 @@ const Stats = () => {
   return (
     <div className="space-y-6">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold tracking-tight text-white">Stats</h1>
+        <h1 className="text-2xl font-bold tracking-tight text-white sm:text-3xl">
+          Stats
+        </h1>
         <p className="mt-2 text-white/50">
           View detailed statistics about your backlog
         </p>

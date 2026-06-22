@@ -47,7 +47,7 @@ const GameCard = ({ game, onRemove }) => {
   
   return (
     <Link to={`/dashboard/games/${game.id}`}>
-      <article className="relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 shadow-xl transition hover:-translate-y-1 hover:bg-white/10 ">
+      <article className="relative h-full overflow-hidden rounded-2xl border border-white/10 bg-white/5 shadow-xl transition hover:-translate-y-1 hover:bg-white/10 ">
         {onRemove && (
           <button
             onClick={(event) => {
@@ -63,7 +63,7 @@ const GameCard = ({ game, onRemove }) => {
           </button>
         )}
 
-        <div className="h-50 overflow-hidden rounded-xl bg-black/30">
+        <div className="h-56 overflow-hidden rounded-xl bg-black/30 sm:h-60">
           {coverImage ? (
             <img
               src={coverImage}
@@ -77,23 +77,27 @@ const GameCard = ({ game, onRemove }) => {
           )}
         </div>
 
-        <div className="p-4">
+        <div className="p-3 sm:p-4">
           <div className="mb-3 flex items-start justify-between gap-3">
-            <div>
+            <div className="min-w-0">
               <h2 className="font-semibold text-white">{title}</h2>
 
               <div className="mt-1 flex items-center gap-2 text-white/50">
-                <span className="text-lg">{getPlatformIcon(platform)}</span>
-                <span className="text-sm">{platform || "No platform"}</span>
+                <span className="shrink-0 text-lg">
+                  {getPlatformIcon(platform)}
+                </span>
+                <span className="min-w-0 truncate text-sm">
+                  {platform || "No platform"}
+                </span>
               </div>
             </div>
 
-            <span className="rounded-full border border-white/10 bg-white/10 px-3 py-1 text-xs text-white/70">
+            <span className="shrink-0 rounded-full border border-white/10 bg-white/10 px-3 py-1 text-xs text-white/70">
               {game.status}
             </span>
           </div>
 
-          <div className="grid grid-cols-2 gap-3 text-sm">
+          <div className="grid gap-3 text-sm sm:grid-cols-2">
             <div className="rounded-xl bg-black/20 p-3">
               <p className="text-white/40">Time to Beat</p>
               <p className="mt-1 font-semibold text-white">

@@ -29,8 +29,8 @@ const GamesByPlatformChart = ({ games = [] }) => {
   const platformData = getGamesByPlatform(games);
 
   return (
-    <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-6 shadow-lg">
-      <div className="mb-6">
+    <div className="min-w-0 rounded-2xl border border-white/10 bg-white/[0.03] p-4 shadow-lg sm:p-6">
+      <div className="mb-5 sm:mb-6">
         <h2 className="text-lg font-semibold text-white">Games by Platform</h2>
         <p className="mt-1 text-sm text-white/50">
           See where most of your tracked games are stored.
@@ -38,50 +38,52 @@ const GamesByPlatformChart = ({ games = [] }) => {
       </div>
 
       {platformData.length === 0 ? (
-        <div className="flex h-64 items-center justify-center rounded-xl border border-white/10 bg-black/20 text-sm text-white/50">
+        <div className="flex h-56 items-center justify-center rounded-xl border border-white/10 bg-black/20 text-sm text-white/50 sm:h-64">
           No platform data yet.
         </div>
       ) : (
-        <div className="h-72">
-          <ResponsiveContainer width="100%" height="100%">
-            <BarChart data={platformData}>
-              <XAxis
-                dataKey="platform"
-                tick={{ fill: "#9ca3af", fontSize: 12 }}
-                axisLine={false}
-                tickLine={false}
-              />
+        <div className="-mx-2 overflow-x-auto px-2">
+          <div className="h-64 min-w-[520px] sm:h-72 sm:min-w-0">
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={platformData}>
+                <XAxis
+                  dataKey="platform"
+                  tick={{ fill: "#9ca3af", fontSize: 12 }}
+                  axisLine={false}
+                  tickLine={false}
+                />
 
-              <YAxis
-                allowDecimals={false}
-                tick={{ fill: "#9ca3af", fontSize: 12 }}
-                axisLine={false}
-                tickLine={false}
-              />
+                <YAxis
+                  allowDecimals={false}
+                  tick={{ fill: "#9ca3af", fontSize: 12 }}
+                  axisLine={false}
+                  tickLine={false}
+                />
 
-              <Tooltip
-                cursor={{ fill: "rgba(255, 255, 255, 0.05)" }}
-                contentStyle={{
-                  backgroundColor: "#14141400",
-                  border: "1px solid rgb(139, 92, 246)",
-                  borderRadius: "12px",
-                  color: "#fff",
-                }}
-                itemStyle={{
-                  color: "#fff",
-                }}
-              />
+                <Tooltip
+                  cursor={{ fill: "rgba(255, 255, 255, 0.05)" }}
+                  contentStyle={{
+                    backgroundColor: "#14141400",
+                    border: "1px solid rgb(139, 92, 246)",
+                    borderRadius: "12px",
+                    color: "#fff",
+                  }}
+                  itemStyle={{
+                    color: "#fff",
+                  }}
+                />
 
-              <Bar dataKey="count" name="Games" radius={[8, 8, 0, 0]}>
-                {platformData.map((entry) => (
-                  <Cell
-                    key={entry.platform}
-                    fill={PLATFORM_COLORS[entry.platform] || "#fdfeff"}
-                  />
-                ))}
-              </Bar>
-            </BarChart>
-          </ResponsiveContainer>
+                <Bar dataKey="count" name="Games" radius={[8, 8, 0, 0]}>
+                  {platformData.map((entry) => (
+                    <Cell
+                      key={entry.platform}
+                      fill={PLATFORM_COLORS[entry.platform] || "#fdfeff"}
+                    />
+                  ))}
+                </Bar>
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
         </div>
       )}
     </div>

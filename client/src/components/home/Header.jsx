@@ -4,35 +4,35 @@ import SignupBtn from "../ui/SignupBtn";
 const Header = () => {
   return (
     <header className="sticky top-0 z-50 border-b border-white/10 bg-black/30 backdrop-blur-xl">
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 md:px-10 lg:px-16">
-        <h1 className="text-xl font-bold tracking-tight text-white">
+      <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-3 px-4 py-3 sm:px-6 md:flex-nowrap md:px-10 md:py-4 lg:px-16">
+        <h1 className="shrink-0 text-xl font-bold tracking-tight text-white">
           Game<span className="text-cyan-400">Backlog</span>
         </h1>
 
-        <nav className="flex items-center gap-8">
+        <nav className="order-3 flex w-full items-center justify-center gap-4 overflow-x-auto pt-1 sm:gap-6 md:order-none md:w-auto md:justify-start md:gap-8 md:overflow-visible md:pt-0">
           <Link
             to="/"
-            className="text-sm font-medium text-zinc-300 transition hover:text-white"
+            className="shrink-0 text-sm font-medium text-zinc-300 transition hover:text-white"
           >
             Home
           </Link>
 
           <Link
             to="/features"
-            className="text-sm font-medium text-zinc-300 transition hover:text-white"
+            className="shrink-0 text-sm font-medium text-zinc-300 transition hover:text-white"
           >
             features
           </Link>
 
           <Link
             to="/about"
-            className="text-sm font-medium text-zinc-300 transition hover:text-white"
+            className="shrink-0 text-sm font-medium text-zinc-300 transition hover:text-white"
           >
             about
           </Link>
         </nav>
 
-        <div className="flex items-center gap-3">
+        <div className="flex shrink-0 items-center gap-3">
             <LoginBtn />
           
           
