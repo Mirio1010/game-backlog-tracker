@@ -32,12 +32,12 @@ const DashBoard = () => {
 
   return (
     <MainLayout>
-      <div className="flex h-screen overflow-hidden">
-        <aside className="h-screen w-64 shrink-0">
+      <div className="flex min-h-screen flex-col md:h-screen md:flex-row md:overflow-hidden">
+        <aside className="shrink-0 md:h-screen md:w-64">
           <SideBar />
         </aside>
 
-        <main className="flex-1 overflow-y-auto bg-gradient-to-br from-zinc-950 via-slate-900 to-black p-8 text-white">
+        <main className="min-w-0 flex-1 bg-gradient-to-br from-zinc-950 via-slate-900 to-black p-4 text-white sm:p-6 md:overflow-y-auto md:p-8">
           <Outlet
             context={{
               games,
