@@ -62,6 +62,10 @@ const getMyGames = async (req, res) => {
       .eq("user_id", req.user.id)
       .order("created_at", { ascending: false });
 
+      
+      
+      
+
     if (error) {
       console.error("Error fetching games:", error);
 

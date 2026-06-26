@@ -7,7 +7,7 @@ import "../../styles/hero.css";
 import GetStartedBtn from './GetStartedBtn.jsx';
 
 import { TextEffect } from '../motion-primitives/text-effect.jsx';
-
+import { Magnetic } from '../motion-primitives/magnetic.jsx';
 const Hero = () => {
  return (
    <section className="relative overflow-hidden bg-gradient-to-br from-zinc-950 via-slate-900 to-black text-white">
@@ -44,7 +44,13 @@ const Hero = () => {
          </p>
 
          <div className="flex flex-col gap-4 sm:flex-row">
-           <GetStartedBtn />
+           <Magnetic
+             intensity={0.5}
+             actionArea="global"
+             range={100}
+           >
+             <GetStartedBtn />
+           </Magnetic>
          </div>
        </div>
 
