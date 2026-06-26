@@ -5,6 +5,7 @@ import { useState } from "react";
 import FilterUI from "../../components/ui/FilterUI";
 
 import { deleteGame } from "../../api/gamesApi";
+import { AnimatedGroup } from "../../components/motion-primitives/animated-group";
 
 const BacklogPage = () => {
   const { games, setGames } = useOutletContext();
@@ -29,22 +30,19 @@ const BacklogPage = () => {
     return matchesStatus && matchesPlatform && matchesSearch;
   });
 
- const handleRemoveGame = async (gameId) => {
-   try {
-     await deleteGame(gameId);
+  const handleRemoveGame = async (gameId) => {
+    try {
+      await deleteGame(gameId);
 
-     setGames((currentGames) =>
-       currentGames.filter((game) => game.id !== gameId),
-     );
-   } catch (error) {
-     console.error("Delete game error:", error);
-   }
- };
+      setGames((currentGames) =>
+        currentGames.filter((game) => game.id !== gameId),
+      );
+    } catch (error) {
+      console.error("Delete game error:", error);
+    }
+  };
 
-
-console.log(filteredGames);
-
- 
+  console.log(filteredGames);
 
   return (
     <section>
@@ -76,11 +74,25 @@ console.log(filteredGames);
           </p>
         </div>
       ) : (
-        <div className="grid gap-4 sm:grid-cols-2 sm:gap-6 xl:grid-cols-3 2xl:grid-cols-4">
+        <AnimatedGroup
+          preset="blur-slide"
+          className="grid gap-4 sm:grid-cols-2 sm:gap-6 xl:grid-cols-3 2xl:grid-cols-4"
+          variants={{
+            container: {
+              hidden: { opacity: 0 },
+              visible: {
+                opacity: 1,
+                transition: {
+                  staggerChildren: 0.07,
+                },
+              },
+            },
+          }}
+        >
           {filteredGames.map((game) => (
             <GameCard key={game.id} game={game} onRemove={handleRemoveGame} />
           ))}
-        </div>
+        </AnimatedGroup>
       )}
     </section>
   );
