@@ -1,6 +1,6 @@
 import StatCard from "./StatCard";
 import { getGameStats } from "../../utils/gameStats";
-
+import { Tilt } from "../motion-primitives/tilt";
 const DashboardStats = ({ games = [] }) => {
   const {
     totalGames,
@@ -47,7 +47,6 @@ const DashboardStats = ({ games = [] }) => {
         value={`${completionRate}%`}
         subtitle={`${completedGames} out of ${totalGames} games completed`}
       />
-
     </div>
   );
 };
