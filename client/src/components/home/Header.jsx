@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import LoginBtn from "../ui/LoginBtn";
 import SignupBtn from "../ui/SignupBtn";
+
 const Header = () => {
   return (
     <header className="sticky top-0 z-50 border-b border-white/10 bg-black/30 backdrop-blur-xl">
@@ -43,5 +44,8 @@ const Header = () => {
     </header>
   );
 };
+
+
+
 
 export default Header;
