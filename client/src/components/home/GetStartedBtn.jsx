@@ -4,14 +4,14 @@ import { Magnetic } from "../motion-primitives/magnetic";
 const GetStartedBtn = () => {
   return (
     <Link to="/Signup" className="inline-block">
-      <button className="rounded-xl bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground shadow-lg shadow-primary/20 transition hover:bg-primary/90 hover:shadow-primary/30">
+      <button className="rounded-xl bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground shadow-lg shadow-primary/20 transition hover:bg-primary/90 hover:shadow-primary/30 cursor-pointer">
         <Magnetic
           intensity={0.25}
-          actionArea="parent"
+          actionArea="global"
           range={150}
           springOptions={{
             stiffness: 100,
-            damping: 5,
+            damping: 4,
             mass: 0.25,
           }}
         >

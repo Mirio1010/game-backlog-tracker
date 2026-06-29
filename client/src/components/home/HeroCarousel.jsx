@@ -47,9 +47,9 @@ const ProductPreviewCarousel = () => {
     <div className="relative">
       <GlowEffect
         colors={["#f93816", "#8b5cf6", "#f59e0b", "#f93816"]}
-        mode="rotate"
+        mode="breathe"
         blur="stronger"
-        scale={0.93}
+        scale={1.15}
         duration={4}
         className="opacity-35"
       />
