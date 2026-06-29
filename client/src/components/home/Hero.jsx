@@ -8,10 +8,12 @@ import GetStartedBtn from "./GetStartedBtn.jsx";
 
 import { TextEffect } from "../motion-primitives/text-effect.jsx";
 import { Magnetic } from "../motion-primitives/magnetic.jsx";
+import ProductPreviewCarousel from "./HeroCarousel.jsx";
+
 const Hero = () => {
   return (
     <section className="relative overflow-hidden bg-gradient-to-br from-background via-surface to-background text-foreground">
-      <div className="mx-auto grid min-h-[80vh] max-w-7xl items-center gap-10 px-4 py-12 sm:px-6 sm:py-16 md:px-10 lg:min-h-[90vh] lg:grid-cols-2 lg:gap-20 lg:px-16">
+      <div className="mx-auto grid min-h-[80vh] max-w-[92rem] items-center gap-10 px-4 py-12 sm:px-6 sm:py-16 md:px-10 lg:min-h-[90vh] lg:grid-cols-[0.75fr_1.25fr] lg:gap-30 lg:px-10 xl:px-8">
         <div className="space-y-5 sm:space-y-6">
           <TextEffect
             as="h1"
@@ -43,14 +45,12 @@ const Hero = () => {
           </div>
         </div>
 
-        {/* Home Image */}
+        <div className="relative flex w-full items-center justify-center lg:justify-end">
+          <div className="absolute -left-10 top-10 h-72 w-72 rounded-full bg-primary/20 blur-3xl"></div>
+          <div className="absolute -right-10 bottom-10 h-72 w-72 rounded-full bg-accent/20 blur-3xl"></div>
 
-        <div className="relative flex items-center justify-center">
-          <div className="absolute -left-10 top-10 h-72 w-72 rounded-full bg-cyan-500/20 blur-3xl"></div>
-          <div className="absolute -right-10 bottom-10 h-72 w-72 rounded-full bg-blue-500/20 blur-3xl"></div>
-
-          <div className="relative w-full max-w-xl rounded-3xl border border-border bg-card p-2 shadow-2xl shadow-black/40 backdrop-blur-xl sm:p-4">
-            <HomeImage />
+          <div className="relative w-full max-w-none rounded-3xl border border-border bg-card p-2 shadow-2xl shadow-black/40 backdrop-blur-xl">
+            <ProductPreviewCarousel />
           </div>
         </div>
       </div>
