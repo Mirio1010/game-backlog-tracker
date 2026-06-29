@@ -22,7 +22,7 @@ const Hero = () => {
             className="max-w-2xl text-3xl font-extrabold leading-tight tracking-tight sm:text-5xl lg:text-6xl"
             getSegmentClassName={(segment, index) =>
               index === 1
-                ? "bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent"
+                ? "bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent"
                 : ""
             }
           >
