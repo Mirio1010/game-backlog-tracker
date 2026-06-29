@@ -29,12 +29,7 @@ const Hero = () => {
            {"Destroy your game backlog\none step at a time"}
          </TextEffect>
 
-         {/* <h1 className="max-w-2xl text-3xl font-extrabold leading-tight tracking-tight sm:text-5xl lg:text-6xl">
-           Destroy your game backlog
-           <span className="block bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
-             one step at a time
-           </span>
-         </h1> */}
+        
 
          <p className="max-w-xl text-sm leading-7 text-zinc-300 sm:text-base sm:leading-8 lg:text-lg">
            Welcome to Game Backlog Tracker, the ultimate tool for gamers who
@@ -53,6 +48,8 @@ const Hero = () => {
            </Magnetic>
          </div>
        </div>
+
+       {/* Home Image */}
 
        <div className="relative flex items-center justify-center">
          <div className="absolute -left-10 top-10 h-72 w-72 rounded-full bg-cyan-500/20 blur-3xl"></div>
