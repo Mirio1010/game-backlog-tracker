@@ -86,20 +86,20 @@ const Form = () => {
       }),
     });
 
-   const data = await res.json();
+    const data = await res.json();
 
-   if (!res.ok) {
-     console.log("Backend error:", data.message);
-     setError(data.message || "Something went wrong. Please try again.");
-     return;
-   }
+    if (!res.ok) {
+      console.log("Backend error:", data.message);
+      setError(data.message || "Something went wrong. Please try again.");
+      return;
+    }
 
-   console.log("Success:", data);
-   navigate("/login", {
-     state: {
-       message: "Account created successfully. Please log in.",
-     },
-   });
+    console.log("Success:", data);
+    navigate("/login", {
+      state: {
+        message: "Account created successfully. Please log in.",
+      },
+    });
   };
 
   return (
@@ -109,7 +109,9 @@ const Form = () => {
 
         <div className="flex items-center justify-center bg-surface p-4 sm:p-10 md:p-16">
           <div className="w-full max-w-md rounded-2xl border border-border bg-surface/80 p-5 shadow-xl sm:p-8">
-            <h2 className="mb-6 text-2xl font-semibold text-foreground">Sign Up</h2>
+            <h2 className="mb-6 text-2xl font-semibold text-foreground">
+              Sign Up
+            </h2>
 
             <form
               autoComplete="off"
@@ -119,7 +121,7 @@ const Form = () => {
               <div className="space-y-2">
                 <label
                   htmlFor="username"
-                  className="text-sm font-medium text-zinc-200"
+                  className="text-sm font-medium text-muted"
                 >
                   Username
                 </label>
@@ -130,14 +132,14 @@ const Form = () => {
                   value={formData.username}
                   onChange={handleChange}
                   autoComplete="username"
-                  className="w-full rounded-xl border border-white/10 bg-zinc-800/80 px-4 py-3 text-white outline-none transition placeholder:text-zinc-500 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/30"
+                  className="w-full rounded-xl border border-border bg-card px-4 py-3 text-foreground outline-none transition placeholder:text-muted focus:border-primary focus:ring-2 focus:ring-primary/30"
                 />
               </div>
 
               <div className="space-y-2">
                 <label
                   htmlFor="email"
-                  className="text-sm font-medium text-zinc-200"
+                  className="text-sm font-medium text-muted"
                 >
                   Email
                 </label>
@@ -148,14 +150,14 @@ const Form = () => {
                   value={formData.email}
                   onChange={handleChange}
                   autoComplete="email"
-                  className="w-full rounded-xl border border-white/10 bg-zinc-800/80 px-4 py-3 text-white outline-none transition placeholder:text-zinc-500 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/30"
+                  className="w-full rounded-xl border border-border bg-card px-4 py-3 text-foreground outline-none transition placeholder:text-muted focus:border-primary focus:ring-2 focus:ring-primary/30"
                 />
               </div>
 
               <div className="space-y-2">
                 <label
                   htmlFor="password"
-                  className="text-sm font-medium text-zinc-200"
+                  className="text-sm font-medium text-muted"
                 >
                   Password
                 </label>
@@ -166,14 +168,14 @@ const Form = () => {
                   value={formData.password}
                   onChange={handleChange}
                   autoComplete="new-password"
-                  className="w-full rounded-xl border border-white/10 bg-zinc-800/80 px-4 py-3 text-white outline-none transition placeholder:text-zinc-500 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/30"
+                  className="w-full rounded-xl border border-border bg-card px-4 py-3 text-foreground outline-none transition placeholder:text-muted focus:border-primary focus:ring-2 focus:ring-primary/30"
                 />
               </div>
 
               <div className="space-y-2">
                 <label
                   htmlFor="confirmPassword"
-                  className="text-sm font-medium text-zinc-200"
+                  className="text-sm font-medium text-muted"
                 >
                   Confirm Password
                 </label>
@@ -189,7 +191,7 @@ const Form = () => {
                   value={formData.confirmPassword}
                   onChange={handleChange}
                   autoComplete="new-password"
-                  className="w-full rounded-xl border border-white/10 bg-zinc-800/80 px-4 py-3 text-white outline-none transition placeholder:text-zinc-500 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/30"
+                  className="w-full rounded-xl border border-border bg-card px-4 py-3 text-foreground outline-none transition placeholder:text-muted focus:border-primary focus:ring-2 focus:ring-primary/30"
                 />
               </div>
 

@@ -102,13 +102,13 @@ const AddGamePage = () => {
       </form>
 
       {searchTerm.trim() === "" && (
-        <div className="rounded-2xl border border-white/10 bg-white/5 p-8 text-center text-white/50">
+        <div className="rounded-2xl border border-border bg-card p-8 text-center text-muted">
           Search for a game to see results.
         </div>
       )}
 
       {isLoading && (
-        <div className="rounded-2xl border border-white/10 bg-white/5 p-8 text-center text-white/50">
+        <div className="rounded-2xl border border-border bg-card p-8 text-center text-muted">
           Searching games...
         </div>
       )}

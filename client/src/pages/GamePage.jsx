@@ -128,7 +128,7 @@ const GamePage = () => {
         </section>
 
         <section className="mt-8 grid gap-4 sm:mt-10 sm:gap-6 lg:grid-cols-[minmax(0,1fr)_360px]">
-          <div className="min-w-0 rounded-3xl border border-white/10 bg-white/10 p-4 backdrop-blur sm:p-6">
+          <div className="min-w-0 rounded-3xl border border-border bg-card p-4 backdrop-blur sm:p-6">
             <h2 className="text-xl font-bold sm:text-2xl">Notes</h2>
 
             <p className="mt-4 leading-7 text-muted">
@@ -136,7 +136,7 @@ const GamePage = () => {
             </p>
           </div>
 
-          <div className="min-w-0 rounded-3xl border border-white/10 bg-white/10 p-4 backdrop-blur sm:p-6">
+          <div className="min-w-0 rounded-3xl border border-border bg-card p-4 backdrop-blur sm:p-6">
             <h2 className="text-xl font-bold sm:text-2xl">Platforms</h2>
 
             <div className="mt-4 flex flex-wrap gap-2">
@@ -262,7 +262,7 @@ const GamePreview = ({
               Gameplay Videos
             </h3>
 
-            <span className="rounded-full border border-emerald-400/20 bg-emerald-500/10 px-3 py-1 text-xs font-medium text-emerald-100">
+            <span className="rounded-full border border-primary/20 bg-primary/10 px-3 py-1 text-xs font-medium text-primary">
               Found on RAWG
             </span>
           </div>
@@ -297,10 +297,12 @@ const GamePreview = ({
 
       {!isLoading && !error && !hasVideos && hasScreenshots && (
         <div>
-          <div className="mb-4 rounded-2xl border border-white/10 bg-black/30 p-5">
-            <h3 className="text-lg font-semibold text-white">Screenshots</h3>
+          <div className="mb-4 rounded-2xl border border-border bg-surface p-5">
+            <h3 className="text-lg font-semibold text-foreground">
+              Screenshots
+            </h3>
 
-            <p className="mt-2 text-sm leading-6 text-white/60">
+            <p className="mt-2 text-sm leading-6 text-muted">
               No gameplay videos were found for this game, so here are
               screenshots from RAWG instead.
             </p>
@@ -327,7 +329,9 @@ const GamePreview = ({
 
       {!isLoading && !error && !hasVideos && !hasScreenshots && (
         <div className="rounded-2xl border border-border bg-surface p-5">
-          <h3 className="text-lg font-semibold text-foreground">No preview found</h3>
+          <h3 className="text-lg font-semibold text-foreground">
+            No preview found
+          </h3>
 
           <p className="mt-2 text-sm leading-6 text-muted">
             No videos or screenshots were found for this game yet.
@@ -344,7 +348,7 @@ const GamePreview = ({
       )}
 
       {selectedScreenshot && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 p-4 sm:p-6">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-background/95 p-4 sm:p-6">
           <button
             type="button"
             onClick={closeScreenshot}

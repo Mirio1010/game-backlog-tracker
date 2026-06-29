@@ -104,7 +104,9 @@ const Form = () => {
 
         <div className="flex items-center justify-center bg-surface p-4 sm:p-10 md:p-16">
           <div className="w-full max-w-md rounded-2xl border border-border bg-surface/80 p-5 shadow-xl sm:p-8">
-            <h2 className="mb-6 text-2xl font-semibold text-foreground">Log In</h2>
+            <h2 className="mb-6 text-2xl font-semibold text-foreground">
+              Log In
+            </h2>
 
             {error && (
               <p className="mb-4 rounded-xl border border-red-500/20 bg-red-500/10 px-4 py-3 text-sm text-red-300">
@@ -122,7 +124,7 @@ const Form = () => {
               <div className="space-y-2">
                 <label
                   htmlFor="email"
-                  className="text-sm font-medium text-zinc-200"
+                  className="text-sm font-medium text-muted"
                 >
                   Email
                 </label>
@@ -134,14 +136,14 @@ const Form = () => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   disabled={isLoading}
-                  className="w-full rounded-xl border border-white/10 bg-zinc-800/80 px-4 py-3 text-white outline-none transition placeholder:text-zinc-500 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/30 disabled:cursor-not-allowed disabled:opacity-70"
+                  className="w-full rounded-xl border border-border bg-card px-4 py-3 text-foreground outline-none transition placeholder:text-muted focus:border-primary focus:ring-2 focus:ring-primary/30 disabled:cursor-not-allowed disabled:opacity-70"
                 />
               </div>
 
               <div className="space-y-2">
                 <label
                   htmlFor="password"
-                  className="text-sm font-medium text-zinc-200"
+                  className="text-sm font-medium text-muted"
                 >
                   Password
                 </label>
@@ -153,7 +155,7 @@ const Form = () => {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   disabled={isLoading}
-                  className="w-full rounded-xl border border-white/10 bg-zinc-800/80 px-4 py-3 text-white outline-none transition placeholder:text-zinc-500 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/30 disabled:cursor-not-allowed disabled:opacity-70"
+                  className="w-full rounded-xl border border-border bg-card px-4 py-3 text-foreground outline-none transition placeholder:text-muted focus:border-primary focus:ring-2 focus:ring-primary/30 disabled:cursor-not-allowed disabled:opacity-70"
                 />
               </div>
 

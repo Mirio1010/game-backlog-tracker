@@ -55,21 +55,21 @@ const BacklogPage = () => {
         setSearchTerm={setSearchTerm}
       />
       <div className="mb-8">
-        <h1 className="text-2xl font-bold tracking-tight text-white sm:text-3xl">
+        <h1 className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
           My Backlog
         </h1>
 
-        <p className="mt-2 text-white/50">
+        <p className="mt-2 text-muted">
           View and manage every game in your backlog.
         </p>
       </div>
 
       {games.length === 0 ? (
-        <div className="rounded-2xl border border-white/10 bg-white/5 p-8 text-center">
-          <h2 className="text-xl font-semibold text-white">
+        <div className="rounded-2xl border border-border bg-card p-8 text-center">
+          <h2 className="text-xl font-semibold text-foreground">
             No games in your backlog yet.
           </h2>
-          <p className="mt-2 text-white/50">
+          <p className="mt-2 text-muted">
             Add your first game from the Add Game page.
           </p>
         </div>
