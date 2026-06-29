@@ -1,23 +1,33 @@
 @import "tailwindcss";
 
 :root {
-  --background: #09090b; /* zinc-950 */
+  /* Tailwind OG-style palette based on your live site */
+  --background: oklch(14.1% 0.005 285.823); /* zinc-950 */
   --foreground: #ffffff;
 
+  /* Old text-white/50 style */
   --muted-foreground: rgba(255, 255, 255, 0.5);
 
+  /* Old bg-white/5 glass card style */
   --card: rgba(255, 255, 255, 0.05);
+
+  /* Extra soft surface layer */
   --surface: rgba(255, 255, 255, 0.03);
 
+  /* Old border-white/10 */
   --border: rgba(255, 255, 255, 0.1);
 
-  --primary: #8b5cf6; /* violet-500 */
-  --accent: #06b6d4; /* cyan-500 */
+  /* Main buttons were mostly cyan */
+  --primary: oklch(71.5% 0.143 215.221); /* cyan-500 */
 
-  --primary-foreground: #ffffff;
+  /* Purple/violet should be the secondary accent */
+  --accent: oklch(60.6% 0.25 292.717); /* violet-500 */
+
+  /* Cyan buttons usually need dark text for contrast */
+  --primary-foreground: #020617;
 }
 
-/* Tailwind v4 theme tokens */
+/* Tailwind v4 custom theme tokens */
 @theme {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -37,10 +47,7 @@ html {
 }
 
 body {
-  background:
-    radial-gradient(circle at top left, rgba(139, 92, 246, 0.12), transparent 32rem),
-    radial-gradient(circle at top right, rgba(6, 182, 212, 0.1), transparent 28rem),
-    linear-gradient(135deg, #09090b 0%, #0f172a 45%, #000000 100%);
+  background-color: var(--background);
   color: var(--foreground);
   min-height: 100vh;
 }
@@ -60,12 +67,12 @@ body {
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(139, 92, 246, 0.55);
+  background: color-mix(in oklch, var(--primary) 55%, transparent);
 }
 
 * {
   scrollbar-width: thin;
-  scrollbar-color: rgba(139, 92, 246, 0.35) transparent;
+  scrollbar-color: color-mix(in oklch, var(--primary) 35%, transparent) transparent;
 }
 
 @keyframes slow-pan {

@@ -1,6 +1,6 @@
 const MainLayout = ({ children }) => {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-surface to-background text-foreground">
+    <div className="min-h-screen bg-gradient-to-br from-zinc-950 via-slate-950 to-black text-white">
       {children}
     </div>
   );
