@@ -39,7 +39,16 @@ const Hero = () => {
           </p>
 
           <div className="flex flex-col gap-4 sm:flex-row">
-            <Magnetic intensity={0.5} actionArea="global" range={100}>
+            <Magnetic
+              intensity={0.5}
+              actionArea="global"
+              range={200}
+              springOptions={{
+                stiffness: 220,
+                damping: 12,
+                mass: 0.3,
+              }}
+            >
               <GetStartedBtn />
             </Magnetic>
           </div>
