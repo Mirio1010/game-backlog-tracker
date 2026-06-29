@@ -1,6 +1,175 @@
 @import "tailwindcss";
 
-/* Softer glass-style scrollbar */
+/*
+  Theme variables
+
+  These are CSS variables that control the main colors of the app.
+  The components should use Tailwind classes like:
+
+  bg-background
+  text-foreground
+  bg-card
+  border-border
+  bg-primary
+  text-primary-foreground
+
+  The goal is to let you change the site's visual style mostly from here.
+*/
+:root {
+  /*
+    Main page background color.
+
+    This is the base dark color behind the whole app.
+    It is similar to Tailwind's zinc-950.
+    Used by: bg-background, body background, and dark layout areas.
+  */
+  --background: oklch(14.1% 0.005 285.823);
+
+  /*
+    Main text color.
+
+    This is used for normal readable text, headings, labels, and anything
+    that should be bright on the dark background.
+    Used by: text-foreground.
+  */
+  --foreground: #ffffff;
+
+  /*
+    Muted/secondary text color.
+
+    This is for less important text like descriptions, subtitles,
+    helper text, timestamps, and card captions.
+    It replaces things like text-white/50.
+    Used by: text-muted-foreground.
+  */
+  --muted-foreground: rgba(255, 255, 255, 0.5);
+
+  /*
+    Card background color.
+
+    This is the glassy panel color for dashboard cards, stat cards,
+    preview cards, form containers, and similar UI blocks.
+    It replaces things like bg-white/5.
+    Used by: bg-card.
+  */
+  --card: rgba(255, 255, 255, 0.05);
+
+  /*
+    Surface color.
+
+    This is for secondary layers inside the UI:
+    nested panels, hover backgrounds, input areas, sidebar surfaces,
+    dropdowns, or slightly different sections.
+
+    Be careful using this for big page backgrounds.
+    Since it is semi-transparent white, it can make large areas look lighter.
+    Used by: bg-surface.
+  */
+  --surface: rgba(255, 255, 255, 0.03);
+
+  /*
+    Border color.
+
+    This controls subtle outlines around cards, inputs, modals,
+    buttons, and dividers.
+    It replaces things like border-white/10.
+    Used by: border-border.
+  */
+  --border: rgba(255, 255, 255, 0.1);
+
+/*
+  Primary brand/action color.
+
+  This is the main interactive color of the app.
+  It is usually used for important buttons, active states,
+  selected filters, links, and key highlights.
+  Used by: bg-primary, text-primary, border-primary.
+
+  This red-orange gives the app a more bold/action-focused feel.
+*/
+--primary: #f93816;
+
+/*
+  Accent color.
+
+  This is the secondary brand color.
+  It is usually used for gradients, decorative highlights,
+  chart accents, icons, or smaller UI details.
+
+  Think of primary as the main action color.
+  Think of accent as the supporting personality color.
+  Used by: bg-accent, text-accent, border-accent.
+*/
+--accent: oklch(60.6% 0.25 292.717);
+
+/*
+  Text color placed on top of the primary color.
+
+  Since the primary color is now a strong red-orange,
+  white text gives better readability on buttons.
+*/
+--primary-foreground: #ffffff;
+}
+
+/*
+  Tailwind v4 theme tokens
+
+  This section tells Tailwind to create utility classes from your CSS variables.
+
+  For example:
+  --color-background creates bg-background, text-background, border-background, etc.
+  --color-primary creates bg-primary, text-primary, border-primary, etc.
+
+  Without this @theme block, Tailwind may not understand your custom color names.
+*/
+@theme {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-card: var(--card);
+  --color-surface: var(--surface);
+  --color-border: var(--border);
+  --color-primary: var(--primary);
+  --color-accent: var(--accent);
+  --color-primary-foreground: var(--primary-foreground);
+}
+
+/*
+  Base HTML settings
+
+  color-scheme: dark tells the browser this site is designed for dark mode.
+  This affects built-in browser UI like form controls and scrollbars.
+*/
+html {
+  color-scheme: dark;
+  background-color: var(--background);
+  color: var(--foreground);
+}
+
+/*
+  Body defaults
+
+  This sets the fallback app background and text color.
+
+  Your MainLayout can still apply the larger page gradient with Tailwind:
+  bg-gradient-to-br from-zinc-950 via-slate-900 to-black
+
+  Keeping body simple is good because it prevents the body background
+  and layout background from fighting each other.
+*/
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  min-height: 100vh;
+}
+
+/*
+  Softer glass-style scrollbar.
+
+  Kept neutral on purpose so the scrollbar does not compete with
+  the primary brand color. Since --primary is now a bold orange,
+  using it here would make the UI feel too orange.
+*/
 ::-webkit-scrollbar {
   width: 8px;
 }
@@ -9,22 +178,43 @@
   background: transparent;
 }
 
+/*
+  Normal scrollbar thumb color.
+
+  This is the draggable part of the scrollbar.
+  The white transparency keeps it subtle on the dark background.
+*/
 ::-webkit-scrollbar-thumb {
   background: rgba(255, 255, 255, 0.18);
   border-radius: 999px;
 }
 
+/*
+  Scrollbar hover color.
+
+  Slightly brighter than the normal state, but still neutral.
+*/
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(167, 139, 250, 0.55);
+  background: rgba(255, 255, 255, 0.28);
 }
 
+/*
+  Firefox scrollbar styles.
+
+  Firefox does not use ::-webkit-scrollbar, so this gives it
+  a similar neutral scrollbar style.
+*/
 * {
   scrollbar-width: thin;
-  scrollbar-color: rgba(123, 173, 238, 0.22) transparent;
+  scrollbar-color: rgba(255, 255, 255, 0.22) transparent;
 }
 
+/*
+  Slow pan animation.
 
-
+  This is likely used for hero/game background images.
+  It slowly zooms and moves the image to create subtle motion.
+*/
 @keyframes slow-pan {
   0% {
     transform: scale(1.12) translate(0px, 0px);
@@ -39,6 +229,11 @@
   }
 }
 
+/*
+  Utility class for the slow-pan animation.
+
+  Use this on an image or background layer when you want that slow cinematic movement.
+*/
 .animate-slow-pan {
   animation: slow-pan 18s ease-in-out infinite;
 }

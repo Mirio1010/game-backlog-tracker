@@ -3,14 +3,18 @@
 import React, { useState, useEffect, useRef } from "react";
 import { motion, useMotionValue, useSpring } from "motion/react";
 
-const SPRING_CONFIG = { stiffness: 26.7, damping: 4.1, mass: 0.2 };
+const SPRING_CONFIG = {
+  stiffness: 180,
+  damping: 14,
+  mass: 0.35,
+};
 
 export function Magnetic({
   children,
   intensity = 0.6,
   range = 100,
   actionArea = "self",
-  springOptions = SPRING_CONFIG,
+  springOptions = {},
 }) {
   const [isHovered, setIsHovered] = useState(false);
   const ref = useRef(null);
@@ -18,8 +22,13 @@ export function Magnetic({
   const x = useMotionValue(0);
   const y = useMotionValue(0);
 
-  const springX = useSpring(x, springOptions);
-  const springY = useSpring(y, springOptions);
+  const mergedSpringOptions = {
+    ...SPRING_CONFIG,
+    ...springOptions,
+  };
+
+  const springX = useSpring(x, mergedSpringOptions);
+  const springY = useSpring(y, mergedSpringOptions);
 
   useEffect(() => {
     const calculateDistance = (e) => {
@@ -101,6 +110,7 @@ export function Magnetic({
         x: springX,
         y: springY,
       }}
+      className="inline-block"
     >
       {children}
     </motion.div>

@@ -85,11 +85,11 @@ const AddGamePage = () => {
   return (
     <section>
       <div className="mb-8">
-        <h1 className="text-2xl font-bold tracking-tight text-white sm:text-3xl">
+        <h1 className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
           Add Game
         </h1>
 
-        <p className="mt-2 text-white/50">
+        <p className="mt-2 text-muted">
           Search for a game and add it to your backlog.
         </p>
       </div>
@@ -102,13 +102,13 @@ const AddGamePage = () => {
       </form>
 
       {searchTerm.trim() === "" && (
-        <div className="rounded-2xl border border-white/10 bg-white/5 p-8 text-center text-white/50">
+        <div className="rounded-2xl border border-border bg-card p-8 text-center text-muted">
           Search for a game to see results.
         </div>
       )}
 
       {isLoading && (
-        <div className="rounded-2xl border border-white/10 bg-white/5 p-8 text-center text-white/50">
+        <div className="rounded-2xl border border-border bg-card p-8 text-center text-muted">
           Searching games...
         </div>
       )}

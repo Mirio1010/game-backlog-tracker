@@ -16,15 +16,15 @@ const LeftPanel = () => {
   return (
     <div className="flex items-center justify-center bg-gradient-to-br from-indigo-600/20 via-cyan-500/10 to-transparent p-6 sm:p-10 md:p-16">
       <div className="max-w-md space-y-4 sm:space-y-6">
-        <p className="text-sm font-medium uppercase tracking-[0.2em] text-cyan-300">
+        <p className="text-sm font-medium uppercase tracking-[0.2em] text-primary">
           GameBacklog
         </p>
 
-        <h1 className="text-3xl font-bold tracking-tight text-white sm:text-4xl md:text-5xl">
+        <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl md:text-5xl">
           Welcome Back
         </h1>
 
-        <p className="text-base leading-7 text-zinc-300">
+        <p className="text-base leading-7 text-muted">
           Did you know most gamers have a growing, unplayed library of dozens of
           games—sometimes over 100—built up through digital sales, subscription
           services like Game Pass, and free giveaways?
@@ -99,12 +99,14 @@ const Form = () => {
 
   return (
     <main>
-      <section className="grid min-h-[calc(100vh-105px)] grid-cols-1 overflow-hidden border border-white/10 bg-white/5 shadow-2xl backdrop-blur md:min-h-screen md:grid-cols-2">
+      <section className="grid min-h-[calc(100vh-105px)] grid-cols-1 overflow-hidden border border-border bg-card shadow-2xl backdrop-blur md:min-h-screen md:grid-cols-2">
         <LeftPanel />
 
-        <div className="flex items-center justify-center bg-black/20 p-4 sm:p-10 md:p-16">
-          <div className="w-full max-w-md rounded-2xl border border-white/10 bg-zinc-900/70 p-5 shadow-xl sm:p-8">
-            <h2 className="mb-6 text-2xl font-semibold text-white">Log In</h2>
+        <div className="flex items-center justify-center bg-surface p-4 sm:p-10 md:p-16">
+          <div className="w-full max-w-md rounded-2xl border border-border bg-surface/80 p-5 shadow-xl sm:p-8">
+            <h2 className="mb-6 text-2xl font-semibold text-foreground">
+              Log In
+            </h2>
 
             {error && (
               <p className="mb-4 rounded-xl border border-red-500/20 bg-red-500/10 px-4 py-3 text-sm text-red-300">
@@ -122,7 +124,7 @@ const Form = () => {
               <div className="space-y-2">
                 <label
                   htmlFor="email"
-                  className="text-sm font-medium text-zinc-200"
+                  className="text-sm font-medium text-muted"
                 >
                   Email
                 </label>
@@ -134,14 +136,14 @@ const Form = () => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   disabled={isLoading}
-                  className="w-full rounded-xl border border-white/10 bg-zinc-800/80 px-4 py-3 text-white outline-none transition placeholder:text-zinc-500 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/30 disabled:cursor-not-allowed disabled:opacity-70"
+                  className="w-full rounded-xl border border-border bg-card px-4 py-3 text-foreground outline-none transition placeholder:text-muted focus:border-primary focus:ring-2 focus:ring-primary/30 disabled:cursor-not-allowed disabled:opacity-70"
                 />
               </div>
 
               <div className="space-y-2">
                 <label
                   htmlFor="password"
-                  className="text-sm font-medium text-zinc-200"
+                  className="text-sm font-medium text-muted"
                 >
                   Password
                 </label>
@@ -153,14 +155,14 @@ const Form = () => {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   disabled={isLoading}
-                  className="w-full rounded-xl border border-white/10 bg-zinc-800/80 px-4 py-3 text-white outline-none transition placeholder:text-zinc-500 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/30 disabled:cursor-not-allowed disabled:opacity-70"
+                  className="w-full rounded-xl border border-border bg-card px-4 py-3 text-foreground outline-none transition placeholder:text-muted focus:border-primary focus:ring-2 focus:ring-primary/30 disabled:cursor-not-allowed disabled:opacity-70"
                 />
               </div>
 
               <button
                 type="submit"
                 disabled={isLoading}
-                className="flex w-full items-center justify-center gap-2 rounded-xl bg-cyan-400 px-4 py-3 font-semibold text-slate-950 transition hover:bg-cyan-300 active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-70"
+                className="flex w-full items-center justify-center gap-2 rounded-xl bg-primary px-4 py-3 font-semibold text-primary-foreground transition hover:bg-cyan-300 active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-70"
               >
                 {isLoading && (
                   <span className="h-5 w-5 animate-spin rounded-full border-2 border-slate-950/30 border-t-slate-950"></span>
@@ -170,7 +172,7 @@ const Form = () => {
               </button>
 
               {isLoading && (
-                <p className="text-center text-sm text-zinc-400">
+                <p className="text-center text-sm text-muted">
                   Waking things up, this may take a moment...
                 </p>
               )}

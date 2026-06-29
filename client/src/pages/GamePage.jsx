@@ -44,12 +44,12 @@ const GamePage = () => {
 
   if (!game) {
     return (
-      <div className="p-6 text-white">
+      <div className="p-6 text-foreground">
         <h1 className="text-2xl font-bold">Game not found</h1>
 
         <Link
           to="/dashboard/backlog"
-          className="mt-4 inline-block text-purple-300 hover:text-purple-200"
+          className="mt-4 inline-block text-primary hover:text-accent"
         >
           Back to backlog
         </Link>
@@ -58,7 +58,7 @@ const GamePage = () => {
   }
 
   return (
-    <div className="relative min-h-screen overflow-hidden text-white">
+    <div className="relative min-h-screen overflow-hidden text-foreground">
       <div className="absolute inset-0 overflow-hidden md:rounded-[2rem]">
         <img
           src={game.cover_image}
@@ -71,13 +71,13 @@ const GamePage = () => {
       <div className="relative z-10 mx-auto max-w-6xl p-4 sm:p-6">
         <Link
           to="/dashboard/backlog"
-          className="mb-6 inline-flex items-center rounded-full border border-white/10 bg-white/10 px-4 py-2 text-sm text-white/80 backdrop-blur transition hover:bg-white/20 hover:text-white sm:mb-8"
+          className="mb-6 inline-flex items-center rounded-full border border-border bg-card px-4 py-2 text-sm text-muted backdrop-blur transition hover:bg-white/20 hover:text-foreground sm:mb-8"
         >
           ← Back to backlog
         </Link>
 
         <section className="grid gap-8 md:grid-cols-[320px_1fr]">
-          <div className="overflow-hidden rounded-3xl border border-white/10 bg-white/10 shadow-2xl backdrop-blur">
+          <div className="overflow-hidden rounded-3xl border border-border bg-card shadow-2xl backdrop-blur">
             <img
               src={game.cover_image}
               alt={game.title}
@@ -87,11 +87,11 @@ const GamePage = () => {
 
           <div className="flex flex-col justify-end">
             <div className="mb-4 flex flex-wrap gap-3">
-              <span className="rounded-full border border-purple-400/30 bg-purple-500/20 px-4 py-1 text-sm font-medium text-purple-100">
+              <span className="rounded-full border border-primary/30 bg-primary/20 px-4 py-1 text-sm font-medium text-primary">
                 {game.status}
               </span>
 
-              <span className="rounded-full border border-white/10 bg-white/10 px-4 py-1 text-sm text-white/80">
+              <span className="rounded-full border border-border bg-card px-4 py-1 text-sm text-muted">
                 Playing on {game.selected_platform}
               </span>
             </div>
@@ -104,7 +104,7 @@ const GamePage = () => {
               {game.genres?.map((genre) => (
                 <span
                   key={genre}
-                  className="rounded-full border border-white/10 bg-black/30 px-3 py-1 text-sm text-white/70"
+                  className="rounded-full border border-border bg-surface px-3 py-1 text-sm text-muted"
                 >
                   {genre}
                 </span>
@@ -128,22 +128,22 @@ const GamePage = () => {
         </section>
 
         <section className="mt-8 grid gap-4 sm:mt-10 sm:gap-6 lg:grid-cols-[minmax(0,1fr)_360px]">
-          <div className="min-w-0 rounded-3xl border border-white/10 bg-white/10 p-4 backdrop-blur sm:p-6">
+          <div className="min-w-0 rounded-3xl border border-border bg-card p-4 backdrop-blur sm:p-6">
             <h2 className="text-xl font-bold sm:text-2xl">Notes</h2>
 
-            <p className="mt-4 leading-7 text-white/70">
+            <p className="mt-4 leading-7 text-muted">
               {game.notes || "You have not added any notes for this game yet."}
             </p>
           </div>
 
-          <div className="min-w-0 rounded-3xl border border-white/10 bg-white/10 p-4 backdrop-blur sm:p-6">
+          <div className="min-w-0 rounded-3xl border border-border bg-card p-4 backdrop-blur sm:p-6">
             <h2 className="text-xl font-bold sm:text-2xl">Platforms</h2>
 
             <div className="mt-4 flex flex-wrap gap-2">
               {game.platforms?.map((platform) => (
                 <span
                   key={platform}
-                  className="rounded-xl bg-black/30 px-3 py-2 text-sm text-white/70"
+                  className="rounded-xl bg-surface px-3 py-2 text-sm text-muted"
                 >
                   {platform}
                 </span>
@@ -216,18 +216,18 @@ const GamePreview = ({
   };
 
   return (
-    <section className="mt-8 rounded-3xl border border-white/10 bg-white/10 p-4 backdrop-blur sm:mt-10 sm:p-6">
+    <section className="mt-8 rounded-3xl border border-border bg-card p-4 backdrop-blur sm:mt-10 sm:p-6">
       <div className="mb-5 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <p className="text-sm font-medium uppercase tracking-[0.2em] text-purple-200/70">
+          <p className="text-sm font-medium uppercase tracking-[0.2em] text-primary">
             Media
           </p>
 
-          <h2 className="mt-2 text-xl font-bold text-white sm:text-2xl">
+          <h2 className="mt-2 text-xl font-bold text-foreground sm:text-2xl">
             Game Preview
           </h2>
 
-          <p className="mt-2 text-sm text-white/60">
+          <p className="mt-2 text-sm text-muted">
             Preview the game before deciding if it belongs at the top of your
             backlog.
           </p>
@@ -237,14 +237,14 @@ const GamePreview = ({
           href={youtubeSearchUrl}
           target="_blank"
           rel="noreferrer"
-          className="inline-flex w-full justify-center rounded-full border border-purple-400/30 bg-purple-500/20 px-4 py-2 text-sm font-medium text-purple-100 transition hover:bg-purple-500/30 hover:text-white sm:w-fit"
+          className="inline-flex w-full justify-center rounded-full border border-primary/30 bg-primary/20 px-4 py-2 text-sm font-medium text-primary transition hover:bg-primary/30 hover:text-foreground sm:w-fit"
         >
           Search gameplay on YouTube
         </a>
       </div>
 
       {isLoading && (
-        <div className="rounded-2xl border border-white/10 bg-black/30 p-5 text-sm text-white/60">
+        <div className="rounded-2xl border border-border bg-surface p-5 text-sm text-muted">
           Loading game preview...
         </div>
       )}
@@ -262,7 +262,7 @@ const GamePreview = ({
               Gameplay Videos
             </h3>
 
-            <span className="rounded-full border border-emerald-400/20 bg-emerald-500/10 px-3 py-1 text-xs font-medium text-emerald-100">
+            <span className="rounded-full border border-primary/20 bg-primary/10 px-3 py-1 text-xs font-medium text-primary">
               Found on RAWG
             </span>
           </div>
@@ -271,7 +271,7 @@ const GamePreview = ({
             {videos.map((video) => (
               <article
                 key={video.id}
-                className="overflow-hidden rounded-2xl border border-white/10 bg-black/30"
+                className="overflow-hidden rounded-2xl border border-border bg-surface"
               >
                 <div className="aspect-video bg-black">
                   <video
@@ -285,7 +285,7 @@ const GamePreview = ({
                 </div>
 
                 <div className="p-4">
-                  <h3 className="font-semibold text-white">
+                  <h3 className="font-semibold text-foreground">
                     {video.title || "Gameplay video"}
                   </h3>
                 </div>
@@ -297,10 +297,12 @@ const GamePreview = ({
 
       {!isLoading && !error && !hasVideos && hasScreenshots && (
         <div>
-          <div className="mb-4 rounded-2xl border border-white/10 bg-black/30 p-5">
-            <h3 className="text-lg font-semibold text-white">Screenshots</h3>
+          <div className="mb-4 rounded-2xl border border-border bg-surface p-5">
+            <h3 className="text-lg font-semibold text-foreground">
+              Screenshots
+            </h3>
 
-            <p className="mt-2 text-sm leading-6 text-white/60">
+            <p className="mt-2 text-sm leading-6 text-muted">
               No gameplay videos were found for this game, so here are
               screenshots from RAWG instead.
             </p>
@@ -312,7 +314,7 @@ const GamePreview = ({
                 key={screenshot.id}
                 type="button"
                 onClick={() => openScreenshot(index)}
-                className="group overflow-hidden rounded-2xl border border-white/10 bg-black/30 text-left"
+                className="group overflow-hidden rounded-2xl border border-border bg-surface text-left"
               >
                 <img
                   src={screenshot.image}
@@ -326,10 +328,12 @@ const GamePreview = ({
       )}
 
       {!isLoading && !error && !hasVideos && !hasScreenshots && (
-        <div className="rounded-2xl border border-white/10 bg-black/30 p-5">
-          <h3 className="text-lg font-semibold text-white">No preview found</h3>
+        <div className="rounded-2xl border border-border bg-surface p-5">
+          <h3 className="text-lg font-semibold text-foreground">
+            No preview found
+          </h3>
 
-          <p className="mt-2 text-sm leading-6 text-white/60">
+          <p className="mt-2 text-sm leading-6 text-muted">
             No videos or screenshots were found for this game yet.
           </p>
 
@@ -344,11 +348,11 @@ const GamePreview = ({
       )}
 
       {selectedScreenshot && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 p-4 sm:p-6">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-background/95 p-4 sm:p-6">
           <button
             type="button"
             onClick={closeScreenshot}
-            className="absolute right-3 top-3 rounded-full border border-white/10 bg-white/10 px-4 py-2 text-sm font-semibold text-white backdrop-blur transition hover:bg-white/20 sm:right-5 sm:top-5"
+            className="absolute right-3 top-3 rounded-full border border-border bg-card px-4 py-2 text-sm font-semibold text-foreground backdrop-blur transition hover:bg-white/20 sm:right-5 sm:top-5"
           >
             Close
           </button>
@@ -357,7 +361,7 @@ const GamePreview = ({
             <button
               type="button"
               onClick={showPreviousScreenshot}
-              className="absolute bottom-5 left-4 rounded-full border border-white/10 bg-white/10 px-4 py-3 text-xl font-bold text-white backdrop-blur transition hover:bg-white/20 sm:bottom-auto sm:left-5 sm:top-1/2 sm:-translate-y-1/2 sm:text-2xl"
+              className="absolute bottom-5 left-4 rounded-full border border-border bg-card px-4 py-3 text-xl font-bold text-foreground backdrop-blur transition hover:bg-white/20 sm:bottom-auto sm:left-5 sm:top-1/2 sm:-translate-y-1/2 sm:text-2xl"
               aria-label="Previous screenshot"
             >
               ←
@@ -371,7 +375,7 @@ const GamePreview = ({
               className="max-h-[78vh] w-full rounded-2xl object-contain shadow-2xl sm:max-h-[90vh]"
             />
 
-            <p className="mt-4 text-center text-sm text-white/50">
+            <p className="mt-4 text-center text-sm text-muted">
               {selectedScreenshotIndex + 1} / {screenshots.length}
             </p>
           </div>
@@ -380,7 +384,7 @@ const GamePreview = ({
             <button
               type="button"
               onClick={showNextScreenshot}
-              className="absolute bottom-5 right-4 rounded-full border border-white/10 bg-white/10 px-4 py-3 text-xl font-bold text-white backdrop-blur transition hover:bg-white/20 sm:bottom-auto sm:right-5 sm:top-1/2 sm:-translate-y-1/2 sm:text-2xl"
+              className="absolute bottom-5 right-4 rounded-full border border-border bg-card px-4 py-3 text-xl font-bold text-foreground backdrop-blur transition hover:bg-white/20 sm:bottom-auto sm:right-5 sm:top-1/2 sm:-translate-y-1/2 sm:text-2xl"
               aria-label="Next screenshot"
             >
               →
@@ -394,9 +398,9 @@ const GamePreview = ({
 
 const StatCard = ({ label, value }) => {
   return (
-    <div className="min-w-0 rounded-2xl border border-white/10 bg-black/30 p-4 backdrop-blur">
-      <p className="text-sm text-white/50">{label}</p>
-      <p className="mt-1 break-words text-lg font-bold text-white sm:text-xl">
+    <div className="min-w-0 rounded-2xl border border-border bg-surface p-4 backdrop-blur">
+      <p className="text-sm text-muted">{label}</p>
+      <p className="mt-1 break-words text-lg font-bold text-foreground sm:text-xl">
         {value}
       </p>
     </div>
