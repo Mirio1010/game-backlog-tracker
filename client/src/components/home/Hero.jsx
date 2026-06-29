@@ -13,7 +13,7 @@ import ProductPreviewCarousel from "./HeroCarousel.jsx";
 const Hero = () => {
   return (
     <section className="relative overflow-hidden bg-gradient-to-br from-background via-surface to-background text-foreground">
-      <div className="mx-auto grid min-h-[80vh] max-w-[92rem] items-center gap-10 px-4 py-12 sm:px-6 sm:py-16 md:px-10 lg:min-h-[90vh] lg:grid-cols-[0.75fr_1.25fr] lg:gap-30 lg:px-10 xl:px-8">
+      <div className="mx-auto grid min-h-[80vh] max-w-[92rem] items-center gap-10 px-4 py-12 sm:px-6 sm:py-16 md:px-10 lg:min-h-[90vh] lg:grid-cols-[0.75fr_1.25fr] lg:gap-20 lg:px-10 xl:px-8">
         <div className="space-y-5 sm:space-y-6">
           <TextEffect
             as="h1"
