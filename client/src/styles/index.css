@@ -1,5 +1,28 @@
 @import "tailwindcss";
 
+:root {
+  --background: #020617;
+  --foreground: #f8fafc;
+  --muted-foreground: #94a3b8;
+  --card: rgba(255, 255, 255, 0.05);
+  --surface: rgba(0, 0, 0, 0.2);
+  --border: rgba(255, 255, 255, 0.1);
+  --primary: #06b6d4;
+  --accent: #6366f1;
+  --primary-foreground: #020617;
+}
+
+html {
+  color-scheme: dark;
+  background-color: var(--background);
+  color: var(--foreground);
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+}
+
 /* Softer glass-style scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
@@ -15,12 +38,12 @@
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(167, 139, 250, 0.55);
+  background: rgba(99, 102, 241, 0.55);
 }
 
 * {
   scrollbar-width: thin;
-  scrollbar-color: rgba(123, 173, 238, 0.22) transparent;
+  scrollbar-color: rgba(6, 182, 212, 0.22) transparent;
 }
 
 

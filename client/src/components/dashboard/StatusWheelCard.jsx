@@ -27,10 +27,10 @@ const StatusWheelCard = ({ games }) => {
   const colors = ["#8b5cf6", "#22c55e", "#f92516"];
 
   return (
-    <div className="w-full min-w-0 rounded-2xl border border-white/10 bg-white/5 p-6 text-white shadow-xl backdrop-blur">
+    <div className="w-full min-w-0 rounded-2xl border border-border bg-card p-6 text-foreground shadow-xl backdrop-blur">
       <div className="mb-6">
         <h2 className="text-xl font-semibold">Backlog Status</h2>
-        <p className="mt-1 text-sm text-white/50">
+        <p className="mt-1 text-sm text-muted">
           See how your games are split between playing, completed, and backlog.
         </p>
       </div>
@@ -67,7 +67,7 @@ const StatusWheelCard = ({ games }) => {
         {statusData.map((item, index) => (
           <div
             key={item.name}
-            className="flex items-center justify-between rounded-xl border border-white/10 bg-black/20 px-4 py-3"
+            className="flex items-center justify-between rounded-xl border border-border bg-surface px-4 py-3"
           >
             <div className="flex items-center gap-3">
               <span
@@ -75,10 +75,10 @@ const StatusWheelCard = ({ games }) => {
                 style={{ backgroundColor: colors[index] }}
               />
 
-              <span className="text-sm text-white/70">{item.name}</span>
+              <span className="text-sm text-muted">{item.name}</span>
             </div>
 
-            <span className="text-sm font-semibold text-white">
+            <span className="text-sm font-semibold text-foreground">
               {item.value}
             </span>
           </div>

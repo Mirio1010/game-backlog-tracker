@@ -85,11 +85,11 @@ const AddGamePage = () => {
   return (
     <section>
       <div className="mb-8">
-        <h1 className="text-2xl font-bold tracking-tight text-white sm:text-3xl">
+        <h1 className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
           Add Game
         </h1>
 
-        <p className="mt-2 text-white/50">
+        <p className="mt-2 text-muted">
           Search for a game and add it to your backlog.
         </p>
       </div>

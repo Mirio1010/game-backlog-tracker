@@ -7,19 +7,19 @@ const FilterUI = ({
   setSearchTerm,
 }) => {
   const selectClass =
-    "w-full rounded-xl border border-white/10 bg-white/10 px-4 py-2 text-white outline-none backdrop-blur-md transition focus:border-violet-400 focus:bg-white/15 md:w-auto md:min-w-40";
+    "w-full rounded-xl border border-border bg-card px-4 py-2 text-foreground outline-none backdrop-blur-md transition focus:border-primary focus:bg-white/15 md:w-auto md:min-w-40";
 
-  const optionClass = "bg-zinc-900 text-white";
+  const optionClass = "bg-surface text-foreground";
 
   return (
-    <div className="mb-6 rounded-2xl border border-white/10 bg-white/5 p-3 backdrop-blur sm:p-4">
+    <div className="mb-6 rounded-2xl border border-border bg-card p-3 backdrop-blur sm:p-4">
       <div className="flex flex-col gap-3 md:flex-row">
         <input
           type="text"
           value={searchTerm}
           onChange={(event) => setSearchTerm(event.target.value)}
           placeholder="Search games..."
-          className="w-full rounded-xl border border-white/10 bg-white/10 px-4 py-2 text-white placeholder:text-white/40 outline-none transition focus:border-violet-400 focus:bg-white/15 md:flex-1"
+          className="w-full rounded-xl border border-border bg-card px-4 py-2 text-foreground placeholder:text-muted outline-none transition focus:border-primary focus:bg-white/15 md:flex-1"
         />
 
         <select

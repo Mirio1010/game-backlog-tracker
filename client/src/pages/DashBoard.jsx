@@ -37,7 +37,7 @@ const DashBoard = () => {
           <SideBar />
         </aside>
 
-        <main className="min-w-0 flex-1 bg-gradient-to-br from-zinc-950 via-slate-900 to-black p-4 text-white sm:p-6 md:overflow-y-auto md:p-8">
+        <main className="min-w-0 flex-1 bg-gradient-to-br from-background via-surface to-background p-4 text-foreground sm:p-6 md:overflow-y-auto md:p-8">
           <Outlet
             context={{
               games,

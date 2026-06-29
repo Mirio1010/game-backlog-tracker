@@ -18,24 +18,24 @@ const SideBar = () => {
 
   const getLinkClasses = ({ isActive }) =>
     isActive
-      ? `${linkBaseClasses} shrink-0 bg-white/10 text-white shadow-sm hover:bg-white/15 hover:text-violet-300`
-      : `${linkBaseClasses} shrink-0 text-white/70 hover:bg-white/10 hover:text-white`;
+      ? `${linkBaseClasses} shrink-0 bg-card text-foreground shadow-sm hover:bg-white/15 hover:text-primary`
+      : `${linkBaseClasses} shrink-0 text-muted hover:bg-card hover:text-foreground`;
 
   return (
-    <aside className="flex h-full w-full flex-col border-b border-white/10 bg-black/30 px-4 py-4 text-white backdrop-blur md:w-64 md:border-b-0 md:border-r md:py-6">
+    <aside className="flex h-full w-full flex-col border-b border-border bg-surface/80 px-4 py-4 text-foreground backdrop-blur md:w-64 md:border-b-0 md:border-r md:py-6">
       <div className="mb-4 flex items-center justify-between gap-4 md:mb-8 md:block">
         <div>
           <h2 className="text-lg font-bold tracking-tight sm:text-xl">
             Game Backlog
           </h2>
-          <p className="mt-1 text-xs text-white/50 sm:text-sm">
+          <p className="mt-1 text-xs text-muted sm:text-sm">
             Track your progress
           </p>
         </div>
 
         <button
           onClick={handleLogout}
-          className="shrink-0 rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-sm font-medium text-white/70 transition hover:bg-red-500/10 hover:text-red-300 md:hidden"
+          className="shrink-0 rounded-xl border border-border bg-card px-3 py-2 text-sm font-medium text-muted transition hover:bg-red-500/10 hover:text-red-300 md:hidden"
         >
           Log out
         </button>
@@ -75,15 +75,15 @@ const SideBar = () => {
 const SignedInBox = ({ username, onLogout, className = "" }) => {
   return (
     <div
-      className={`rounded-2xl border border-white/10 bg-white/5 p-4 shadow-lg backdrop-blur ${className}`}
+      className={`rounded-2xl border border-border bg-card p-4 shadow-lg backdrop-blur ${className}`}
     >
       <div className="flex items-center gap-3">
-        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-violet-500/20 text-sm font-bold text-violet-200 ring-1 ring-violet-300/20">
+        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/20 text-sm font-bold text-primary ring-1 ring-primary/20">
           {username.charAt(0).toUpperCase()}
         </div>
 
         <div className="min-w-0">
-          <p className="truncate text-sm font-semibold text-white">
+          <p className="truncate text-sm font-semibold text-foreground">
             {username}
           </p>
         </div>
@@ -91,7 +91,7 @@ const SignedInBox = ({ username, onLogout, className = "" }) => {
 
       <button
         onClick={onLogout}
-        className="mt-4 w-full rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-sm font-medium text-white/70 transition hover:bg-red-500/10 hover:text-red-300"
+        className="mt-4 w-full rounded-xl border border-border bg-card px-3 py-2 text-sm font-medium text-muted transition hover:bg-red-500/10 hover:text-red-300"
       >
         Log out
       </button>
