@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react";
 import { Link } from "react-router-dom";
 const Footer = () => {
   return (
@@ -16,12 +16,10 @@ const Footer = () => {
           </div>
 
           <div className="flex flex-col gap-3 text-sm">
-            
-              <Link to="/">Home</Link>
-            
-           
-              <Link to="/features">features</Link>
-           
+            <Link to="/">Home</Link>
+
+            <Link to="/features">features</Link>
+
             <a href="#" className="transition hover:text-white">
               Sign In
             </a>
@@ -38,6 +36,6 @@ const Footer = () => {
       </div>
     </footer>
   );
-}
+};
 
-export default Footer
+export default Footer;

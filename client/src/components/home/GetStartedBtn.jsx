@@ -7,5 +7,5 @@ const GetStartedBtn = () => {
       </button>
     </Link>
   );
-}
+};
 export default GetStartedBtn;

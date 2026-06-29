@@ -19,8 +19,6 @@ const Features = () => {
         <div className="absolute right-0 top-96 h-72 w-72 rounded-full bg-blue-500/10 blur-3xl"></div>
 
         <section className="relative mx-auto max-w-6xl px-4 py-14 text-center sm:px-6 sm:py-20">
-         
-
           <h1 className="mx-auto mt-6 max-w-4xl text-3xl font-extrabold leading-tight tracking-tight sm:text-4xl md:text-6xl">
             Everything you need to organize your games and{" "}
             <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
@@ -112,7 +110,7 @@ const Features = () => {
 
 const FeatureCard = ({ icon, title, description }) => {
   return (
-  <div className="group rounded-3xl border border-border bg-card p-5 shadow-xl shadow-black/20 backdrop-blur transition hover:-translate-y-1 hover:border-primary/30 hover:bg-white/10 sm:p-6">
+    <div className="group rounded-3xl border border-border bg-card p-5 shadow-xl shadow-black/20 backdrop-blur transition hover:-translate-y-1 hover:border-primary/30 hover:bg-white/10 sm:p-6">
       <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-primary/20 bg-primary/10 text-primary transition group-hover:bg-cyan-500/20">
         {icon}
       </div>

@@ -37,14 +37,11 @@ const GameCard = ({ game, onRemove }) => {
 
   const platform = game.platform || game.selected_platform;
 
-  const timeToBeat = game.howLongToBeat || game.rawgPlaytime || game.average_playtime;
+  const timeToBeat =
+    game.howLongToBeat || game.rawgPlaytime || game.average_playtime;
 
   const rating = game.rating || game.rawgRating;
- 
-  
-  
-  
-  
+
   return (
     <Link to={`/dashboard/games/${game.id}`}>
       <article className="relative h-full overflow-hidden rounded-2xl border border-border bg-card shadow-xl transition hover:-translate-y-1 hover:bg-white/10 ">

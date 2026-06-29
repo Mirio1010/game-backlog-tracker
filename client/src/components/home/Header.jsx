@@ -34,18 +34,13 @@ const Header = () => {
         </nav>
 
         <div className="flex shrink-0 items-center gap-3">
-            <LoginBtn />
-          
-          
-            <SignupBtn />
-         
+          <LoginBtn />
+
+          <SignupBtn />
         </div>
       </div>
     </header>
   );
 };
-
-
-
 
 export default Header;
