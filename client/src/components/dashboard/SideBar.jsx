@@ -8,7 +8,7 @@ import { RiFunctionAddLine } from "react-icons/ri";
 
 import { IoIosStats } from "react-icons/io";
 import { FaRegStar } from "react-icons/fa";
-
+import { MdLogout } from "react-icons/md";
 
 const SideBar = () => {
   const navigate = useNavigate();
@@ -94,23 +94,12 @@ const SignedInBox = ({ username, onLogout, className = "" }) => {
     <div
       className={`rounded-2xl border border-border bg-card p-4 shadow-lg backdrop-blur ${className}`}
     >
-      <div className="flex items-center gap-3">
-        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/20 text-sm font-bold text-primary ring-1 ring-primary/20">
-          {username.charAt(0).toUpperCase()}
-        </div>
-
-        <div className="min-w-0">
-          <p className="truncate text-sm font-semibold text-foreground">
-            {username}
-          </p>
-        </div>
-      </div>
-
       <button
         onClick={onLogout}
-        className="mt-4 w-full rounded-xl border border-border bg-card px-3 py-2 text-sm font-medium text-muted transition hover:bg-red-500/10 hover:text-red-300"
+        className="flex w-full items-center justify-between gap-3 rounded-xl border border-border bg-card px-3 py-2 text-sm font-medium text-muted transition hover:bg-red-500/10 hover:text-red-300"
       >
-        Log out
+        <span className="truncate">{username}</span>
+        <MdLogout className="shrink-0 text-lg" />
       </button>
     </div>
   );
