@@ -1,4 +1,14 @@
 import { NavLink, useNavigate } from "react-router-dom";
+import {
+  MdOutlineDashboard,
+  MdListAlt,
+} from "react-icons/md";
+
+import { RiFunctionAddLine } from "react-icons/ri";
+
+import { IoIosStats } from "react-icons/io";
+import { FaRegStar } from "react-icons/fa";
+
 
 const SideBar = () => {
   const navigate = useNavigate();
@@ -13,8 +23,10 @@ const SideBar = () => {
     navigate("/");
   };
 
+  const iconClass = "shrink-0 text-lg";
+
   const linkBaseClasses =
-    "rounded-xl px-4 py-3 text-left text-sm font-medium transition";
+    "flex items-center gap-2 rounded-xl px-4 py-3 text-left text-sm font-medium transition";
 
   const getLinkClasses = ({ isActive }) =>
     isActive
@@ -43,22 +55,27 @@ const SideBar = () => {
 
       <nav className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1 md:mx-0 md:flex-col md:overflow-visible md:px-0 md:pb-0">
         <NavLink to="/dashboard" end className={getLinkClasses}>
+          <MdOutlineDashboard className={iconClass} />
           Dashboard
         </NavLink>
 
         <NavLink to="/dashboard/backlog" className={getLinkClasses}>
+          <MdListAlt className={iconClass} />
           My Backlog
         </NavLink>
 
         <NavLink to="/dashboard/add-game" className={getLinkClasses}>
+          <RiFunctionAddLine className={iconClass} />
           Add Game
         </NavLink>
 
         <NavLink to="/dashboard/stats" className={getLinkClasses}>
+          <IoIosStats className={iconClass} />
           Stats
         </NavLink>
 
         <NavLink to="/dashboard/wishlist" className={getLinkClasses}>
+          <FaRegStar className={iconClass}/>
           Wishlist
         </NavLink>
       </nav>
