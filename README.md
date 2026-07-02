@@ -10,7 +10,7 @@ The app combines account-based game tracking with data from the RAWG API so user
 
 ## Preview
 
-![Game Backlog Tracker Dashboard](./client/src/assets/readme/preview.jpg)
+![Game Backlog Tracker Dashboard](./client/src/assets/homepage/carousel/videogames.jpg)
 
 ## Features
 
