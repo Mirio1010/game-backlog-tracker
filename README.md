@@ -4,7 +4,7 @@ Game Backlog Tracker is a full-stack web app for organizing and analyzing a pers
 
 The app combines account-based game tracking with data from the RAWG API so users can search for games, save them to their own collection, and view useful backlog stats.
 
-## Live Demo
+## Live APP
 
 [View the deployed app 🚀](https://game-backlog-tracker.netlify.app/)
 
