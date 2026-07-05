@@ -39,12 +39,15 @@ const DashboardStats = ({ games = [] }) => {
 
       <StatCard
         title="Completed Hours"
-        value={`${completedHoursPlayed}h`}
+        value={completedHoursPlayed}
+        suffix="h"
         subtitle="Hours from completed games only"
       />
+
       <StatCard
         title="Completion Rate"
-        value={`${completionRate}%`}
+        value={completionRate}
+        suffix="%"
         subtitle={`${completedGames} out of ${totalGames} games completed`}
       />
     </div>
