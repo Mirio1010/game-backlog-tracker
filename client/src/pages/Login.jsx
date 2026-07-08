@@ -159,19 +159,9 @@ const Form = () => {
                 />
               </div>
 
-              <CreateAccountRedirect/>
+              <CreateAccountRedirect />
 
-              <button
-                type="submit"
-                disabled={isLoading}
-                className="flex w-full items-center justify-center gap-2 rounded-xl bg-primary px-4 py-3 font-semibold text-primary-foreground transition hover:bg-cyan-300 active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-70 cursor-pointer hover:bg-primary/60"
-              >
-                {isLoading && (
-                  <span className="h-5 w-5 animate-spin rounded-full border-2 border-slate-950/30 border-t-slate-950"></span>
-                )}
-
-                {isLoading ? "Logging in..." : "Submit"}
-              </button>
+              <SummitBtn isLoading={isLoading}/>
 
               {isLoading && (
                 <p className="text-center text-sm text-muted r">
@@ -185,6 +175,22 @@ const Form = () => {
     </main>
   );
 };
+
+const SummitBtn = ({isLoading}) => {
+  return (
+    <button
+      type="submit"
+      disabled={isLoading}
+      className="flex w-full items-center justify-center gap-2 rounded-xl bg-primary px-4 py-3 font-semibold text-primary-foreground transition hover:bg-cyan-300 active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-70 cursor-pointer hover:bg-primary/60"
+    >
+      {isLoading && (
+        <span className="h-5 w-5 animate-spin rounded-full border-2 border-slate-950/30 border-t-slate-950"></span>
+      )}
+
+      {isLoading ? "Logging in..." : "Submit"}
+    </button>
+  );
+}
 
 
 const CreateAccountRedirect = () => {
