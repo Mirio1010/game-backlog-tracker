@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, Link } from "react-router-dom";
 import MainLayout from "../components/layout/MainLayout";
 import Header from "../components/home/Header";
 
@@ -159,6 +159,8 @@ const Form = () => {
                 />
               </div>
 
+              <CreateAccountRedirect/>
+
               <button
                 type="submit"
                 disabled={isLoading}
@@ -181,6 +183,21 @@ const Form = () => {
         </div>
       </section>
     </main>
+  );
+};
+
+
+const CreateAccountRedirect = () => {
+  return (
+    <p className="text-center text-sm text-muted">
+      Don&apos;t have an account?{" "}
+      <Link
+        to="/signup"
+        className="font-medium text-primary transition hover:text-primary/70"
+      >
+        Create one
+      </Link>
+    </p>
   );
 };
 
