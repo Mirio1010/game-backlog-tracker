@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import MainLayout from "../components/layout/MainLayout";
 import Header from "../components/home/Header";
 
@@ -194,6 +194,7 @@ const Form = () => {
                   className="w-full rounded-xl border border-border bg-card px-4 py-3 text-foreground outline-none transition placeholder:text-muted focus:border-primary focus:ring-2 focus:ring-primary/30"
                 />
               </div>
+              <LoginRedirect/>
 
               <button
                 type="submit"
@@ -206,6 +207,21 @@ const Form = () => {
         </div>
       </section>
     </main>
+  );
+};
+
+
+const LoginRedirect = () => {
+  return (
+    <p className="text-center text-sm text-muted">
+      Have have an account?{" "}
+      <Link
+        to="/login"
+        className="font-medium text-primary transition hover:text-primary/70"
+      >
+        Log In
+      </Link>
+    </p>
   );
 };
 
