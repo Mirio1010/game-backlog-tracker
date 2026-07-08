@@ -212,7 +212,7 @@ const Form = () => {
 const LoginRedirect = () => {
   return (
     <p className="text-center text-sm text-muted">
-      Have have an account?{" "}
+      Already have have an account?{" "}
       <Link
         to="/login"
         className="font-medium text-primary transition hover:text-primary/70"
