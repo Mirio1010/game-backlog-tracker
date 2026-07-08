@@ -21,21 +21,18 @@ const Hero = () => {
             preset="fade-in-blur"
             speedReveal={0.1}
             speedSegment={0.4}
-            className="max-w-2xl text-3xl font-extrabold leading-tight tracking-tight sm:text-5xl lg:text-6xl"
+            className="max-w-2xl text-3xl font-extrabold leading-tight tracking-tight text-foreground sm:text-5xl lg:text-6xl"
             getSegmentClassName={(segment, index) =>
-              index === 1
-                ? "bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent"
-                : ""
+              index === 1 ? "text-primary" : ""
             }
           >
-            {"Destroy your game backlog\none step at a time"}
+            {"Turn your backlog into\ngames you actually finish."}
           </TextEffect>
 
           <p className="max-w-xl text-sm leading-7 text-muted sm:text-base sm:leading-8 lg:text-lg">
-            Welcome to Game Backlog Tracker, the ultimate tool for gamers who
-            want to conquer their game backlog and stay organized. Manage your
-            collection, track your progress, and discover new games to play in
-            one clean dashboard.
+            Game Backlog Tracker helps you organize your library, track what
+            you're playing, and decide what to pick up next without losing sight
+            of the games you already own.
           </p>
 
           <div className="flex flex-col gap-4 sm:flex-row">
