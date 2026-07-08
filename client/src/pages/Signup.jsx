@@ -196,12 +196,7 @@ const Form = () => {
               </div>
               <LoginRedirect/>
 
-              <button
-                type="submit"
-                className="w-full rounded-xl bg-primary px-4 py-3 font-semibold text-primary-foreground transition hover:bg-cyan-300 active:scale-[0.99]"
-              >
-                Create Account
-              </button>
+              <CreateAccountBtn/>
             </form>
           </div>
         </div>
@@ -209,6 +204,9 @@ const Form = () => {
     </main>
   );
 };
+
+
+
 
 
 const LoginRedirect = () => {
@@ -226,3 +224,14 @@ const LoginRedirect = () => {
 };
 
 export default Signup;
+const CreateAccountBtn = () => {
+  return (
+    <button
+      type="submit"
+      className="flex w-full items-center justify-center gap-2 rounded-xl bg-primary px-4 py-3 font-semibold text-primary-foreground transition hover:bg-cyan-300 active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-70 cursor-pointer hover:bg-primary/60"
+    >
+      Create Account
+    </button>
+  );
+}
+
