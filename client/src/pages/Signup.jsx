@@ -14,8 +14,12 @@ const Signup = () => {
 
 const LeftPanel = () => {
   return (
-    <div className="flex items-center justify-center bg-gradient-to-br from-indigo-600/20 via-cyan-500/10 to-transparent p-6 sm:p-10 md:p-16">
-      <div className="max-w-md space-y-4 sm:space-y-6">
+    <div className="relative flex items-center justify-center overflow-hidden border-b border-border bg-surface p-6 sm:p-10 md:border-b-0 md:border-r md:p-16">
+      <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-primary/5 to-transparent" />
+
+      <div className="absolute -left-24 top-1/4 h-72 w-72 rounded-full bg-primary/10 blur-3xl" />
+
+      <div className="relative z-10 max-w-md space-y-4 sm:space-y-6">
         <p className="text-sm font-medium uppercase tracking-[0.2em] text-primary">
           GameBacklog
         </p>
