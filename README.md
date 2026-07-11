@@ -1,4 +1,4 @@
-# Game Backlog Tracker
+# Game Backlog Tracker (Work In Progress)
 
 Game Backlog Tracker is a full-stack web app for organizing and analyzing a personal video game backlog. It helps users keep track of games they are playing, games they have completed, games waiting in their backlog, and games they may want to play in the future.
 
@@ -7,6 +7,10 @@ The app combines account-based game tracking with data from the RAWG API so user
 ## Live APP
 
 [View the deployed app 🚀](https://game-backlog-tracker.netlify.app/)
+
+## Figman Planning Board
+
+[View Whiteboard](https://www.figma.com/board/OoJf9KxXaroqH7gbANuHQb/Game-Backlog-Tracker-%E2%80%94-Design-Direction?node-id=0-1&t=SJS98TZKQCphnO3t-1)
 
 ## Preview
 
