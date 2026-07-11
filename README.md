@@ -8,7 +8,7 @@ The app combines account-based game tracking with data from the RAWG API so user
 
 [View the deployed app 🚀](https://game-backlog-tracker.netlify.app/)
 
-## Figman Planning Board
+## Figma Planning Board
 
 [View Whiteboard](https://www.figma.com/board/OoJf9KxXaroqH7gbANuHQb/Game-Backlog-Tracker-%E2%80%94-Design-Direction?node-id=0-1&t=SJS98TZKQCphnO3t-1)
 
