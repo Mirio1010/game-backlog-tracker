@@ -98,14 +98,13 @@ const deleteGame = async (req, res) => {
       .eq("id", id)
       .eq("user_id", req.user.id)
       .select()
-      .single();
+      .maybeSingle();
 
     if (error) {
       console.error("Error deleting game:", error);
 
       return res.status(500).json({
         message: "Error deleting game",
-        error: error.message,
       });
     }
 
