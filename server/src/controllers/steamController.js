@@ -16,7 +16,9 @@ const getSteamLibrary = async (req, res) => {
 
     const games = await getOwnedGames(steamId);
 
-    res.status(200).json(games);
+    const cleanedGames = cleanGames(games);
+
+    res.status(200).json(cleanedGames);
 
   } catch (error) {
     console.error(`error getting library: ${error}`);
@@ -77,6 +79,21 @@ const getOwnedGames = async (steamId) => {
     
   }
 };
+
+
+const cleanGames = (games) => {
+    const cleanedGames = games.map((game) => {
+        return {
+          steamAppId: game.appid,
+          title: game.name,
+          playtimeMinutes: game.playtime_forever,
+          lastPlayed: game.rtime_last_played,
+          iconHash: game.img_icon_url
+        };
+    })
+
+    return cleanedGames;
+}
 
 
 module.exports = {
