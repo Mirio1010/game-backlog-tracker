@@ -46,7 +46,13 @@ const getSteamId = async (vanityName) => {
     }
 
     const data = await response.json();
+
+    if (!data.response.steamid) {
+      throw new Error("Steam profile could not be found");
+    }
+
     return data.response.steamid;
+
   } catch (error) {
       console.error("Error getting Steam ID:", error);
       throw error;
@@ -71,7 +77,16 @@ const getOwnedGames = async (steamId) => {
 
 
     const data = await response.json();
-    return data.response.games;
+
+
+
+    const games = data.response.games;
+
+    if (!games) {
+      throw new Error("Steam library is unavailable or private");
+    }
+
+    return games;
 
   } catch (error) {
     console.error(`Error getting owned games: ${error}`);
