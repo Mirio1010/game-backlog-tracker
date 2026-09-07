@@ -1,5 +1,36 @@
 const API_KEY = process.env.STEAM_API_KEY;
 
+
+
+const getSteamLibrary = async (req, res) => {
+  try {
+    const { vanityName } = req.query;
+
+    if (!vanityName) {
+      return res.status(400).json({
+        message: "Steam vanity name is required",
+      });
+    }
+
+    const steamId = await getSteamId(vanityName);
+
+    const games = await getOwnedGames(steamId);
+
+    res.status(200).json(games);
+
+  } catch (error) {
+    console.error(`error getting library: ${error}`);
+    
+     return res.status(500).json({
+       message: "Something went wrong fetching Steam library",
+     });
+  }
+};
+
+
+// Helper function for controller
+
+
 const getSteamId = async (vanityName) => {
   try {
     const url =
@@ -45,4 +76,9 @@ const getOwnedGames = async (steamId) => {
     throw error;
     
   }
+};
+
+
+module.exports = {
+  getSteamLibrary,
 };
