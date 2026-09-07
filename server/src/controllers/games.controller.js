@@ -62,13 +62,8 @@ const getMyGames = async (req, res) => {
       .eq("user_id", req.user.id)
       .order("created_at", { ascending: false });
 
-      
-      
-      
-
     if (error) {
       console.error("Error fetching games:", error);
-
       return res.status(500).json({
         message: "Error fetching games",
         error: error.message,
@@ -81,7 +76,6 @@ const getMyGames = async (req, res) => {
     });
   } catch (error) {
     console.error("Fetch games server error:", error);
-
     res.status(500).json({
       message: "Server error while fetching games",
     });
