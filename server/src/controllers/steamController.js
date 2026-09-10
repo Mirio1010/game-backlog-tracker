@@ -111,6 +111,45 @@ const cleanGames = (games) => {
 }
 
 
+const enrichGameData = async (req, res) => {
+  try {
+    const { games } = req.body;
+
+    if (!games) {
+      return res.status(400).json({
+        message: "Games are required",
+      });
+    }
+
+    if (!Array.isArray(games)) {
+      return res.status(400).json({
+        message: "Games must be an array",
+      });
+    }
+
+    if (games.length === 0) {
+      return res.status(400).json({
+        message: "No games selected",
+      });
+    }
+
+    // Enrichment process goes here later
+
+    return res.status(200).json({
+      message: "Games received successfully",
+      games,
+    });
+  } catch (error) {
+    console.error("Error enriching games:", error);
+
+    return res.status(500).json({
+      message: "Something went wrong while enriching games",
+    });
+  }
+};
+
+
 module.exports = {
   getSteamLibrary,
+  enrichGameData
 };

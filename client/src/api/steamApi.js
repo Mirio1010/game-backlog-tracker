@@ -14,6 +14,9 @@ export const fetchUserSteamGames = async (vanityName) => {
   return data;
 };
 
+
+// This function sends the user's selected games to the backend for the 
+// enrichment process.
 export const enrichSteamGameData = async (data) => {
   const options = {
     method: "POST",
@@ -21,7 +24,7 @@ export const enrichSteamGameData = async (data) => {
     body: JSON.stringify(data),
   };
 
-  const res = await fetch("YOUR_ENDPOINT", options);
+  const res = await fetch(`${API_BASE_URL}/steam/enrich-games`, options);
 
   if (!res.ok) {
     throw new Error(`Failed to enrich item: ${res.status}`);

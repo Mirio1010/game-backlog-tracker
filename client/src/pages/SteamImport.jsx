@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { fetchUserSteamGames } from "../api/steamApi";
+import { fetchUserSteamGames, enrichSteamGameData } from "../api/steamApi";
 
 const SteamImport = () => {
   const [vanityName, setVanityName] = useState("");
@@ -9,26 +9,22 @@ const SteamImport = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  
-  
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError(null)
+    setError(null);
     setIsLoading(true);
     setGames([]);
     setSelectedGameIds([]);
     try {
-        const data = await fetchUserSteamGames(vanityName);
-        setGames(data);
-        
+      const data = await fetchUserSteamGames(vanityName);
+      setGames(data);
     } catch (error) {
-        console.error(`Error fetching this user's games: ${error}`);
-        setError(error.message);
+      console.error(`Error fetching this user's games: ${error}`);
+      setError(error.message);
     } finally {
-        setIsLoading(false);
+      setIsLoading(false);
     }
-  }
+  };
 
   const toggleGame = (steamAppId) => {
     setSelectedGameIds((previousIds) => {
@@ -40,8 +36,18 @@ const SteamImport = () => {
     });
   };
 
+  const handleImport = async () => {
+    const selected = getSelectedGames(selectedGameIds, games);
+    const backendData = createBackendPayLoad(selected);
 
-  
+    const res = await enrichSteamGameData({
+      games: backendData
+    });
+
+    console.log(res.message);
+    
+
+  };
 
   return (
     <div style={{ color: "white" }}>
@@ -74,15 +80,13 @@ const SteamImport = () => {
 
       {error && <p style={{ color: "red" }}>{error}</p>}
 
-
       {games.length > 0 && (
-  <button onClick={() => {
-    console.log(getSelectedGames(selectedGameIds, games))
-    console.log(backendPayLoad(getSelectedGames(selectedGameIds, games)));
-    
-  }
-  }>Import Games</button>
-)}
+        <button
+          onClick={handleImport}
+        >
+          Import Games
+        </button>
+      )}
     </div>
   );
 };
@@ -92,8 +96,11 @@ const GameList = ({ games, toggleGame, selectedGameIds }) => {
     return (
       <li key={steamAppId}>
         {title}
-        <input type="checkbox" onChange={() => toggleGame(steamAppId)} 
-        checked={selectedGameIds.includes(steamAppId)}/>
+        <input
+          type="checkbox"
+          onChange={() => toggleGame(steamAppId)}
+          checked={selectedGameIds.includes(steamAppId)}
+        />
       </li>
     );
   });
@@ -107,21 +114,15 @@ const getSelectedGames = (selectedGameIds, games) => {
   return userSelectedGames;
 };
 
-
 const createBackendPayLoad = (selectedGames) => {
-    const backendData = selectedGames.map((game) => {
-      return {
-        steamAppId: game.steamAppId,
-        title: game.title
-      }
-    })
+  const backendData = selectedGames.map((game) => {
+    return {
+      steamAppId: game.steamAppId,
+      title: game.title,
+    };
+  });
 
-    return backendData;
-}
-
-
-
-
-
+  return backendData;
+};
 
 export default SteamImport;
