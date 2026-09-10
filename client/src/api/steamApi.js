@@ -13,3 +13,19 @@ export const fetchUserSteamGames = async (vanityName) => {
 
   return data;
 };
+
+export const enrichSteamGameData = async (data) => {
+  const options = {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data),
+  };
+
+  const res = await fetch("YOUR_ENDPOINT", options);
+
+  if (!res.ok) {
+    throw new Error(`Failed to enrich item: ${res.status}`);
+  }
+
+  return res.json();
+};
