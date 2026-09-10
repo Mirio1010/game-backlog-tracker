@@ -14,6 +14,7 @@ import AddGamePage from "../pages/dashboardpages/AddGamePage.jsx";
 import Stats from "../pages/dashboardpages/Stats.jsx";
 import Wishlist from "../pages/dashboardpages/Wishlist.jsx";
 import GamePage from "../pages/GamePage.jsx";
+import SteamImport from "../pages/SteamImport.jsx";
 function AppRoutes() {
   return (
     <Routes>
@@ -23,6 +24,7 @@ function AppRoutes() {
       <Route path="/about" element={<About />} />
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<Signup />} />
+      <Route path="/steam-import" element={<SteamImport />} />
 
       {/* Protected Routes */}
       <Route
@@ -38,10 +40,7 @@ function AppRoutes() {
         <Route path="add-game" element={<AddGamePage />} />
         <Route path="stats" element={<Stats />} />
         <Route path="wishlist" element={<Wishlist />} />
-        <Route
-          path="/dashboard/games/:id"
-          element={<GamePage/>}
-        />
+        <Route path="/dashboard/games/:id" element={<GamePage />} />
       </Route>
     </Routes>
   );
