@@ -40,6 +40,9 @@ const SteamImport = () => {
     });
   };
 
+
+  
+
   return (
     <div style={{ color: "white" }}>
       <h1>Import Steam Library</h1>
@@ -73,7 +76,11 @@ const SteamImport = () => {
 
 
       {games.length > 0 && (
-  <button onClick={() => console.log(getSelectedGames(selectedGameIds, games))
+  <button onClick={() => {
+    console.log(getSelectedGames(selectedGameIds, games))
+    console.log(backendPayLoad(getSelectedGames(selectedGameIds, games)));
+    
+  }
   }>Import Games</button>
 )}
     </div>
@@ -99,6 +106,19 @@ const getSelectedGames = (selectedGameIds, games) => {
 
   return userSelectedGames;
 };
+
+
+const createBackendPayLoad = (selectedGames) => {
+    const backendData = selectedGames.map((game) => {
+      return {
+        steamAppId: game.steamAppId,
+        title: game.title
+      }
+    })
+
+    return backendData;
+}
+
 
 
 
