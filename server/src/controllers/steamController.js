@@ -143,7 +143,7 @@ const enrichGameData = async (req, res) => {
      games.map(({ title, steamAppId }) => enrichData(title, steamAppId)),
    );
    
-    console.log(completedGames);
+    
     
     
     
@@ -151,7 +151,7 @@ const enrichGameData = async (req, res) => {
 
     return res.status(200).json({
       message: "Games received successfully",
-      games,
+      games: completedGames,
     });
   } catch (error) {
     console.error("Error enriching games:", error);
