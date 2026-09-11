@@ -234,34 +234,58 @@ const SteamSelectionScreen = ({
 };
 
 
-const SteamPreviewScreen = ({completedGames, onBack}) => {
+const SteamPreviewScreen = ({ completedGames, onBack }) => {
   return (
-    <div>
+    <div className="mx-auto w-full max-w-6xl px-4 py-8 sm:px-6">
+      {/* Back */}
       <button
         type="button"
         onClick={onBack}
-        className="mb-4 rounded-lg border border-zinc-700 px-4 py-2 text-sm text-zinc-300 transition hover:bg-zinc-800"
+        className="
+          mb-6 inline-flex items-center gap-2
+          rounded-lg px-3 py-2
+          text-sm font-medium text-muted
+          transition
+          hover:bg-white/5 hover:text-foreground
+        "
       >
-        Back
+        <span>←</span>
+        Back to selection
       </button>
+
+      {/* Header */}
+      <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+          <h1 className="text-3xl font-bold tracking-tight text-foreground">
+            Review your games
+          </h1>
+
+          <p className="mt-2 max-w-2xl text-sm leading-6 text-muted sm:text-base">
+            We matched your Steam games with game metadata. Review everything
+            below before adding them to your backlog.
+          </p>
+        </div>
+
+        <div className="shrink-0 rounded-xl border border-border bg-card px-4 py-3">
+          <p className="text-xs font-medium uppercase tracking-wide text-muted">
+            Games selected
+          </p>
+
+          <p className="mt-1 text-2xl font-bold text-foreground">
+            {completedGames.length}
+          </p>
+        </div>
+      </div>
 
       <DisplayPreview completedGames={completedGames} />
     </div>
   );
-}
+};
 
 const DisplayPreview = ({ completedGames }) => {
   return (
-    <section className="mt-8">
-      <div className="mb-6">
-        <h2 className="text-2xl font-bold text-white">Review your games</h2>
-
-        <p className="mt-1 text-sm text-zinc-400">
-          Make sure the game information looks correct before importing.
-        </p>
-      </div>
-
-      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+    <section>
+      <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
         {completedGames.map(
           ({
             steamAppId,
@@ -277,119 +301,165 @@ const DisplayPreview = ({ completedGames }) => {
             return (
               <article
                 key={steamAppId}
-                className="overflow-hidden rounded-2xl border border-zinc-800 bg-zinc-900"
+                className="
+                  group overflow-hidden rounded-2xl
+                  border border-border bg-card
+                  shadow-lg
+                  transition duration-200
+                  hover:-translate-y-1
+                  hover:border-primary/40
+                  hover:shadow-xl
+                "
               >
-                {/* Cover */}
-                <div className="aspect-[16/9] overflow-hidden bg-zinc-800">
+                {/* Artwork */}
+                <div className="relative aspect-video overflow-hidden bg-background">
                   {coverImage ? (
                     <img
                       src={coverImage}
                       alt={coverAlt}
-                      className="h-full w-full object-cover"
+                      className="
+                        h-full w-full object-cover
+                        transition duration-300
+                        group-hover:scale-[1.03]
+                      "
                     />
                   ) : (
-                    <div className="flex h-full items-center justify-center text-sm text-zinc-500">
+                    <div className="flex h-full items-center justify-center text-sm text-muted">
                       No artwork available
                     </div>
                   )}
+
+                  {/* Steam badge */}
+                  <span
+                    className="
+                      absolute right-3 top-3
+                      rounded-full border border-white/10
+                      bg-black/70 px-2.5 py-1
+                      text-xs font-medium text-white
+                      backdrop-blur
+                    "
+                  >
+                    Steam
+                  </span>
+
+                  {/* Gradient over bottom of artwork */}
+                  <div className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-black/60 to-transparent" />
                 </div>
 
-                {/* Game information */}
+                {/* Content */}
                 <div className="p-5">
-                  <div className="mb-3 flex items-start justify-between gap-3">
-                    <h3 className="text-lg font-semibold text-white">
-                      {title}
-                    </h3>
+                  <h2 className="line-clamp-2 text-lg font-bold text-foreground">
+                    {title}
+                  </h2>
 
-                    <span className="shrink-0 rounded-full bg-orange-500/10 px-2.5 py-1 text-xs font-medium text-orange-400">
-                      Steam
-                    </span>
-                  </div>
+                  {/* Basic metadata */}
+                  <div className="mt-4 grid grid-cols-2 gap-3">
+                    <div className="rounded-xl bg-background/50 p-3">
+                      <p className="text-xs text-muted">RAWG Rating</p>
 
-                  <div className="space-y-3 text-sm">
-                    <div className="flex justify-between">
-                      <span className="text-zinc-500">RAWG Rating</span>
-
-                      <span className="font-medium text-white">
+                      <p className="mt-1 font-semibold text-foreground">
                         ⭐ {rawgRating ?? "N/A"}
-                      </span>
+                      </p>
                     </div>
 
-                    <div className="flex justify-between">
-                      <span className="text-zinc-500">Released</span>
+                    <div className="rounded-xl bg-background/50 p-3">
+                      <p className="text-xs text-muted">Released</p>
 
-                      <span className="text-zinc-300">
+                      <p className="mt-1 truncate font-semibold text-foreground">
                         {released || "Unknown"}
-                      </span>
-                    </div>
-
-                    {/* Genres */}
-                    <div>
-                      <p className="mb-2 text-zinc-500">Genres</p>
-
-                      <div className="flex flex-wrap gap-2">
-                        {genres?.length > 0 ? (
-                          genres.map((genre) => (
-                            <span
-                              key={genre}
-                              className="rounded-md bg-zinc-800 px-2 py-1 text-xs text-zinc-300"
-                            >
-                              {genre}
-                            </span>
-                          ))
-                        ) : (
-                          <span className="text-zinc-500">Unknown</span>
-                        )}
-                      </div>
-                    </div>
-
-                    {/* Platforms */}
-                    <div>
-                      <p className="mb-2 text-zinc-500">Platforms</p>
-
-                      <div className="flex flex-wrap gap-2">
-                        {platforms?.length > 0 ? (
-                          platforms.map((platform) => (
-                            <span
-                              key={platform}
-                              className="rounded-md border border-zinc-700 px-2 py-1 text-xs text-zinc-400"
-                            >
-                              {platform}
-                            </span>
-                          ))
-                        ) : (
-                          <span className="text-zinc-500">Unknown</span>
-                        )}
-                      </div>
+                      </p>
                     </div>
                   </div>
 
-                  {/* Match controls */}
-                  <div className="mt-5 border-t border-zinc-800 pt-4">
-                    <p className="mb-3 text-xs text-zinc-500">
-                      Does this match your Steam game?
+                  {/* Genres */}
+                  <div className="mt-5">
+                    <p className="mb-2 text-xs font-medium uppercase tracking-wide text-muted">
+                      Genres
+                    </p>
+
+                    <div className="flex flex-wrap gap-2">
+                      {genres?.length > 0 ? (
+                        genres.map((genre) => (
+                          <span
+                            key={genre}
+                            className="
+                              rounded-full
+                              bg-primary/10 px-2.5 py-1
+                              text-xs font-medium text-primary
+                            "
+                          >
+                            {genre}
+                          </span>
+                        ))
+                      ) : (
+                        <span className="text-sm text-muted">Unknown</span>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Platforms */}
+                  <div className="mt-5">
+                    <p className="mb-2 text-xs font-medium uppercase tracking-wide text-muted">
+                      Platforms
+                    </p>
+
+                    <div className="flex flex-wrap gap-2">
+                      {platforms?.length > 0 ? (
+                        platforms.map((platform) => (
+                          <span
+                            key={platform}
+                            className="
+                              rounded-lg border border-border
+                              px-2.5 py-1
+                              text-xs text-muted
+                            "
+                          >
+                            {platform}
+                          </span>
+                        ))
+                      ) : (
+                        <span className="text-sm text-muted">Unknown</span>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Match verification */}
+                  <div className="mt-6 border-t border-border pt-4">
+                    <p className="mb-3 text-sm text-muted">
+                      Is this the correct game?
                     </p>
 
                     <div className="flex gap-2">
                       <button
                         type="button"
-                        className="flex-1 rounded-lg bg-orange-500 px-3 py-2 text-sm font-medium text-white transition hover:bg-orange-600"
+                        className="
+                          flex-1 rounded-xl
+                          bg-primary px-4 py-2.5
+                          text-sm font-semibold text-white
+                          transition
+                          hover:opacity-90
+                        "
                       >
                         Looks Correct
                       </button>
 
                       <button
                         type="button"
-                        className="rounded-lg border border-zinc-700 px-3 py-2 text-sm text-zinc-300 transition hover:bg-zinc-800"
+                        className="
+                          rounded-xl border border-border
+                          px-4 py-2.5
+                          text-sm font-medium text-foreground
+                          transition
+                          hover:bg-white/5
+                        "
                       >
                         Change
                       </button>
                     </div>
                   </div>
 
-                  <p className="mt-3 text-xs text-zinc-600">
-                    RAWG ID: {rawgId}
-                  </p>
+                  
+                 
                 </div>
               </article>
             );
