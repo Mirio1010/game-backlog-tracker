@@ -1,3 +1,5 @@
+const { enrichData } = require("../services/rawgService");
+
 const API_KEY = process.env.STEAM_API_KEY;
 
 
@@ -134,6 +136,18 @@ const enrichGameData = async (req, res) => {
     }
 
     // Enrichment process goes here later
+
+    
+
+   const completedGames = await Promise.all(
+     games.map(({ title, steamAppId }) => enrichData(title, steamAppId)),
+   );
+   
+    console.log(completedGames);
+    
+    
+    
+    
 
     return res.status(200).json({
       message: "Games received successfully",
