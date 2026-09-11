@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { fetchUserSteamGames, enrichSteamGameData } from "../api/steamApi";
-
+import MainLayout from '../components/layout/MainLayout'
 const SteamImport = () => {
   const [vanityName, setVanityName] = useState("");
   const [games, setGames] = useState([]);
@@ -10,6 +10,7 @@ const SteamImport = () => {
   const [error, setError] = useState(null);
   const [completedGames, setCompletedGames] = useState([]);
   const [step, setStep] = useState('selection')
+  const [isImporting, setIsImporting] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -39,73 +40,214 @@ const SteamImport = () => {
   };
 
   const handleImport = async () => {
+    if (selectedGameIds.length === 0) {
+      setError("Select at least one game to continue.");
+      return;
+    }
+
     const selected = getSelectedGames(selectedGameIds, games);
-    const backendData = createBackendPayLoad(selected);
+    const backendData = createBackendPayload(selected);
 
-    const res = await enrichSteamGameData({
-      games: backendData
-    });
+    setError(null);
+    setIsImporting(true);
 
-    console.log(res.message);
-    setCompletedGames(res.games);
-    
-    setStep('preview');
+    try {
+      const res = await enrichSteamGameData({
+        games: backendData,
+      });
 
+      setCompletedGames(res.games);
+      setStep("preview");
+    } catch (error) {
+      console.error("Error enriching Steam games:", error);
+      setError(error.message);
+    } finally {
+      setIsImporting(false);
+    }
   };
 
-  if (step === 'preview') {
-    return <SteamPreviewScreen completedGames={completedGames} />
-  }
-
   return (
-   <SteamSelectionScreen handleSubmit={handleSubmit} setVanityName={setVanityName} vanityName={vanityName} games={games} toggleGame={toggleGame} selectedGameIds={selectedGameIds} isLoading={isLoading} error={error} handleImport={handleImport}/>
+    <MainLayout>
+      {step === "preview" ? (
+        <SteamPreviewScreen
+          completedGames={completedGames}
+          onBack={() => setStep("selection")}
+        />
+      ) : (
+        <SteamSelectionScreen
+          handleSubmit={handleSubmit}
+          setVanityName={setVanityName}
+          vanityName={vanityName}
+          games={games}
+          toggleGame={toggleGame}
+          selectedGameIds={selectedGameIds}
+          isLoading={isLoading}
+          isImporting={isImporting}
+          error={error}
+          handleImport={handleImport}
+        />
+      )}
+    </MainLayout>
   );
 };
 
-const SteamSelectionScreen = ({handleSubmit, setVanityName, vanityName, games, toggleGame, selectedGameIds, isLoading, error, handleImport}) => {
-  return  (
-     <div style={{ color: "white" }}>
-      <h1>Import Steam Library</h1>
+const SteamSelectionScreen = ({
+  handleSubmit,
+  setVanityName,
+  vanityName,
+  games,
+  toggleGame,
+  selectedGameIds,
+  isLoading,
+  error,
+  handleImport,
+  isImporting,
+}) => {
+  return (
+    <div className="mx-auto w-full max-w-5xl px-4 py-8 sm:px-6">
+      {/* Header */}
+      <div className="mb-8">
+        <h1 className="text-3xl font-bold tracking-tight text-foreground">
+          Import Steam Library
+        </h1>
 
-      <form onSubmit={handleSubmit}>
+        <p className="mt-2 text-sm text-muted sm:text-base">
+          Enter your Steam vanity name and choose the games you want to add to
+          your backlog.
+        </p>
+      </div>
+
+      {/* Steam account form */}
+      <form
+        onSubmit={handleSubmit}
+        className="mb-8 flex flex-col gap-3 sm:flex-row"
+      >
         <input
           type="text"
           value={vanityName}
           onChange={(e) => setVanityName(e.target.value)}
           placeholder="Steam vanity name"
+          className="
+            w-full flex-1 rounded-xl
+            border border-border
+            bg-card px-4 py-3
+            text-foreground
+            outline-none
+            transition
+            placeholder:text-muted
+            focus:border-primary
+            focus:ring-2 focus:ring-primary/20
+          "
         />
 
-        <button type="submit">Get Library</button>
+        <button
+          type="submit"
+          disabled={isLoading || !vanityName.trim()}
+          className="
+            rounded-xl bg-primary
+            px-6 py-3
+            font-semibold text-white
+            transition
+            hover:opacity-90
+            disabled:cursor-not-allowed
+            disabled:opacity-50
+          "
+        >
+          {isLoading ? "Loading..." : "Get Library"}
+        </button>
       </form>
 
-      {isLoading ? (
-        <p>Loading...</p>
-      ) : (
-        <>
-          <ul>
+      {/* Error */}
+      {error && (
+        <div className="mb-6 rounded-xl border border-red-500/20 bg-red-500/10 px-4 py-3 text-sm text-red-400">
+          {error}
+        </div>
+      )}
+
+      {/* Library */}
+      {games.length > 0 && (
+        <div className="overflow-hidden rounded-2xl border border-border bg-card">
+          {/* Library header */}
+          <div className="flex items-center justify-between border-b border-border px-5 py-4">
+            <div>
+              <h2 className="font-semibold text-foreground">
+                Your Steam Library
+              </h2>
+
+              <p className="mt-0.5 text-sm text-muted">
+                {games.length} games found
+              </p>
+            </div>
+
+            <span className="text-sm font-medium text-primary">
+              {selectedGameIds.length} selected
+            </span>
+          </div>
+
+          {/* Games */}
+          <div className="max-h-[600px] overflow-y-auto p-3">
             <GameList
               games={games}
               toggleGame={toggleGame}
               selectedGameIds={selectedGameIds}
             />
-          </ul>
-        </>
+          </div>
+
+          {/* Import footer */}
+          <div className="flex items-center justify-between border-t border-border px-5 py-4">
+            <p className="text-sm text-muted">
+              {selectedGameIds.length === 0
+                ? "Select games to continue"
+                : `${selectedGameIds.length} game${
+                    selectedGameIds.length === 1 ? "" : "s"
+                  } ready to import`}
+            </p>
+
+            <button
+              type="button"
+              onClick={handleImport}
+              disabled={isImporting || selectedGameIds.length === 0}
+              className="
+                rounded-xl bg-primary
+                px-5 py-2.5
+                font-semibold text-white
+                transition
+                hover:opacity-90
+                disabled:cursor-not-allowed
+                disabled:opacity-50
+              "
+            >
+              {isImporting ? "Importing..." : "Import Games"}
+            </button>
+          </div>
+        </div>
       )}
 
-      {error && <p style={{ color: "red" }}>{error}</p>}
-
-      {games.length > 0 && <button onClick={handleImport}>Import Games</button>}
-
-      
+      {/* Initial loading state */}
+      {isLoading && games.length === 0 && (
+        <div className="rounded-2xl border border-border bg-card py-16 text-center text-muted">
+          Loading your Steam library...
+        </div>
+      )}
     </div>
-  )
-}
+  );
+};
 
 
-const SteamPreviewScreen = ({completedGames}) => {
+const SteamPreviewScreen = ({completedGames, onBack}) => {
   return (
-    <DisplayPreview completedGames={completedGames}/>
-  )
+    <div>
+      <button
+        type="button"
+        onClick={onBack}
+        className="mb-4 rounded-lg border border-zinc-700 px-4 py-2 text-sm text-zinc-300 transition hover:bg-zinc-800"
+      >
+        Back
+      </button>
+
+      <DisplayPreview completedGames={completedGames} />
+    </div>
+  );
 }
 
 const DisplayPreview = ({ completedGames }) => {
@@ -259,18 +401,70 @@ const DisplayPreview = ({ completedGames }) => {
 };
 
 const GameList = ({ games, toggleGame, selectedGameIds }) => {
-  return games.map(({ steamAppId, title }) => {
-    return (
-      <li key={steamAppId}>
-        {title}
-        <input
-          type="checkbox"
-          onChange={() => toggleGame(steamAppId)}
-          checked={selectedGameIds.includes(steamAppId)}
-        />
-      </li>
-    );
-  });
+  return (
+    <div className="grid gap-2 sm:grid-cols-2">
+      {games.map(({ steamAppId, title, iconHash }) => {
+        const isSelected = selectedGameIds.includes(steamAppId);
+
+        const iconUrl = iconHash
+          ? `https://media.steampowered.com/steamcommunity/public/images/apps/${steamAppId}/${iconHash}.jpg`
+          : null;
+
+        return (
+          <button
+            type="button"
+            key={steamAppId}
+            onClick={() => toggleGame(steamAppId)}
+            className={`
+              flex w-full items-center gap-3
+              rounded-xl border p-3
+              text-left transition
+
+              ${
+                isSelected
+                  ? "border-primary bg-primary/10"
+                  : "border-transparent hover:border-border hover:bg-white/5"
+              }
+            `}
+          >
+            {/* Game icon */}
+            <div className="h-10 w-10 shrink-0 overflow-hidden rounded-lg bg-background">
+              {iconUrl ? (
+                <img
+                  src={iconUrl}
+                  alt=""
+                  className="h-full w-full object-cover"
+                />
+              ) : (
+                <div className="flex h-full w-full items-center justify-center text-sm font-semibold text-muted">
+                  {title.charAt(0)}
+                </div>
+              )}
+            </div>
+
+            {/* Game title */}
+            <span className="min-w-0 flex-1 truncate font-medium text-foreground">
+              {title}
+            </span>
+
+            {/* Selection indicator */}
+            <div
+              className={`
+                flex h-5 w-5 shrink-0 items-center justify-center
+                rounded-full border transition
+
+                ${isSelected ? "border-primary bg-primary" : "border-muted"}
+              `}
+            >
+              {isSelected && (
+                <span className="text-xs font-bold text-white">✓</span>
+              )}
+            </div>
+          </button>
+        );
+      })}
+    </div>
+  );
 };
 
 const getSelectedGames = (selectedGameIds, games) => {
@@ -281,7 +475,7 @@ const getSelectedGames = (selectedGameIds, games) => {
   return userSelectedGames;
 };
 
-const createBackendPayLoad = (selectedGames) => {
+const createBackendPayload = (selectedGames) => {
   const backendData = selectedGames.map((game) => {
     return {
       steamAppId: game.steamAppId,
