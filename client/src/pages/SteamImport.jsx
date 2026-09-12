@@ -71,6 +71,7 @@ const SteamImport = () => {
       {step === "preview" ? (
         <SteamPreviewScreen
           completedGames={completedGames}
+          setCompletedGames={setCompletedGames}
           onBack={() => setStep("selection")}
         />
       ) : (
@@ -233,7 +234,7 @@ const SteamSelectionScreen = ({
   );
 };
 
-const SteamPreviewScreen = ({ completedGames, onBack }) => {
+const SteamPreviewScreen = ({ completedGames, onBack, setCompletedGames }) => {
   return (
     <div className="mx-auto w-full max-w-6xl px-4 py-8 sm:px-6">
       {/* Back */}
@@ -276,13 +277,27 @@ const SteamPreviewScreen = ({ completedGames, onBack }) => {
         </div>
       </div>
 
-      <DisplayPreview completedGames={completedGames} />
+      <DisplayPreview completedGames={completedGames} setCompletedGames={setCompletedGames}/>
     </div>
   );
 };
 
-const DisplayPreview = ({ completedGames }) => {
+const DisplayPreview = ({ completedGames, setCompletedGames }) => {
   const [gameToChange, setGameToChange] = useState(null);
+
+ const handleGameChange = (selectedGame) => {
+   const newCompletedGames = completedGames.map((game) => {
+     return game.steamAppId === gameToChange.steamAppId
+       ? {
+           ...game,
+           ...selectedGame,
+           steamAppId: game.steamAppId,
+         }
+       : game;
+   });
+
+   setCompletedGames(newCompletedGames);
+ };
 
   return (
     <section>
@@ -446,7 +461,11 @@ const DisplayPreview = ({ completedGames }) => {
         })}
 
         {gameToChange && (
-          <ChangeGameModal onClose={() => setGameToChange(null)} gameToChange={gameToChange}/>
+          <ChangeGameModal
+            onClose={() => setGameToChange(null)}
+            gameToChange={gameToChange}
+            onSelect={handleGameChange}
+          />
         )}
       </div>
     </section>
@@ -539,7 +558,7 @@ const createBackendPayload = (selectedGames) => {
   return backendData;
 };
 
-const ChangeGameModal = ({ onClose, gameToChange}) => {
+const ChangeGameModal = ({ onClose, gameToChange, onSelect}) => {
   const API_URL = import.meta.env.VITE_API_URL;
   const [searchTerm, setSearchTerm] = useState(gameToChange.title);
   const [gamesFromSearch, setGamesFromSearch] = useState([]);
@@ -656,6 +675,10 @@ const ChangeGameModal = ({ onClose, gameToChange}) => {
                   text-sm font-medium text-foreground
                   transition hover:bg-white/5
                 "
+                onClick={() => {
+                  onSelect(game);
+                  onClose();
+                }}
                   >
                     Select
                   </button>
