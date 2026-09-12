@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { fetchUserSteamGames, enrichSteamGameData } from "../api/steamApi";
+
 import MainLayout from "../components/layout/MainLayout";
 const SteamImport = () => {
   const [vanityName, setVanityName] = useState("");
@@ -562,20 +563,30 @@ const ChangeGameModal = ({ onClose, gameToChange, onSelect}) => {
   const API_URL = import.meta.env.VITE_API_URL;
   const [searchTerm, setSearchTerm] = useState(gameToChange.title);
   const [gamesFromSearch, setGamesFromSearch] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
   const handleSearch = async () => {
     try {
       const response = await fetch(
         `${API_URL}/api/rawg/search?query=${encodeURIComponent(searchTerm)}&page_size=5`,
       );
-
+      setIsLoading(true);
       const data = await response.json();
+      
+      
 
-      console.log(data);
       setGamesFromSearch(data);
+      
     } catch (error) {
       console.error("Failed to search games:", error);
+    } finally {
+      setIsLoading(false);
     }
   };
+
+  useEffect(() => {
+    handleSearch();
+  }, [])
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4">
@@ -640,7 +651,9 @@ const ChangeGameModal = ({ onClose, gameToChange, onSelect}) => {
 
         {/* Results */}
         <p className="mb-3 text-sm font-medium text-muted">Search Results</p>
-        {gamesFromSearch.map((game) => {
+
+        
+        {isLoading ? <h1>loading...</h1> : gamesFromSearch.map((game) => {
           const { title, rawgId, coverImage, released, coverAlt } = game;
 
           return (
