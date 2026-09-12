@@ -563,22 +563,28 @@ const ChangeGameModal = ({ onClose, gameToChange, onSelect}) => {
   const API_URL = import.meta.env.VITE_API_URL;
   const [searchTerm, setSearchTerm] = useState(gameToChange.title);
   const [gamesFromSearch, setGamesFromSearch] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   const handleSearch = async () => {
     try {
+      setIsLoading(true);
+      setError(null);
       const response = await fetch(
         `${API_URL}/api/rawg/search?query=${encodeURIComponent(searchTerm)}&page_size=5`,
       );
-      setIsLoading(true);
-      const data = await response.json();
-      
-      
 
+      if (!response.ok) {
+        throw new Error(`Request failed with status ${response.status}`);
+      }
+
+      const data = await response.json();
       setGamesFromSearch(data);
       
     } catch (error) {
       console.error("Failed to search games:", error);
+      setGamesFromSearch([]);
+      setError(`Error searching for this game: ${error.message}`)
     } finally {
       setIsLoading(false);
     }
@@ -660,7 +666,6 @@ const ChangeGameModal = ({ onClose, gameToChange, onSelect}) => {
             
               <div className="space-y-3"
               key={rawgId}>
-                {/* Temporary fake result */}
                 <div
                   className="
                 flex items-center gap-4
@@ -700,6 +705,8 @@ const ChangeGameModal = ({ onClose, gameToChange, onSelect}) => {
             
           );
         })}
+
+        {error && <p>{error}</p>}
       </div>
     </div>
   );
