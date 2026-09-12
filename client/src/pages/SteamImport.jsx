@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { fetchUserSteamGames, enrichSteamGameData } from "../api/steamApi";
-import MainLayout from '../components/layout/MainLayout'
+import MainLayout from "../components/layout/MainLayout";
 const SteamImport = () => {
   const [vanityName, setVanityName] = useState("");
   const [games, setGames] = useState([]);
@@ -9,7 +9,7 @@ const SteamImport = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [completedGames, setCompletedGames] = useState([]);
-  const [step, setStep] = useState('selection')
+  const [step, setStep] = useState("selection");
   const [isImporting, setIsImporting] = useState(false);
 
   const handleSubmit = async (e) => {
@@ -233,7 +233,6 @@ const SteamSelectionScreen = ({
   );
 };
 
-
 const SteamPreviewScreen = ({ completedGames, onBack }) => {
   return (
     <div className="mx-auto w-full max-w-6xl px-4 py-8 sm:px-6">
@@ -283,11 +282,13 @@ const SteamPreviewScreen = ({ completedGames, onBack }) => {
 };
 
 const DisplayPreview = ({ completedGames }) => {
+  const [gameToChange, setGameToChange] = useState(null);
+
   return (
     <section>
       <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
-        {completedGames.map(
-          ({
+        {completedGames.map((game) => {
+          const {
             steamAppId,
             rawgId,
             title,
@@ -297,11 +298,12 @@ const DisplayPreview = ({ completedGames }) => {
             rawgRating,
             genres,
             platforms,
-          }) => {
-            return (
-              <article
-                key={steamAppId}
-                className="
+          } = game;
+
+          return (
+            <article
+              key={steamAppId}
+              className="
                   group overflow-hidden rounded-2xl
                   border border-border bg-card
                   shadow-lg
@@ -310,160 +312,141 @@ const DisplayPreview = ({ completedGames }) => {
                   hover:border-primary/40
                   hover:shadow-xl
                 "
-              >
-                {/* Artwork */}
-                <div className="relative aspect-video overflow-hidden bg-background">
-                  {coverImage ? (
-                    <img
-                      src={coverImage}
-                      alt={coverAlt}
-                      className="
+            >
+              {/* Artwork */}
+              <div className="relative aspect-video overflow-hidden bg-background">
+                {coverImage ? (
+                  <img
+                    src={coverImage}
+                    alt={coverAlt}
+                    className="
                         h-full w-full object-cover
                         transition duration-300
                         group-hover:scale-[1.03]
                       "
-                    />
-                  ) : (
-                    <div className="flex h-full items-center justify-center text-sm text-muted">
-                      No artwork available
-                    </div>
-                  )}
+                  />
+                ) : (
+                  <div className="flex h-full items-center justify-center text-sm text-muted">
+                    No artwork available
+                  </div>
+                )}
 
-                  {/* Steam badge */}
-                  <span
-                    className="
+                {/* Steam badge */}
+                <span
+                  className="
                       absolute right-3 top-3
                       rounded-full border border-white/10
                       bg-black/70 px-2.5 py-1
                       text-xs font-medium text-white
                       backdrop-blur
                     "
-                  >
-                    Steam
-                  </span>
+                >
+                  Steam
+                </span>
 
-                  {/* Gradient over bottom of artwork */}
-                  <div className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-black/60 to-transparent" />
-                </div>
+                {/* Gradient over bottom of artwork */}
+                <div className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-black/60 to-transparent" />
+              </div>
 
-                {/* Content */}
-                <div className="p-5">
-                  <h2 className="line-clamp-2 text-lg font-bold text-foreground">
-                    {title}
-                  </h2>
+              {/* Content */}
+              <div className="p-5">
+                <h2 className="line-clamp-2 text-lg font-bold text-foreground">
+                  {title}
+                </h2>
+                {/* Basic metadata */}
+                <div className="mt-4 grid grid-cols-2 gap-3">
+                  <div className="rounded-xl bg-background/50 p-3">
+                    <p className="text-xs text-muted">RAWG Rating</p>
 
-                  {/* Basic metadata */}
-                  <div className="mt-4 grid grid-cols-2 gap-3">
-                    <div className="rounded-xl bg-background/50 p-3">
-                      <p className="text-xs text-muted">RAWG Rating</p>
-
-                      <p className="mt-1 font-semibold text-foreground">
-                        ⭐ {rawgRating ?? "N/A"}
-                      </p>
-                    </div>
-
-                    <div className="rounded-xl bg-background/50 p-3">
-                      <p className="text-xs text-muted">Released</p>
-
-                      <p className="mt-1 truncate font-semibold text-foreground">
-                        {released || "Unknown"}
-                      </p>
-                    </div>
+                    <p className="mt-1 font-semibold text-foreground">
+                      ⭐ {rawgRating ?? "N/A"}
+                    </p>
                   </div>
 
-                  {/* Genres */}
-                  <div className="mt-5">
-                    <p className="mb-2 text-xs font-medium uppercase tracking-wide text-muted">
-                      Genres
-                    </p>
+                  <div className="rounded-xl bg-background/50 p-3">
+                    <p className="text-xs text-muted">Released</p>
 
-                    <div className="flex flex-wrap gap-2">
-                      {genres?.length > 0 ? (
-                        genres.map((genre) => (
-                          <span
-                            key={genre}
-                            className="
+                    <p className="mt-1 truncate font-semibold text-foreground">
+                      {released || "Unknown"}
+                    </p>
+                  </div>
+                </div>
+                {/* Genres */}
+                <div className="mt-5">
+                  <p className="mb-2 text-xs font-medium uppercase tracking-wide text-muted">
+                    Genres
+                  </p>
+
+                  <div className="flex flex-wrap gap-2">
+                    {genres?.length > 0 ? (
+                      genres.map((genre) => (
+                        <span
+                          key={genre}
+                          className="
                               rounded-full
                               bg-primary/10 px-2.5 py-1
                               text-xs font-medium text-primary
                             "
-                          >
-                            {genre}
-                          </span>
-                        ))
-                      ) : (
-                        <span className="text-sm text-muted">Unknown</span>
-                      )}
-                    </div>
+                        >
+                          {genre}
+                        </span>
+                      ))
+                    ) : (
+                      <span className="text-sm text-muted">Unknown</span>
+                    )}
                   </div>
+                </div>
+                {/* Platforms */}
+                <div className="mt-5">
+                  <p className="mb-2 text-xs font-medium uppercase tracking-wide text-muted">
+                    Platforms
+                  </p>
 
-                  {/* Platforms */}
-                  <div className="mt-5">
-                    <p className="mb-2 text-xs font-medium uppercase tracking-wide text-muted">
-                      Platforms
-                    </p>
-
-                    <div className="flex flex-wrap gap-2">
-                      {platforms?.length > 0 ? (
-                        platforms.map((platform) => (
-                          <span
-                            key={platform}
-                            className="
+                  <div className="flex flex-wrap gap-2">
+                    {platforms?.length > 0 ? (
+                      platforms.map((platform) => (
+                        <span
+                          key={platform}
+                          className="
                               rounded-lg border border-border
                               px-2.5 py-1
                               text-xs text-muted
                             "
-                          >
-                            {platform}
-                          </span>
-                        ))
-                      ) : (
-                        <span className="text-sm text-muted">Unknown</span>
-                      )}
-                    </div>
+                        >
+                          {platform}
+                        </span>
+                      ))
+                    ) : (
+                      <span className="text-sm text-muted">Unknown</span>
+                    )}
                   </div>
-
-                  {/* Match verification */}
-                  <div className="mt-6 border-t border-border pt-4">
-                    <p className="mb-3 text-sm text-muted">
-                      Is this the correct game?
-                    </p>
-
-                    <div className="flex gap-2">
-                      <button
-                        type="button"
-                        className="
-                          flex-1 rounded-xl
-                          bg-primary px-4 py-2.5
-                          text-sm font-semibold text-white
-                          transition
-                          hover:opacity-90
-                        "
-                      >
-                        Looks Correct
-                      </button>
-
-                      <button
-                        type="button"
-                        className="
-                          rounded-xl border border-border
-                          px-4 py-2.5
-                          text-sm font-medium text-foreground
-                          transition
-                          hover:bg-white/5
-                        "
-                      >
-                        Change
-                      </button>
-                    </div>
-                  </div>
-
-                  
-                 
                 </div>
-              </article>
-            );
-          },
+                {/* Match verification */}
+                <div className="mt-6 border-t border-border pt-4">
+                  <div className="flex items-center justify-between gap-4">
+                    <p className="text-sm text-muted">Not the right game?</p>
+                    <button
+                      type="button"
+                      className="
+                        rounded-xl border border-border
+                        px-4 py-2.5
+                        text-sm font-medium text-foreground
+                        transition
+                        hover:bg-white/5
+                        "
+                      onClick={() => setGameToChange(game)}
+                    >
+                      Change Match
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </article>
+          );
+        })}
+
+        {gameToChange && (
+          <ChangeGameModal onClose={() => setGameToChange(null)} gameToChange={gameToChange}/>
         )}
       </div>
     </section>
@@ -554,6 +537,136 @@ const createBackendPayload = (selectedGames) => {
   });
 
   return backendData;
+};
+
+const ChangeGameModal = ({ onClose, gameToChange}) => {
+  const API_URL = import.meta.env.VITE_API_URL;
+  const [searchTerm, setSearchTerm] = useState(gameToChange.title);
+  const [gamesFromSearch, setGamesFromSearch] = useState([]);
+  const handleSearch = async () => {
+    try {
+      const response = await fetch(
+        `${API_URL}/api/rawg/search?query=${encodeURIComponent(searchTerm)}&page_size=5`,
+      );
+
+      const data = await response.json();
+
+      console.log(data);
+      setGamesFromSearch(data);
+    } catch (error) {
+      console.error("Failed to search games:", error);
+    }
+  };
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4">
+      <div className="w-full max-w-2xl rounded-2xl border border-border bg-card p-6 shadow-2xl">
+        {/* Header */}
+        <div className="mb-6 flex items-center justify-between">
+          <div>
+            <h2 className="text-xl font-bold text-foreground">
+              Change Game Match
+            </h2>
+
+            <p className="mt-1 text-sm text-muted">
+              Search for the correct game below.
+            </p>
+          </div>
+
+          <button
+            type="button"
+            className="
+              rounded-lg px-3 py-2
+              text-muted transition
+              hover:bg-white/5
+              hover:text-foreground
+            "
+            onClick={onClose}
+          >
+            ✕
+          </button>
+        </div>
+
+        {/* Search */}
+        <div className="mb-6 flex gap-2">
+          <input
+            type="text"
+            placeholder="Search for a game..."
+            className="
+              flex-1 rounded-xl
+              border border-border
+              bg-background px-4 py-3
+              text-sm text-foreground
+              outline-none
+              placeholder:text-muted
+              focus:border-primary
+            "
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+
+          <button
+            type="button"
+            className="
+              rounded-xl bg-primary
+              px-5 py-3
+              text-sm font-semibold text-white
+              transition hover:opacity-90
+            "
+            onClick={handleSearch}
+          >
+            Search
+          </button>
+        </div>
+
+        {/* Results */}
+        <p className="mb-3 text-sm font-medium text-muted">Search Results</p>
+        {gamesFromSearch.map((game) => {
+          const { title, rawgId, coverImage, released, coverAlt } = game;
+
+          return (
+            
+              <div className="space-y-3"
+              key={rawgId}>
+                {/* Temporary fake result */}
+                <div
+                  className="
+                flex items-center gap-4
+                rounded-xl border border-border
+                bg-background p-3
+              "
+                >
+                  <img
+                    src={coverImage}
+                    alt={coverAlt}
+                    className="h-20 w-14 rounded-lg bg-white/10 object-cover"
+                  />
+
+                  <div className="flex-1">
+                    <h3 className="font-semibold text-foreground">{title}</h3>
+
+                    <p className="mt-1 text-sm text-muted">{released}</p>
+                  </div>
+
+                  <button
+                    type="button"
+                    className="
+                  rounded-lg border border-border
+                  px-4 py-2
+                  text-sm font-medium text-foreground
+                  transition hover:bg-white/5
+                "
+                  >
+                    Select
+                  </button>
+                </div>
+              </div>
+            
+          );
+        })}
+      </div>
+    </div>
+  );
 };
 
 export default SteamImport;

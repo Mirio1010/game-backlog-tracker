@@ -4,8 +4,9 @@ const router = express.Router();
 
 // GET /api/rawg/search?query=elden
 router.get("/search", async (req, res) => {
+  
   try {
-    const { query } = req.query;
+    const { query, page_size } = req.query;
 
     if (!query) {
       return res.status(400).json({
@@ -18,8 +19,11 @@ router.get("/search", async (req, res) => {
         message: "RAWG API key is missing",
       });
     }
+    const size = page_size || 10;
 
-    const rawgUrl = `https://api.rawg.io/api/games?key=${process.env.RAWG_API_KEY}&search=${encodeURIComponent(query)}&page_size=10`;
+    
+
+    const rawgUrl = `https://api.rawg.io/api/games?key=${process.env.RAWG_API_KEY}&search=${encodeURIComponent(query)}&page_size=${size}`;
 
     const rawgResponse = await fetch(rawgUrl);
 
