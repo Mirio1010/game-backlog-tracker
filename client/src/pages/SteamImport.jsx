@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { fetchUserSteamGames, enrichSteamGameData } from "../api/steamApi";
-
+import {importSteamGames} from '../api/gamesApi'
 import MainLayout from "../components/layout/MainLayout";
 const SteamImport = () => {
   const [vanityName, setVanityName] = useState("");
@@ -236,6 +236,27 @@ const SteamSelectionScreen = ({
 };
 
 const SteamPreviewScreen = ({ completedGames, onBack, setCompletedGames }) => {
+  const [isImporting, setIsImporting] = useState(false);
+  const [importError, setImportError] = useState(null);
+  
+  
+  const handleImport = async () => {
+    try {
+      setIsImporting(true);
+      setImportError(null);
+
+      const importedGames = await importSteamGames(completedGames);
+
+      console.log("Imported games:", importedGames);
+    } catch (error) {
+      console.error("Failed to import games:", error);
+      setImportError(error.message);
+    } finally {
+      setIsImporting(false);
+    }
+  };
+
+
   return (
     <div className="mx-auto w-full max-w-6xl px-4 py-8 sm:px-6">
       {/* Back */}
@@ -278,7 +299,12 @@ const SteamPreviewScreen = ({ completedGames, onBack, setCompletedGames }) => {
             </p>
           </div>
 
-          <ImportToBacklogButton />
+          <ImportToBacklogButton
+            onClick={handleImport}
+            isLoading={isImporting}
+            disabled={completedGames.length === 0}
+          />
+          {importError && <p className="text-sm text-red-400">{importError}</p>}
         </div>
       </div>
 

@@ -24,7 +24,6 @@ function AppRoutes() {
       <Route path="/about" element={<About />} />
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<Signup />} />
-      <Route path="/steam-import" element={<SteamImport />} />
 
       {/* Protected Routes */}
       <Route
@@ -42,6 +41,15 @@ function AppRoutes() {
         <Route path="wishlist" element={<Wishlist />} />
         <Route path="/dashboard/games/:id" element={<GamePage />} />
       </Route>
+
+      <Route
+        path="/steam-import"
+        element={
+          <ProtectedRoutes>
+            <SteamImport />
+          </ProtectedRoutes>
+        }
+      />
     </Routes>
   );
 }
