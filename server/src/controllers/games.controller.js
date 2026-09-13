@@ -121,8 +121,60 @@ const deleteGame = async (req, res) => {
   }
 };
 
+
+const importSteamGames = async (req, res) => {
+  try {
+    const games = req.body;
+
+    const gamesToInsert = games.map((game) => ({
+      user_id: req.user.id,
+      rawg_id: game.rawgId,
+      title: game.title,
+      cover_image: game.coverImage,
+      released: game.released,
+      rating: game.rawgRating,
+      genres: game.genres,
+      platforms: game.platforms,
+      status: game.status || "Backlog",
+      selected_platform: game.selected_platform,
+      notes: game.notes || "",
+      average_playtime: game.rawgPlaytime || 0,
+    }));
+
+    const { data, error } = await supabase
+      .from("saved_games")
+      .insert(gamesToInsert)
+      .select();
+
+    // handle error + response
+
+    if (error) {
+      console.error("Error importing games:", error);
+
+      return res.status(500).json({
+        message: "Error importing games",
+      });
+    }
+
+    res.status(201).json({
+      message: "Games imported successfully",
+      games: data,
+    });
+
+  } catch (error) {
+    // server error
+
+     console.error("Importing games server error:", error);
+
+     res.status(500).json({
+       message: "Server error while importing games",
+     });
+  }
+};
+
 module.exports = {
   saveGame,
   getMyGames,
   deleteGame,
+  importSteamGames,
 };

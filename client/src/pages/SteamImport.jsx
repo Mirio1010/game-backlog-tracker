@@ -255,7 +255,7 @@ const SteamPreviewScreen = ({ completedGames, onBack, setCompletedGames }) => {
       </button>
 
       {/* Header */}
-      <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+      <div className="mb-8 flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <h1 className="text-3xl font-bold tracking-tight text-foreground">
             Review your games
@@ -267,21 +267,54 @@ const SteamPreviewScreen = ({ completedGames, onBack, setCompletedGames }) => {
           </p>
         </div>
 
-        <div className="shrink-0 rounded-xl border border-border bg-card px-4 py-3">
-          <p className="text-xs font-medium uppercase tracking-wide text-muted">
-            Games selected
-          </p>
+        <div className="flex shrink-0 flex-col gap-3 sm:min-w-52">
+          <div className="rounded-xl border border-border bg-card px-4 py-3">
+            <p className="text-xs font-medium uppercase tracking-wide text-muted">
+              Games selected
+            </p>
 
-          <p className="mt-1 text-2xl font-bold text-foreground">
-            {completedGames.length}
-          </p>
+            <p className="mt-1 text-2xl font-bold text-foreground">
+              {completedGames.length}
+            </p>
+          </div>
+
+          <ImportToBacklogButton />
         </div>
       </div>
 
-      <DisplayPreview completedGames={completedGames} setCompletedGames={setCompletedGames}/>
+      <DisplayPreview
+        completedGames={completedGames}
+        setCompletedGames={setCompletedGames}
+      />
     </div>
   );
 };
+
+const ImportToBacklogButton = ({
+  onClick,
+  isLoading = false,
+  disabled = false,
+}) => {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      disabled={disabled || isLoading}
+      className="
+        w-full rounded-xl
+        bg-primary px-6 py-3
+        text-sm font-semibold text-white
+        transition
+        hover:opacity-90
+        disabled:cursor-not-allowed
+        disabled:opacity-50
+      "
+    >
+      {isLoading ? "Importing..." : "Import to Backlog"}
+    </button>
+  );
+};
+
 
 const DisplayPreview = ({ completedGames, setCompletedGames }) => {
   const [gameToChange, setGameToChange] = useState(null);
@@ -299,6 +332,7 @@ const DisplayPreview = ({ completedGames, setCompletedGames }) => {
 
    setCompletedGames(newCompletedGames);
  };
+console.log(completedGames);
 
   return (
     <section>
