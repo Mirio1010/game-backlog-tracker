@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { useOutletContext } from "react-router-dom";
-
+import { useNavigate } from "react-router-dom";
 import AddGameSearchBar from "../../components/dashboard/Add-Game/AddGameSearchBar";
 import AddGameResultCard from "../../components/dashboard/Add-Game/AddGameResultCard";
 import AddGameModal from "../../components/dashboard/Add-Game/AddGameModal";
 import { saveGame as saveGameToDatabase } from "../../api/gamesApi";
+import { SiSteam } from "react-icons/si";
 
 const AddGamePage = () => {
   const API_URL = import.meta.env.VITE_API_URL;
@@ -92,6 +93,10 @@ const AddGamePage = () => {
         <p className="mt-2 text-muted">
           Search for a game and add it to your backlog.
         </p>
+
+        <div className="mt-4">
+          <ImportSteamGamesBtn />
+        </div>
       </div>
 
       <form onSubmit={handleSearchGames}>
@@ -149,6 +154,27 @@ const AddGamePage = () => {
         />
       )}
     </section>
+  );
+};
+
+
+
+const ImportSteamGamesBtn = () => {
+  const navigate = useNavigate();
+
+  const handleImportSteamGames = () => {
+    navigate("/steam-import");
+  };
+
+  return (
+    <button
+      type="button"
+      onClick={handleImportSteamGames}
+      className="flex cursor-pointer items-center gap-2 rounded-xl border border-border bg-card px-5 py-3 font-medium text-foreground transition hover:border-primary hover:text-primary"
+    >
+      <SiSteam className="text-xl" />
+      Import Steam Games
+    </button>
   );
 };
 
