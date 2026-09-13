@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { fetchUserSteamGames, enrichSteamGameData } from "../api/steamApi";
 import {importSteamGames} from '../api/gamesApi'
 import MainLayout from "../components/layout/MainLayout";
+import { useNavigate } from "react-router-dom";
+
 const SteamImport = () => {
   const [vanityName, setVanityName] = useState("");
   const [games, setGames] = useState([]);
@@ -238,6 +240,7 @@ const SteamSelectionScreen = ({
 const SteamPreviewScreen = ({ completedGames, onBack, setCompletedGames }) => {
   const [isImporting, setIsImporting] = useState(false);
   const [importError, setImportError] = useState(null);
+  const navigate = useNavigate();
   
   
   const handleImport = async () => {
@@ -246,7 +249,7 @@ const SteamPreviewScreen = ({ completedGames, onBack, setCompletedGames }) => {
       setImportError(null);
 
       const importedGames = await importSteamGames(completedGames);
-
+      navigate("/dashboard");
       console.log("Imported games:", importedGames);
     } catch (error) {
       console.error("Failed to import games:", error);

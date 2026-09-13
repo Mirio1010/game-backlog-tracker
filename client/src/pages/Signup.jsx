@@ -42,6 +42,9 @@ const Form = () => {
   const API_URL = import.meta.env.VITE_API_URL;
 
   const navigate = useNavigate();
+
+  const [accountCreated, setAccountCreated] = useState(false);
+
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -80,30 +83,37 @@ const Form = () => {
       return;
     }
 
-    const res = await fetch(`${API_URL}/api/auth/register`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        username: formData.username,
-        email: formData.email,
-        password: formData.password,
-      }),
-    });
+    try {
+      const res = await fetch(`${API_URL}/api/auth/register`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: formData.username,
+          email: formData.email,
+          password: formData.password,
+        }),
+      });
 
-    const data = await res.json();
+      const data = await res.json();
 
-    if (!res.ok) {
-      console.log("Backend error:", data.message);
-      setError(data.message || "Something went wrong. Please try again.");
-      return;
+      if (!res.ok) {
+        console.log("Backend error:", data.message);
+
+        setError(data.message || "Something went wrong. Please try again.");
+
+        return;
+      }
+
+      console.log("Success:", data);
+
+      setAccountCreated(true);
+    } catch (error) {
+      console.error("Signup error:", error);
+
+      setError("Something went wrong. Please try again.");
     }
-
-    console.log("Success:", data);
-    navigate("/login", {
-      state: {
-        message: "Account created successfully. Please log in.",
-      },
-    });
   };
 
   return (
@@ -113,95 +123,107 @@ const Form = () => {
 
         <div className="flex items-center justify-center bg-surface p-4 sm:p-10 md:p-16">
           <div className="w-full max-w-md rounded-2xl border border-border bg-surface/80 p-5 shadow-xl sm:p-8">
-            <h2 className="mb-6 text-2xl font-semibold text-foreground">
-              Sign Up
-            </h2>
+            {accountCreated ? (
+              <SignupSuccess />
+            ) : (
+              <>
+                <h2 className="mb-6 text-2xl font-semibold text-foreground">
+                  Sign Up
+                </h2>
 
-            <form
-              autoComplete="off"
-              className="space-y-5"
-              onSubmit={handleSubmit}
-            >
-              <div className="space-y-2">
-                <label
-                  htmlFor="username"
-                  className="text-sm font-medium text-muted"
+                <form
+                  autoComplete="off"
+                  className="space-y-5"
+                  onSubmit={handleSubmit}
                 >
-                  Username
-                </label>
-                <input
-                  type="text"
-                  id="username"
-                  name="username"
-                  value={formData.username}
-                  onChange={handleChange}
-                  autoComplete="username"
-                  className="w-full rounded-xl border border-border bg-card px-4 py-3 text-foreground outline-none transition placeholder:text-muted focus:border-primary focus:ring-2 focus:ring-primary/30"
-                />
-              </div>
+                  <div className="space-y-2">
+                    <label
+                      htmlFor="username"
+                      className="text-sm font-medium text-muted"
+                    >
+                      Username
+                    </label>
 
-              <div className="space-y-2">
-                <label
-                  htmlFor="email"
-                  className="text-sm font-medium text-muted"
-                >
-                  Email
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  autoComplete="email"
-                  className="w-full rounded-xl border border-border bg-card px-4 py-3 text-foreground outline-none transition placeholder:text-muted focus:border-primary focus:ring-2 focus:ring-primary/30"
-                />
-              </div>
+                    <input
+                      type="text"
+                      id="username"
+                      name="username"
+                      value={formData.username}
+                      onChange={handleChange}
+                      autoComplete="username"
+                      className="w-full rounded-xl border border-border bg-card px-4 py-3 text-foreground outline-none transition placeholder:text-muted focus:border-primary focus:ring-2 focus:ring-primary/30"
+                    />
+                  </div>
 
-              <div className="space-y-2">
-                <label
-                  htmlFor="password"
-                  className="text-sm font-medium text-muted"
-                >
-                  Password
-                </label>
-                <input
-                  type="password"
-                  id="password"
-                  name="password"
-                  value={formData.password}
-                  onChange={handleChange}
-                  autoComplete="new-password"
-                  className="w-full rounded-xl border border-border bg-card px-4 py-3 text-foreground outline-none transition placeholder:text-muted focus:border-primary focus:ring-2 focus:ring-primary/30"
-                />
-              </div>
+                  <div className="space-y-2">
+                    <label
+                      htmlFor="email"
+                      className="text-sm font-medium text-muted"
+                    >
+                      Email
+                    </label>
 
-              <div className="space-y-2">
-                <label
-                  htmlFor="confirmPassword"
-                  className="text-sm font-medium text-muted"
-                >
-                  Confirm Password
-                </label>
-                {error && (
-                  <p className="rounded-xl border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-300">
-                    {error}
-                  </p>
-                )}
-                <input
-                  type="password"
-                  id="confirmPassword"
-                  name="confirmPassword"
-                  value={formData.confirmPassword}
-                  onChange={handleChange}
-                  autoComplete="new-password"
-                  className="w-full rounded-xl border border-border bg-card px-4 py-3 text-foreground outline-none transition placeholder:text-muted focus:border-primary focus:ring-2 focus:ring-primary/30"
-                />
-              </div>
-              <LoginRedirect/>
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      autoComplete="email"
+                      className="w-full rounded-xl border border-border bg-card px-4 py-3 text-foreground outline-none transition placeholder:text-muted focus:border-primary focus:ring-2 focus:ring-primary/30"
+                    />
+                  </div>
 
-              <CreateAccountBtn/>
-            </form>
+                  <div className="space-y-2">
+                    <label
+                      htmlFor="password"
+                      className="text-sm font-medium text-muted"
+                    >
+                      Password
+                    </label>
+
+                    <input
+                      type="password"
+                      id="password"
+                      name="password"
+                      value={formData.password}
+                      onChange={handleChange}
+                      autoComplete="new-password"
+                      className="w-full rounded-xl border border-border bg-card px-4 py-3 text-foreground outline-none transition placeholder:text-muted focus:border-primary focus:ring-2 focus:ring-primary/30"
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <label
+                      htmlFor="confirmPassword"
+                      className="text-sm font-medium text-muted"
+                    >
+                      Confirm Password
+                    </label>
+
+                    <input
+                      type="password"
+                      id="confirmPassword"
+                      name="confirmPassword"
+                      value={formData.confirmPassword}
+                      onChange={handleChange}
+                      autoComplete="new-password"
+                      className="w-full rounded-xl border border-border bg-card px-4 py-3 text-foreground outline-none transition placeholder:text-muted focus:border-primary focus:ring-2 focus:ring-primary/30"
+                    />
+                  </div>
+
+                  {error && (
+                    <p className="rounded-xl border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-300">
+                      {error}
+                    </p>
+                  )}
+
+                  <LoginRedirect />
+
+                  <CreateAccountBtn />
+                </form>
+              </>
+            )}
           </div>
         </div>
       </section>
@@ -209,6 +231,79 @@ const Form = () => {
   );
 };
 
+
+const SignupSuccess = () => {
+  const navigate = useNavigate();
+
+  const handleSteamImport = () => {
+    navigate("/login", {
+      state: {
+        message: "Account created successfully. Please log in.",
+        redirectTo: "/steam-import",
+      },
+    });
+  };
+
+  const handleSkip = () => {
+    navigate("/login", {
+      state: {
+        message: "Account created successfully. Please log in.",
+      },
+    });
+  };
+
+  return (
+    <div className="space-y-6 text-center">
+      <div>
+        <p className="text-sm font-medium uppercase tracking-[0.2em] text-primary">
+          You&apos;re all set
+        </p>
+
+        <h2 className="mt-2 text-2xl font-semibold text-foreground">
+          Account created!
+        </h2>
+
+        <p className="mt-3 text-sm leading-6 text-muted">
+          Want to import your Steam library and start building your backlog
+          right away?
+        </p>
+      </div>
+
+      <div className="space-y-3">
+        <button
+          type="button"
+          onClick={handleSteamImport}
+          className="
+            w-full rounded-xl
+            bg-primary px-4 py-3
+            font-semibold text-primary-foreground
+            transition
+            hover:bg-primary/70
+            active:scale-[0.99]
+          "
+        >
+          Import from Steam
+        </button>
+
+        <button
+          type="button"
+          onClick={handleSkip}
+          className="
+            w-full rounded-xl
+            border border-border
+            bg-card px-4 py-3
+            font-medium text-foreground
+            transition
+            hover:bg-white/5
+            active:scale-[0.99]
+          "
+        >
+          Skip for now
+        </button>
+      </div>
+    </div>
+  );
+};
 
 
 
