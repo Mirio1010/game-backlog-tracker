@@ -126,7 +126,27 @@ const importSteamGames = async (req, res) => {
   try {
     const games = req.body;
 
-    const gamesToInsert = games.map((game) => ({
+
+     const { data: existingGames, error: fetchError } = await supabase
+       .from("saved_games")
+       .select("rawg_id")
+       .eq("user_id", req.user.id);
+
+     const existingRawgIds = new Set(existingGames.map((game) => game.rawg_id));
+
+     const filteredGames = games.filter(
+       (game) => !existingRawgIds.has(game.rawgId),
+     );
+
+     if (filteredGames.length === 0) {
+      return res.status(500).json({
+        message: 'These games are already in your backlog!',
+        games: []
+      })
+     }
+
+
+    const gamesToInsert = filteredGames.map((game) => ({
       user_id: req.user.id,
       rawg_id: game.rawgId,
       title: game.title,
