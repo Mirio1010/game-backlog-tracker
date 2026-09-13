@@ -34,7 +34,7 @@ const enrichData = async (title, steamAppId) => {
       [],
     status: "Backlog",
     notes: "",
-    selected_platform: "steam",
+    selected_platform: "Steam",
     average_playtime: rawgGame.average_playtime ?? 0,
   };
 };
