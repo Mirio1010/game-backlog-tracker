@@ -44,7 +44,11 @@ const Form = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const signupMessage = location.state?.message;
+  
+
+ const signupMessage = location.state?.message;
+ const redirectTo = location.state?.redirectTo;
+
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -92,7 +96,7 @@ const Form = () => {
 
       console.log("Login successful:", data);
 
-      navigate("/dashboard");
+      navigate(redirectTo || "/dashboard");
     } catch (error) {
       setError("Something went wrong. Please try again.");
       console.log(error);

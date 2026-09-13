@@ -62,13 +62,8 @@ const getMyGames = async (req, res) => {
       .eq("user_id", req.user.id)
       .order("created_at", { ascending: false });
 
-      
-      
-      
-
     if (error) {
       console.error("Error fetching games:", error);
-
       return res.status(500).json({
         message: "Error fetching games",
         error: error.message,
@@ -81,7 +76,6 @@ const getMyGames = async (req, res) => {
     });
   } catch (error) {
     console.error("Fetch games server error:", error);
-
     res.status(500).json({
       message: "Server error while fetching games",
     });
@@ -127,8 +121,80 @@ const deleteGame = async (req, res) => {
   }
 };
 
+
+const importSteamGames = async (req, res) => {
+  try {
+    const games = req.body;
+
+
+     const { data: existingGames, error: fetchError } = await supabase
+       .from("saved_games")
+       .select("rawg_id")
+       .eq("user_id", req.user.id);
+
+     const existingRawgIds = new Set(existingGames.map((game) => game.rawg_id));
+
+     const filteredGames = games.filter(
+       (game) => !existingRawgIds.has(game.rawgId),
+     );
+
+     if (filteredGames.length === 0) {
+      return res.status(500).json({
+        message: 'These games are already in your backlog!',
+        games: []
+      })
+     }
+
+
+    const gamesToInsert = filteredGames.map((game) => ({
+      user_id: req.user.id,
+      rawg_id: game.rawgId,
+      title: game.title,
+      cover_image: game.coverImage,
+      released: game.released,
+      rating: game.rawgRating,
+      genres: game.genres,
+      platforms: game.platforms,
+      status: game.status || "Backlog",
+      selected_platform: game.selected_platform,
+      notes: game.notes || "",
+      average_playtime: game.rawgPlaytime || 0,
+    }));
+
+    const { data, error } = await supabase
+      .from("saved_games")
+      .insert(gamesToInsert)
+      .select();
+
+    // handle error + response
+
+    if (error) {
+      console.error("Error importing games:", error);
+
+      return res.status(500).json({
+        message: "Error importing games",
+      });
+    }
+
+    res.status(201).json({
+      message: "Games imported successfully",
+      games: data,
+    });
+
+  } catch (error) {
+    // server error
+
+     console.error("Importing games server error:", error);
+
+     res.status(500).json({
+       message: "Server error while importing games",
+     });
+  }
+};
+
 module.exports = {
   saveGame,
   getMyGames,
   deleteGame,
+  importSteamGames,
 };

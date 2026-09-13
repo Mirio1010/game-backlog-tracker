@@ -49,6 +49,34 @@ export const saveGame = async (game) => {
   return data.game;
 };
 
+
+export const importSteamGames = async (games) => {
+
+
+  const token = localStorage.getItem("token");
+
+  if (!token) {
+    throw new Error("No token found. Please log in again.");
+  }
+
+  const response = await fetch(`${API_BASE_URL}/games/import`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(games),
+  });
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.message || "Failed to import games.");
+  }
+
+  return data.games;
+};
+
 export const deleteGame = async (gameId) => {
   const token = localStorage.getItem("token");
 
