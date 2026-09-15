@@ -3,6 +3,7 @@ import { fetchUserSteamGames, enrichSteamGameData } from "../api/steamApi";
 import {importSteamGames} from '../api/gamesApi'
 import MainLayout from "../components/layout/MainLayout";
 import { useNavigate } from "react-router-dom";
+import { ArrowLeft } from "lucide-react";
 
 const SteamImport = () => {
   const [vanityName, setVanityName] = useState("");
@@ -780,18 +781,29 @@ const ChangeGameModal = ({ onClose, gameToChange, onSelect}) => {
 };
 
 const BackBtn = () => {
-  const naviate = useNavigate();
+  const navigate = useNavigate();
 
   const handleClick = () => {
-    naviate("/dashboard/add-game");
-  }
+    navigate("/dashboard/add-game");
+  };
 
   return (
-    <div>
-      <button onClick={handleClick}>back</button>
-    </div>
-  )
-}
+    <button
+      onClick={handleClick}
+      className="
+        flex cursor-pointer items-center gap-2
+        rounded-lg border border-border
+        bg-surface px-4 py-2
+        text-sm font-medium text-muted-foreground
+        transition-colors
+        hover:bg-muted hover:text-foreground
+      "
+    >
+      <ArrowLeft size={18} />
+      Back
+    </button>
+  );
+};
 
 
 export default SteamImport;
