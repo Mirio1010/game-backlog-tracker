@@ -111,6 +111,10 @@ const SteamSelectionScreen = ({
     <div className="mx-auto w-full max-w-5xl px-4 py-8 sm:px-6">
       {/* Header */}
       <div className="mb-8">
+
+      <BackBtn/>
+
+
         <h1 className="text-3xl font-bold tracking-tight text-foreground">
           Import Steam Library
         </h1>
@@ -774,5 +778,20 @@ const ChangeGameModal = ({ onClose, gameToChange, onSelect}) => {
     </div>
   );
 };
+
+const BackBtn = () => {
+  const naviate = useNavigate();
+
+  const handleClick = () => {
+    naviate("/dashboard/add-game");
+  }
+
+  return (
+    <div>
+      <button onClick={handleClick}>back</button>
+    </div>
+  )
+}
+
 
 export default SteamImport;
