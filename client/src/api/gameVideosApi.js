@@ -5,30 +5,34 @@ export const getGameMovies = async (rawgId) => {
     if (!rawgId) return [];
 
     const response = await axios.get(
-      `${API_BASE_URL}/rawg/games/${rawgId}/screenshots`,
+      `${API_BASE_URL}/rawg/games/${rawgId}/videos`,
     );
 
     return response.data;
   } catch (error) {
     throw new Error(
-      error.response?.data?.message || "Failed to fetch game screenshots",
+      error.response?.data?.message || "Failed to fetch gameplay videos",
     );
   }
 };
 
+
+
 export const getGameScreenshots = async (rawgId) => {
-  if (!rawgId) return [];
+  try {
+    if (!rawgId) return [];
 
-  const response = await fetch(
-    `${API_BASE_URL}/rawg/games/${rawgId}/screenshots`,
-  );
+    const response = await axios.get(
+      `${API_BASE_URL}/rawg/games/${rawgId}/screenshots`,
+    );
 
-  const data = await response.json();
-
-  if (!response.ok) {
-    throw new Error(data.message || "Failed to fetch game screenshots");
+    return response.data;
+  } catch (error) {
+      throw new Error(
+        error.response?.data?.message || "Failed to fetch screenshots",
+      );
   }
 
-  return data;
+
 };
 
