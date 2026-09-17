@@ -1,17 +1,19 @@
 const API_BASE_URL = `${import.meta.env.VITE_API_URL}/api`;
 
 export const fetchUserSteamGames = async (vanityName) => {
-  const res = await fetch(
-    `${API_BASE_URL}/steam/library?vanityName=${encodeURIComponent(vanityName)}`,
-  );
+   try {
+     const response = await axios.get(`${API_BASE_URL}/steam/library`, {
+       params: {
+         vanityName: vanityName,
+       },
+     });
 
-  const data = await res.json();
-
-  if (!res.ok) {
-    throw new Error(data.message || "Failed to fetch user library");
-  }
-
-  return data;
+     return response.data;
+   } catch (error) {
+     throw new Error(
+       error.response?.data?.message || "Failed to fetch user library",
+     );
+   }
 };
 
 
