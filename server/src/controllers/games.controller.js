@@ -83,9 +83,9 @@ const getMyGames = async (req, res) => {
 };
 
 const deleteGame = async (req, res) => {
+  
   try {
     const { id } = req.params;
-
     const { data, error } = await supabase
       .from("saved_games")
       .delete()
@@ -121,30 +121,27 @@ const deleteGame = async (req, res) => {
   }
 };
 
-
 const importSteamGames = async (req, res) => {
   try {
     const games = req.body;
 
+    const { data: existingGames, error: fetchError } = await supabase
+      .from("saved_games")
+      .select("rawg_id")
+      .eq("user_id", req.user.id);
 
-     const { data: existingGames, error: fetchError } = await supabase
-       .from("saved_games")
-       .select("rawg_id")
-       .eq("user_id", req.user.id);
+    const existingRawgIds = new Set(existingGames.map((game) => game.rawg_id));
 
-     const existingRawgIds = new Set(existingGames.map((game) => game.rawg_id));
+    const filteredGames = games.filter(
+      (game) => !existingRawgIds.has(game.rawgId),
+    );
 
-     const filteredGames = games.filter(
-       (game) => !existingRawgIds.has(game.rawgId),
-     );
-
-     if (filteredGames.length === 0) {
+    if (filteredGames.length === 0) {
       return res.status(500).json({
-        message: 'These games are already in your backlog!',
-        games: []
-      })
-     }
-
+        message: "These games are already in your backlog!",
+        games: [],
+      });
+    }
 
     const gamesToInsert = filteredGames.map((game) => ({
       user_id: req.user.id,
@@ -167,7 +164,6 @@ const importSteamGames = async (req, res) => {
       .select();
 
     // handle error + response
-
     if (error) {
       console.error("Error importing games:", error);
 
@@ -180,15 +176,14 @@ const importSteamGames = async (req, res) => {
       message: "Games imported successfully",
       games: data,
     });
-
   } catch (error) {
     // server error
 
-     console.error("Importing games server error:", error);
+    console.error("Importing games server error:", error);
 
-     res.status(500).json({
-       message: "Server error while importing games",
-     });
+    res.status(500).json({
+      message: "Server error while importing games",
+    });
   }
 };
 
