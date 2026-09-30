@@ -1,5 +1,5 @@
-
 const API_BASE_URL = `${import.meta.env.VITE_API_URL}/api`;
+import axios from "axios";
 
 export const fetchMyGames = async () => {
   const token = localStorage.getItem("token");
@@ -49,10 +49,7 @@ export const saveGame = async (game) => {
   return data.game;
 };
 
-
 export const importSteamGames = async (games) => {
-
-
   const token = localStorage.getItem("token");
 
   if (!token) {
@@ -98,4 +95,21 @@ export const deleteGame = async (gameId) => {
   }
 
   return data.game;
+};
+
+export const updateGameStatus = async (gameId, newStatus) => {
+  const token = localStorage.getItem("token");
+  const { data } = await axios.patch(
+    `${API_BASE_URL}/games/${gameId}/status`,
+    {
+      status: newStatus,
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    },
+  );
+
+  return data;
 };

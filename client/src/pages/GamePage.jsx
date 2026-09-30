@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { Link, useParams, useOutletContext } from "react-router-dom";
 import { getGameMovies, getGameScreenshots } from "../api/gameVideosApi";
+import {updateGameStatus} from "../api/gamesApi"
 
 const GamePage = () => {
   const { id } = useParams();
-  const { games } = useOutletContext();
+  const { games, setGames } = useOutletContext();
 
   const [videos, setVideos] = useState([]);
   const [screenshots, setScreenshots] = useState([]);
@@ -12,6 +13,22 @@ const GamePage = () => {
   const [mediaError, setMediaError] = useState(null);
 
   const game = games.find((game) => String(game.id) === String(id));
+
+  const handleStatusChange = async (newStatus) => {
+    try {
+      await updateGameStatus(game.id, newStatus);
+
+      setGames((currentGames) =>
+        currentGames.map((currentGame) =>
+          currentGame.id === game.id
+            ? { ...currentGame, status: newStatus }
+            : currentGame,
+        ),
+      );
+    } catch (error) {
+      console.error("Failed to update game status:", error);
+    }
+  };
 
   useEffect(() => {
     if (!game?.rawg_id) return;
@@ -87,10 +104,10 @@ const GamePage = () => {
 
           <div className="flex flex-col justify-end">
             <div className="mb-4 flex flex-wrap gap-3">
-              <span className="rounded-full border border-primary/30 bg-primary/20 px-4 py-1 text-sm font-medium text-primary">
-                {game.status}
-              </span>
-
+              <StatusDropdown
+                value={game.status}
+                onChange={handleStatusChange}
+              />
               <span className="rounded-full border border-border bg-card px-4 py-1 text-sm text-muted">
                 Playing on {game.selected_platform}
               </span>
@@ -161,6 +178,46 @@ const GamePage = () => {
           error={mediaError}
         />
       </div>
+    </div>
+  );
+};
+
+const StatusDropdown = ({ value, onChange }) => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const statuses = ["Backlog", "Playing", "Completed", "Dropped"];
+
+  const handleSelect = (status) => {
+    onChange(status);
+    setIsOpen(false);
+  };
+
+  return (
+    <div className="relative inline-block">
+      <button
+        type="button"
+        onClick={() => setIsOpen((prev) => !prev)}
+        className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/20 px-4 py-2 text-sm font-medium text-primary transition hover:bg-primary/30"
+      >
+        {value}
+
+        <span className={`transition ${isOpen ? "rotate-180" : ""}`}>▼</span>
+      </button>
+
+      {isOpen && (
+        <div className="absolute left-0 top-full z-50 mt-2 min-w-40 overflow-hidden rounded-2xl border border-border bg-card shadow-2xl backdrop-blur">
+          {statuses.map((status) => (
+            <button
+              key={status}
+              type="button"
+              onClick={() => handleSelect(status)}
+              className="block w-full px-4 py-3 text-left text-sm text-foreground transition hover:bg-white/10"
+            >
+              {status}
+            </button>
+          ))}
+        </div>
+      )}
     </div>
   );
 };
