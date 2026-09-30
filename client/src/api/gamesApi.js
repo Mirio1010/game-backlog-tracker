@@ -98,9 +98,18 @@ export const deleteGame = async (gameId) => {
 };
 
 export const updateGameStatus = async (gameId, newStatus) => {
-  const { data } = await axios.patch(`${API_URL}/api/games/${gameId}/status`, {
-    status: newStatus,
-  });
+  const token = localStorage.getItem("token");
+  const { data } = await axios.patch(
+    `${API_BASE_URL}/games/${gameId}/status`,
+    {
+      status: newStatus,
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    },
+  );
 
   return data;
 };

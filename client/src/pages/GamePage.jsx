@@ -5,7 +5,7 @@ import {updateGameStatus} from "../api/gamesApi"
 
 const GamePage = () => {
   const { id } = useParams();
-  const { games } = useOutletContext();
+  const { games, setGames } = useOutletContext();
 
   const [videos, setVideos] = useState([]);
   const [screenshots, setScreenshots] = useState([]);
