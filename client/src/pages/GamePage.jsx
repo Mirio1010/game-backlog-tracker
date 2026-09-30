@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useParams, useOutletContext } from "react-router-dom";
 import { getGameMovies, getGameScreenshots } from "../api/gameVideosApi";
+import {updateGameStatus} from "../api/gamesApi"
 
 const GamePage = () => {
   const { id } = useParams();
@@ -13,9 +14,21 @@ const GamePage = () => {
 
   const game = games.find((game) => String(game.id) === String(id));
 
-  const handleStatusChange = () => {
-    
-  }
+  const handleStatusChange = async (newStatus) => {
+    try {
+      await updateGameStatus(game.id, newStatus);
+
+      setGames((currentGames) =>
+        currentGames.map((currentGame) =>
+          currentGame.id === game.id
+            ? { ...currentGame, status: newStatus }
+            : currentGame,
+        ),
+      );
+    } catch (error) {
+      console.error("Failed to update game status:", error);
+    }
+  };
 
   useEffect(() => {
     if (!game?.rawg_id) return;

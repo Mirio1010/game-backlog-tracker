@@ -1,5 +1,6 @@
 const supabase = require("../config/supabaseClient");
 
+
 const saveGame = async (req, res) => {
   try {
     const game = req.body;
@@ -187,9 +188,37 @@ const importSteamGames = async (req, res) => {
   }
 };
 
+const updateGameStatus = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { status } = req.body;
+
+    const { data, error } = await supabase
+      .from("saved_games")
+      .update({ status })
+      .eq("id", id)
+      .eq("user_id", req.user.id)
+      .select()
+      .single();
+
+    if (error) {
+      throw error;
+    }
+
+    res.status(200).json(data);
+  } catch (error) {
+    console.error("Error updating game status:", error);
+
+    res.status(500).json({
+      message: "Failed to update game status",
+    });
+  }
+};
+
 module.exports = {
   saveGame,
   getMyGames,
   deleteGame,
   importSteamGames,
+  updateGameStatus
 };
